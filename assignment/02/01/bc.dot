@@ -1,0 +1,11 @@
+digraph {
+	graph [rankdir=LR]
+	node [shape=circle]
+	s [style=invisible]
+	s4 [label=<s<sub>4</sub>>]
+	s5 [label=<s<sub>5</sub>>]
+	s6 [label=<s<sub>6</sub>>, peripheries=2]
+	s -> s4
+	s4 -> s5 [label=b]
+	s5 -> s6 [label=c]
+}
