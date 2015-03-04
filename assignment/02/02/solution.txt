@@ -1,0 +1,8 @@
+Regular expressions are constrained to maintain a finite state by definition.
+Since recognizing the specified language would require to count symbols, we need at least a stack, which means infinite state.
+The specified language could be defined with this grammar:
+
+A ↦ ε
+A ↦ aAb
+
+But this is not a regular expression, since it is not a type-3 grammar, but type-2.

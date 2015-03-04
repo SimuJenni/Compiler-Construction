@@ -1,0 +1,9 @@
+((1|2|3|4|5|6|8|9)(0|1|2|3|4|5|6|8|9)*)(ms|s|m|h|d)
+
+Group 1 matches magnitude, group 4 matches unit.
+
+If you don't care about leading zeros and you are using Perl-compliant regexes, I would use:
+
+(\d+)(ms|s|m|h|d)
+
+Group 1 matches magnitude, group 2 matches unit.
