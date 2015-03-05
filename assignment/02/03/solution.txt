@@ -1,4 +1,7 @@
 car|bar|jar|star|crocodile
 (c|b|j|st)ar|crocodile
+(c|b|j|st)(ar|rocodile)
+(c|b|j|st|a|r|o|dile)*
+
 
 Further optimization doesn't make sense without more information about the language.
