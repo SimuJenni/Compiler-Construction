@@ -1,0 +1,15 @@
+digraph {
+	graph [rankdir=LR]
+	node [shape=circle]
+	s [style=invisible]
+	s0s1 [label=<s<sub>0</sub>', s<sub>1</sub>'>, peripheries=2]
+	s2 [label=<s<sub>2</sub>'>]
+	s3s4 [label=<s<sub>3</sub>', s<sub>4</sub>'>, peripheries=2]
+	s -> s0s1
+	s0s1 -> s0s1 [label=a]
+	s0s1 -> s2 [label=b]
+	s0s1 -> s3s4 [label=d]
+	s2 -> s3s4 [label=c]
+	s3s4 -> s2 [label=b]
+	s3s4 -> s3s4 [label=d]
+}

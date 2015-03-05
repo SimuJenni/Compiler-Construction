@@ -19,10 +19,11 @@ Trivial automata were skipped, the final solution is in `a*(bc|d)*.pdf`.
 See `01/02`.
 The final solution is in `a*(bc|d)*.pdf`.
 The application of the formal conversion algorithm presented in the lecture is in `conversion.txt`.
+An equivalent minified automaton is also provided.
 
 ### Exercise 2
 
-See `02/solution.txt`.
+See `02/solution.txt` and `02/Proof.jpg`.
 
 ### Exercise 3
 
