@@ -41,12 +41,14 @@ Since it won't consume any terminals in this case, it will never terminate.
 	| <word>
 <word> ::= <capitalWord>
 	| <nonCapitalWord>
+	| <allCapitalWord>			
 <capitalWord> ::= <capitalLetter><wordRest>
 <nonCapitalWord> ::= <nonCapitalLetter><wordRest>
-<wordRest> ::= <letter>
+<allCapitalWord> ::= <capitalLetter><capitalRest>
+<wordRest> ::= <nonCapitalLetter><wordRest>
 	| ε
-<letter> ::= <capitalLetter>
-	| <nonCapitalLetter>
+<capitalRest> ::= <capitalLetter><capitalRest>
+	| ε
 <capitalLetter> ::= [A-Z]
 <nonCapitalLetter> ::= [a-z]
 <finalizingPunctuation> ::= .
@@ -67,9 +69,8 @@ Since it won't consume any terminals in this case, it will never terminate.
 ```
 <phoneNumber> ::= <preamble><areaCode><number>
 <preamble> ::= +<countryCode>
-	| 0
 <countryCode> ::= <digit>{1, 4}
-<areaCode> ::= <digit>{2}
+<areaCode> ::= (0)<digit>{2}
 <number> ::= <digit>{6, 7}
 ```
 
