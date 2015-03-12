@@ -41,14 +41,12 @@ Since it won't consume any terminals in this case, it will never terminate.
 	| <word>
 <word> ::= <capitalWord>
 	| <nonCapitalWord>
-	| <allCapitalWord>			
 <capitalWord> ::= <capitalLetter><wordRest>
 <nonCapitalWord> ::= <nonCapitalLetter><wordRest>
-<allCapitalWord> ::= <capitalLetter><capitalRest>
-<wordRest> ::= <nonCapitalLetter><wordRest>
+<wordRest> ::= <letter><wordRest>
 	| ε
-<capitalRest> ::= <capitalLetter><capitalRest>
-	| ε
+<letter> ::= <capitalLetter>
+	| <nonCapitalLetter>
 <capitalLetter> ::= [A-Z]
 <nonCapitalLetter> ::= [a-z]
 <finalizingPunctuation> ::= .
@@ -67,8 +65,7 @@ Since it won't consume any terminals in this case, it will never terminate.
 ### Exercise 3
 
 ```
-<phoneNumber> ::= <preamble><areaCode><number>
-<preamble> ::= +<countryCode>
+<phoneNumber> ::= +<countryCode>(0)<areaCode><number>
 <countryCode> ::= <digit>{1, 4}
 <areaCode> ::= (0)<digit>{2}
 <number> ::= <digit>{6, 7}
@@ -78,4 +75,4 @@ Since it won't consume any terminals in this case, it will never terminate.
 
 #### Regex
 
-`(\+\d{1,4}|0)\d{2}\d{6,7}`
+`\+\d{1,4}\(0\)\d{2}\d{6,7}`
