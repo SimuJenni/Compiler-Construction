@@ -65,7 +65,7 @@ Since it won't consume any terminals in this case, it will never terminate.
 ```
 <phoneNumber> ::= +<countryCode>(0)<areaCode><number>
 <countryCode> ::= <digit>{1, 4}
-<areaCode> ::= (0)<digit>{2}
+<areaCode> ::= <digit>{2}
 <number> ::= <digit>{6, 7}
 ```
 
