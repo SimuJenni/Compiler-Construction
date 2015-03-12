@@ -43,10 +43,8 @@ Since it won't consume any terminals in this case, it will never terminate.
 	| <nonCapitalWord>
 <capitalWord> ::= <capitalLetter><wordRest>
 <nonCapitalWord> ::= <nonCapitalLetter><wordRest>
-<wordRest> ::= <letter><wordRest>
+<wordRest> ::= <nonCapitalLetter><wordRest>
 	| ε
-<letter> ::= <capitalLetter>
-	| <nonCapitalLetter>
 <capitalLetter> ::= [A-Z]
 <nonCapitalLetter> ::= [a-z]
 <finalizingPunctuation> ::= .
