@@ -6,6 +6,15 @@
 
 Install [JavaCC Eclipse Plugin](http://eclipse-javacc.sourceforge.net/).
 
+### MiniJava.jj
+
+Genereated by processing `grammar.txt` with regular expression search & replace:
+
+1. `s/\s*::=\s*/ : {} {/g`
+2. `s/^(\w)/void $1/g`
+3. `s/\n(void|$)/}$0/g`
+4. `s/(\{| |\t)[A-Z]\w+/$0()/g`
+
 ### Resources
 
 [Grammar](http://www.cambridge.org/resources/052182060X/MCIIJ2e/grammar.htm)
