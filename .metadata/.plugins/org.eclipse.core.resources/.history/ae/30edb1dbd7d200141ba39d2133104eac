@@ -1,0 +1,35 @@
+package ch.unibe.iam.scg.minijava.ast;
+
+import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.visitor.IRetArguVisitor;
+import ch.unibe.iam.scg.javacc.visitor.IRetVisitor;
+import ch.unibe.iam.scg.javacc.visitor.IVoidArguVisitor;
+import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
+
+public class AstNode implements INode {
+
+	@Override
+	public <R, A> R accept(IRetArguVisitor<R, A> vis, A argu) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <R> R accept(IRetVisitor<R> vis) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <A> void accept(IVoidArguVisitor<A> vis, A argu) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void accept(IVoidVisitor vis) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

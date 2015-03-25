@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="PrettyPrintTest" project="MiniJava_1" tests="51" started="51" failures="51" errors="0" ignored="0">
-  <testsuite name="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.065">
-    <testcase name="testVarDeclaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ch.unibe.iam.scg.minijava.prettyprint" project="MiniJava_1" tests="51" started="51" failures="51" errors="0" ignored="0">
+  <testsuite name="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.021">
+    <testcase name="testVarDeclaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.004">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testVarDeclaration(PrettyPrintTest.java:86)
@@ -33,10 +31,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementList" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementList" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.003">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementList(PrettyPrintTest.java:369)
@@ -66,10 +62,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testClassDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testClassDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testClassDelcaration(PrettyPrintTest.java:486)
@@ -99,10 +93,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testVarDeclaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testVarDeclaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testVarDeclaration2(PrettyPrintTest.java:95)
@@ -132,10 +124,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testVarDeclaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testVarDeclaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testVarDeclaration3(PrettyPrintTest.java:104)
@@ -166,9 +156,7 @@
 </failure>
     </testcase>
     <testcase name="testExpressionBrackets2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionBrackets2(PrettyPrintTest.java:223)
@@ -198,10 +186,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionBrackets3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionBrackets3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionBrackets3(PrettyPrintTest.java:232)
@@ -231,10 +217,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionMethodCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionMethodCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionMethodCall(PrettyPrintTest.java:297)
@@ -264,10 +248,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementWhile" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementWhile" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementWhile(PrettyPrintTest.java:378)
@@ -298,9 +280,7 @@
 </failure>
     </testcase>
     <testcase name="testExpressionLength" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionLength(PrettyPrintTest.java:203)
@@ -331,9 +311,7 @@
 </failure>
     </testcase>
     <testcase name="testExpressionNegate" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionNegate(PrettyPrintTest.java:185)
@@ -363,10 +341,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArithmetics" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArithmetics" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArithmetics(PrettyPrintTest.java:241)
@@ -397,9 +373,7 @@
 </failure>
     </testcase>
     <testcase name="testExpressionNew" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionNew(PrettyPrintTest.java:158)
@@ -429,10 +403,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testType2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testType2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Type cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testType2(PrettyPrintTest.java:49)
@@ -463,9 +435,7 @@
 </failure>
     </testcase>
     <testcase name="testType3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Type cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testType3(PrettyPrintTest.java:58)
@@ -495,10 +465,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testType4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testType4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Type cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testType4(PrettyPrintTest.java:67)
@@ -528,10 +496,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testType5" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testType5" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Type cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testType5(PrettyPrintTest.java:76)
@@ -561,10 +527,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testType" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testType" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Type cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testType(PrettyPrintTest.java:40)
@@ -594,7 +558,7 @@
 
 </failure>
     </testcase>
-    <testcase name="testMiniJavaProgram2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.003">
+    <testcase name="testMiniJavaProgram2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
       <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
@@ -625,10 +589,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementArrayAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementArrayAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementArrayAssignment2(PrettyPrintTest.java:360)
@@ -658,10 +620,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementSysout" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementSysout" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementSysout(PrettyPrintTest.java:414)
@@ -691,10 +651,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementWhile2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementWhile2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementWhile2(PrettyPrintTest.java:387)
@@ -724,10 +682,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementAssignment(PrettyPrintTest.java:333)
@@ -757,10 +713,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementAssignment2(PrettyPrintTest.java:342)
@@ -790,10 +744,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionBrackets" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionBrackets" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionBrackets(PrettyPrintTest.java:214)
@@ -823,7 +775,7 @@
 
 </failure>
     </testcase>
-    <testcase name="testMainClass" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.003">
+    <testcase name="testMainClass" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
       <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
@@ -854,10 +806,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementIf2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementIf2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementIf2(PrettyPrintTest.java:405)
@@ -887,7 +837,7 @@
 
 </failure>
     </testcase>
-    <testcase name="testMiniJavaProgram" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
+    <testcase name="testMiniJavaProgram" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
       <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
@@ -918,10 +868,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionMethodCall2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionMethodCall2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionMethodCall2(PrettyPrintTest.java:306)
@@ -951,10 +899,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionMethodCall3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionMethodCall3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionMethodCall3(PrettyPrintTest.java:315)
@@ -984,10 +930,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionMethodCall4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionMethodCall4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionMethodCall4(PrettyPrintTest.java:324)
@@ -1017,10 +961,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testClassDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testClassDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testClassDelcaration2(PrettyPrintTest.java:514)
@@ -1050,10 +992,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementIf" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementIf" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementIf(PrettyPrintTest.java:396)
@@ -1083,10 +1023,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionNegate2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionNegate2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionNegate2(PrettyPrintTest.java:194)
@@ -1116,10 +1054,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArithmetics2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArithmetics2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArithmetics2(PrettyPrintTest.java:250)
@@ -1149,10 +1085,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArithmetics3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArithmetics3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArithmetics3(PrettyPrintTest.java:259)
@@ -1182,10 +1116,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArithmetics4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArithmetics4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArithmetics4(PrettyPrintTest.java:268)
@@ -1215,10 +1147,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionThisCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionThisCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionThisCall(PrettyPrintTest.java:149)
@@ -1248,10 +1178,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionNew2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionNew2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionNew2(PrettyPrintTest.java:167)
@@ -1281,10 +1209,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionNew3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionNew3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionNew3(PrettyPrintTest.java:176)
@@ -1315,9 +1241,7 @@
 </failure>
     </testcase>
     <testcase name="testExpressionThis" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionThis(PrettyPrintTest.java:140)
@@ -1347,10 +1271,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionTrue" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionTrue" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionTrue(PrettyPrintTest.java:113)
@@ -1380,10 +1302,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testMetodDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testMetodDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration2(PrettyPrintTest.java:446)
@@ -1413,10 +1333,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testMetodDelcaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testMetodDelcaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration3(PrettyPrintTest.java:463)
@@ -1446,10 +1364,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionIdentifier(PrettyPrintTest.java:131)
@@ -1479,10 +1395,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArrayAccess" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArrayAccess" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArrayAccess(PrettyPrintTest.java:277)
@@ -1512,10 +1426,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionFalse" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionFalse" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionFalse(PrettyPrintTest.java:122)
@@ -1545,10 +1457,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testStatementArrayAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testStatementArrayAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Statement cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementArrayAssignment(PrettyPrintTest.java:351)
@@ -1579,9 +1489,7 @@
 </failure>
     </testcase>
     <testcase name="testIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Identifier cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testIdentifier(PrettyPrintTest.java:30)
@@ -1611,10 +1519,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testExpressionArrayConsturctor" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testExpressionArrayConsturctor" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.Expression cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionArrayConsturctor(PrettyPrintTest.java:286)
@@ -1644,10 +1550,8 @@
 
 </failure>
     </testcase>
-    <testcase name="testMetodDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
-      <failure>java.lang.AssertionError: java.lang.Error: Unresolved compilation problem: 
-	The import ch.unibe.iam.scg.minijava.ast cannot be resolved
-
+    <testcase name="testMetodDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.ClassCastException: ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration cannot be cast to ch.unibe.iam.scg.minijava.ast.AstNode
 	at org.junit.Assert.fail(Assert.java:88)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
 	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration(PrettyPrintTest.java:423)
