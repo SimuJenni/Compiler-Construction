@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PrettyPrintTest" project="MiniJava_1" tests="51" started="51" failures="13" errors="0" ignored="0">
+  <testsuite name="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.005">
+    <testcase name="testVarDeclaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementList" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testClassDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>
+        <expected>class Foo {
+
+    public Bar foo() {
+        return 1;
+    }
+
+    public Foo bar(Foo a) {
+        return a;
+    }
+
+}</expected>
+        <actual>class Foo {
+    
+    public Bar foo() {
+        
+        return 1;
+    }
+    
+    public Foo bar(Foo a) {
+        
+        return a;
+    }
+    
+}</actual>org.junit.ComparisonFailure: expected:&lt;class Foo {
+[
+    public Bar foo() {
+        return 1;
+    }
+
+    public Foo bar(Foo a) {
+        return a;
+    }
+]
+}&gt; but was:&lt;class Foo {
+[    
+    public Bar foo() {
+        
+        return 1;
+    }
+    
+    public Foo bar(Foo a) {
+        
+        return a;
+    }
+    ]
+}&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testClassDelcaration(PrettyPrintTest.java:487)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testVarDeclaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testVarDeclaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionMethodCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementWhile" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>while (1) foo = 1;</expected>
+        <actual>while(1)foo = 1;</actual>org.junit.ComparisonFailure: expected:&lt;while[ (1) ]foo = 1;&gt; but was:&lt;while[(1)]foo = 1;&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementWhile(PrettyPrintTest.java:379)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionLength" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNegate" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType5" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMiniJavaProgram2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMiniJavaProgram2(PrettyPrintTest.java:589)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementArrayAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementSysout" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementWhile2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>while (1) {
+    a = 1;
+    foo = a;
+}</expected>
+        <actual>while(1){
+    a = 1;
+    foo = a;
+}</actual>org.junit.ComparisonFailure: expected:&lt;while[ (1) ]{
+    a = 1;
+    foo...&gt; but was:&lt;while[(1)]{
+    a = 1;
+    foo...&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementWhile2(PrettyPrintTest.java:388)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMainClass" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMainClass(PrettyPrintTest.java:534)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementIf2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>if (a &gt; 1) {
+    retval = 1;
+} else retval = 2;</expected>
+        <actual>if(a &gt; 1){
+    retval = 1;
+}elseretval = 2;</actual>org.junit.ComparisonFailure: expected:&lt;if[ (a &gt; 1) {
+    retval = 1;
+} else ]retval = 2;&gt; but was:&lt;if[(a &gt; 1){
+    retval = 1;
+}else]retval = 2;&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementIf2(PrettyPrintTest.java:406)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testMiniJavaProgram" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMiniJavaProgram(PrettyPrintTest.java:557)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionMethodCall2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionMethodCall3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>foo.bar(zorg, qwark, bark)</expected>
+        <actual>foo.bar(zorg,qwark,bark)</actual>org.junit.ComparisonFailure: expected:&lt;foo.bar(zorg,[ qwark, ]bark)&gt; but was:&lt;foo.bar(zorg,[qwark,]bark)&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testExpressionMethodCall3(PrettyPrintTest.java:316)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionMethodCall4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testClassDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>class Foo extends Bar {
+    int a;
+    int b;
+
+    public Bar foo() {
+        return 1;
+    }
+
+    public Foo bar(Foo a) {
+        return a;
+    }
+
+}</expected>
+        <actual>class Foo extends Bar {
+    
+    int a;
+    int b;
+    public Bar foo() {
+        
+        return 1;
+    }
+    
+    public Foo bar(Foo a) {
+        
+        return a;
+    }
+    
+}</actual>org.junit.ComparisonFailure: expected:&lt;...o extends Bar {
+    [int a;
+    int b;
+
+    public Bar foo() {
+        return 1;
+    }
+
+    public Foo bar(Foo a) {
+        return a;
+    }
+]
+}&gt; but was:&lt;...o extends Bar {
+    [
+    int a;
+    int b;
+    public Bar foo() {
+        
+        return 1;
+    }
+    
+    public Foo bar(Foo a) {
+        
+        return a;
+    }
+    ]
+}&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testClassDelcaration2(PrettyPrintTest.java:515)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementIf" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>if (true) retval = 1; else retval = 2;</expected>
+        <actual>if(true)retval = 1;elseretval = 2;</actual>org.junit.ComparisonFailure: expected:&lt;if[ (true) retval = 1; else ]retval = 2;&gt; but was:&lt;if[(true)retval = 1;else]retval = 2;&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testStatementIf(PrettyPrintTest.java:397)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionNegate2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001"/>
+    <testcase name="testExpressionThisCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionThis" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionTrue" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMetodDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>public void foo() {
+    int a;
+    Foo bar;
+    Zorg qwark;
+
+    a = bar.foo(a);
+    a = qwark.bar(a);
+    return 1;
+}</expected>
+        <actual>public void foo() {
+    int a;
+    Foo bar;
+    Zorg qwark;
+    
+
+    a = bar.foo(a);
+    a = qwark.bar(a);
+    return 1;
+}</actual>org.junit.ComparisonFailure: expected:&lt;...ar;
+    Zorg qwark;
+[]
+    a = bar.foo(a);...&gt; but was:&lt;...ar;
+    Zorg qwark;
+[    
+]
+    a = bar.foo(a);...&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration2(PrettyPrintTest.java:447)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testMetodDelcaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>public void foo(A b, C d, E f) {
+    int a;
+
+    return 1;
+}</expected>
+        <actual>public void foo(A b, C d, E f) {
+    int a;
+    
+    return 1;
+}</actual>org.junit.ComparisonFailure: expected:&lt;..., E f) {
+    int a;
+[]
+    return 1;
+}&gt; but was:&lt;..., E f) {
+    int a;
+[    ]
+    return 1;
+}&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration3(PrettyPrintTest.java:464)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArrayAccess" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionFalse" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementArrayAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001"/>
+    <testcase name="testIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArrayConsturctor" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMetodDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>
+        <expected>public void foo() {
+    return 1;
+}</expected>
+        <actual>public void foo() {
+    
+    return 1;
+}</actual>org.junit.ComparisonFailure: expected:&lt;...ic void foo() {
+    []return 1;
+}&gt; but was:&lt;...ic void foo() {
+    [
+    ]return 1;
+}&gt;
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMetodDelcaration(PrettyPrintTest.java:424)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+  </testsuite>
+</testrun>
