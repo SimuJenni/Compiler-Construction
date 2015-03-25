@@ -1,51 +1,0 @@
-/**
- * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
- */options{  JDK_VERSION = "1.5";  static = false;}PARSER_BEGIN(MiniJavaImpl)package ch.unibe.iam.scg.javacc;import ch.unibe.iam.scg.minijava.MiniJava;public class MiniJavaImpl implements MiniJava{}PARSER_END(MiniJavaImpl)SKIP :{  " "| "\r"| "\t"| "\n"}// weird stuff
-TOKEN :{  < LENGTH_FIELD_NAME : "length" >| < MAIN_METHOD_NAME : "main" >| < PRINT_METHOD : "System.out.println" >}// operators
-TOKEN :{  < UNARY_OPERATOR : "!" >| < BINARY_OPERATOR :    (      "&&"    | ">"    | "+"    | "-"    | "*"    ) >}// separatorsTOKEN :{  < BRACE_LEFT : "{" >| < BRACE_RIGHT : "}" >| < BRACKET_LEFT : "[" >| < BRACKET_RIGHT : "]" >| < PARENTHESIS_LEFT : "(" >| < PARENTHESIS_RIGHT : ")" >| < SEMICOLON : ";" >| < COMMA : "," >| < DOT : "." >| < EQUALS_SIGN : "=" >}// reserved words
-TOKEN :{  < CLASS : "class" >| < PUBLIC_MODIFIER : "public" >| < STATIC_MODIFIER : "static" >| < EXTENDS : "extends" >| < RETURN : "return" >| < IF : "if" >| < ELSE : "else" >| < WHILE : "while" >| < NEW : "new" >}// types
-TOKEN :{  < VOID_TYPE : "void" >| < STRING_TYPE : "String" >| < INT_TYPE : "int" >| < BOOLEAN_TYPE : "boolean" >}// pseudo-variablesTOKEN :{  < THIS : "this" >}// literals
-TOKEN :{  < TRUE : "true" >| < FALSE : "false" >| < INTEGER_LITERAL : ([ "1"-"9" ]) ([ "0"-"9" ])* >}// identifier
-TOKEN :{  < IDENTIFIER :    < LETTER >    (      < LETTER >    | < DIGIT >    | < UNDERSCORE >    )* >| < #LETTER : [ "a"-"z", "A"-"Z" ] >| < #DIGIT : [ "0"-"9" ] >| < #UNDERSCORE : "_" >}void Goal() :{}{  MainClass()  (    ClassDeclaration()  )*  < EOF >}void MainClass() :{}{  < CLASS > Identifier() < BRACE_LEFT > < PUBLIC_MODIFIER > < STATIC_MODIFIER > < VOID_TYPE > < MAIN_METHOD_NAME > < PARENTHESIS_LEFT > < STRING_TYPE > < BRACKET_LEFT > < BRACKET_RIGHT > Identifier() < PARENTHESIS_RIGHT > < BRACE_LEFT > (Statement())? < BRACE_RIGHT > < BRACE_RIGHT >}void ClassDeclaration() :{}{  < CLASS > Identifier()  (    < EXTENDS > Identifier()  )?  < BRACE_LEFT >  (    VarDeclaration()  )*  (    MethodDeclaration()  )*  < BRACE_RIGHT >}void VarDeclaration() :{}{  Type() Identifier() < SEMICOLON >}void MethodDeclaration() :{}{  < PUBLIC_MODIFIER > Type() Identifier() < PARENTHESIS_LEFT >  (    Type() Identifier()    (      < COMMA > Type() Identifier()    )*  )?  < PARENTHESIS_RIGHT > < BRACE_LEFT >  (    LOOKAHEAD(2)    VarDeclaration()  )*  (    Statement()  )*  (    < RETURN > Expression() < SEMICOLON >  )?  < BRACE_RIGHT >}void Type() :{}{  LOOKAHEAD(2)  < INT_TYPE > < BRACKET_LEFT > < BRACKET_RIGHT >| < INT_TYPE >| BooleanType()| < VOID_TYPE >| Identifier()}void Statement() :{}{  StatementList()| < IF > < PARENTHESIS_LEFT > Expression() < PARENTHESIS_RIGHT > Statement() < ELSE > Statement()| WhileLoop()| < PRINT_METHOD > < PARENTHESIS_LEFT > Expression() < PARENTHESIS_RIGHT > < SEMICOLON >| LOOKAHEAD(2)  Identifier() Assignment() Expression() < SEMICOLON >| Identifier() < BRACKET_LEFT > Expression() < BRACKET_RIGHT > Assignment() Expression() < SEMICOLON >}
-
-void WhileLoop() :
-{}
-{
-  < WHILE > < PARENTHESIS_LEFT > Expression() < PARENTHESIS_RIGHT > Statement()
-}
-
-void StatementList() :
-{}
-{
-  < BRACE_LEFT >
-  (
-    Statement()
-  )*
-  < BRACE_RIGHT >
-}
-void Expression() :{}{  LOOKAHEAD(2)  New() < INT_TYPE > < BRACKET_LEFT > Expression() < BRACKET_RIGHT > ExpressionPrime()| New() Identifier() < PARENTHESIS_LEFT > < PARENTHESIS_RIGHT > ExpressionPrime()| < UNARY_OPERATOR > Expression() ExpressionPrime()| < PARENTHESIS_LEFT > Expression() < PARENTHESIS_RIGHT > ExpressionPrime()| < INTEGER_LITERAL > ExpressionPrime()| < TRUE > ExpressionPrime()| < FALSE > ExpressionPrime()| < THIS > ExpressionPrime()| Identifier() ExpressionPrime()}void ExpressionPrime() :{}{  BinaryOperator() Expression() ExpressionPrime()| < BRACKET_LEFT > Expression() < BRACKET_RIGHT > ExpressionPrime()| LOOKAHEAD(2)  < DOT > < LENGTH_FIELD_NAME > ExpressionPrime()| < DOT > Identifier() < PARENTHESIS_LEFT >  (    Expression()    (      < COMMA > Expression()    )*  )?  < PARENTHESIS_RIGHT > ExpressionPrime()| Empty()}
-
-void BinaryOperator() :
-{}
-{
-  < BINARY_OPERATOR >
-}
-
-void New() :
-{}
-{
-  < NEW >
-}
-
-void Assignment() :
-{}
-{
-  < EQUALS_SIGN >
-}
-void Empty() :{}{  {}}
-
-void BooleanType() :
-{}
-{
-  < BOOLEAN_TYPE >
-}void Identifier() :{}{  < IDENTIFIER >}
