@@ -1,6 +1,5 @@
 package ch.unibe.iam.scg.minijava.prettyprint;
 
-import ch.unibe.iam.scg.javacc.syntaxtree.Assignment;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
@@ -100,21 +99,5 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
 	private void makeSpace() {
 		buffer.append(" ");
 	}
-	
-	  /**
-	   * Visits a {@link Assignment} node, whose child is the following :
-	   * <p>
-	   * f0 -> <EQUALS_SIGN><br>
-	   *
-	   * @param n - the node to visit
-	   */
-	  @Override
-	  public void visit(final Assignment n) {
-		makeSpace();
-	    // f0 -> <EQUALS_SIGN>
-	    final NodeToken n0 = n.f0;
-	    n0.accept(this);
-	    makeSpace();
-	  }
 
 }
