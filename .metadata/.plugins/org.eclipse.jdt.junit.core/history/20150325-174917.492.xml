@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PrettyPrintTest" project="MiniJava_1" tests="51" started="51" failures="3" errors="0" ignored="0">
+  <testsuite name="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.002">
+    <testcase name="testVarDeclaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementList" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testClassDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testVarDeclaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testVarDeclaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionMethodCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementWhile" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionLength" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNegate" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001"/>
+    <testcase name="testType5" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testType" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMiniJavaProgram2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMiniJavaProgram2(PrettyPrintTest.java:589)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementArrayAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementSysout" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementWhile2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementAssignment2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionBrackets" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMainClass" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMainClass(PrettyPrintTest.java:534)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testStatementIf2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMiniJavaProgram" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0">
+      <failure>java.lang.AssertionError: java.lang.reflect.InvocationTargetException
+	at org.junit.Assert.fail(Assert.java:88)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.prettyPrint(PrettyPrintTest.java:605)
+	at ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest.testMiniJavaProgram(PrettyPrintTest.java:557)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+
+</failure>
+    </testcase>
+    <testcase name="testExpressionMethodCall2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionMethodCall3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionMethodCall4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testClassDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementIf" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNegate2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArithmetics4" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionThisCall" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionNew3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionThis" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionTrue" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMetodDelcaration2" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMetodDelcaration3" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.001"/>
+    <testcase name="testExpressionIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArrayAccess" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionFalse" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testStatementArrayAssignment" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testIdentifier" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testExpressionArrayConsturctor" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+    <testcase name="testMetodDelcaration" classname="ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest" time="0.0"/>
+  </testsuite>
+</testrun>

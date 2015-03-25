@@ -4,17 +4,23 @@ import ch.unibe.iam.scg.javacc.syntaxtree.Assignment;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.BooleanType;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
+import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
+import ch.unibe.iam.scg.javacc.syntaxtree.If;
+import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.New;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
+import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.StatementList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Type;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.WhileLoop;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.ast.AstNode;
 
@@ -204,7 +210,6 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
       final NodeToken n3 = n.f3;
       n3.accept(this);
       indentCount++;
-      makeNewLine(0);
       // f4 -> ( VarDeclaration() )*
       final NodeListOptional n4 = n.f4;
       if (n4.present()) {
@@ -217,6 +222,7 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
       // f5 -> ( MethodDeclaration() )*
       final NodeListOptional n5 = n.f5;
       if (n5.present()) {
+    	makeNewLine(0);
         for (int i = 0; i < n5.size(); i++) {
           makeNewLine(indentCount);
           final INode nloeai = n5.elementAt(i);
@@ -347,7 +353,138 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
       final NodeToken n10 = n.f10;
       n10.accept(this);
     }
+    
+    /**
+     * Visits a {@link WhileLoop} node, whose children are the following :
+     * <p>
+     * f0 -> <WHILE><br>
+     * f1 -> <PARENTHESIS_LEFT><br>
+     * f2 -> Expression()<br>
+     * f3 -> <PARENTHESIS_RIGHT><br>
+     * f4 -> Statement()<br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final WhileLoop n) {
+      // f0 -> <WHILE>
+      final NodeToken n0 = n.f0;
+      n0.accept(this);
+      makeSpace();
+      // f1 -> <PARENTHESIS_LEFT>
+      final NodeToken n1 = n.f1;
+      n1.accept(this);
+      // f2 -> Expression()
+      final Expression n2 = n.f2;
+      n2.accept(this);
+      // f3 -> <PARENTHESIS_RIGHT>
+      final NodeToken n3 = n.f3;
+      n3.accept(this);
+      makeSpace();
+      // f4 -> Statement()
+      final Statement n4 = n.f4;
+      n4.accept(this);
+    }
+    
+    /**
+     * Visits a {@link MethodCall} node, whose children are the following :
+     * <p>
+     * f0 -> <DOT><br>
+     * f1 -> Identifier()<br>
+     * f2 -> <PARENTHESIS_LEFT><br>
+     * f3 -> ( #0 Expression()<br>
+     * .. .. . #1 ( $0 <COMMA> $1 Expression() )* )?<br>
+     * f4 -> <PARENTHESIS_RIGHT><br>
+     * f5 -> ExpressionPrime()<br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final MethodCall n) {
+      // f0 -> <DOT>
+      final NodeToken n0 = n.f0;
+      n0.accept(this);
+      // f1 -> Identifier()
+      final Identifier n1 = n.f1;
+      n1.accept(this);
+      // f2 -> <PARENTHESIS_LEFT>
+      final NodeToken n2 = n.f2;
+      n2.accept(this);
+      // f3 -> ( #0 Expression()
+      // .. .. . #1 ( $0 <COMMA> $1 Expression() )* )?
+      final NodeOptional n3 = n.f3;
+      if (n3.present()) {
+        final NodeSequence seq = (NodeSequence) n3.node;
+        // #0 Expression()
+        final INode seq1 = seq.elementAt(0);
+        seq1.accept(this);
+        // #1 ( $0 <COMMA> $1 Expression() )*
+        final INode seq2 = seq.elementAt(1);
+        final NodeListOptional nlo = (NodeListOptional) seq2;
+        if (nlo.present()) {
+          for (int i = 0; i < nlo.size(); i++) {
+            final INode nloeai = nlo.elementAt(i);
+            final NodeSequence seq3 = (NodeSequence) nloeai;
+            // $0 <COMMA>
+            final INode seq4 = seq3.elementAt(0);
+            seq4.accept(this);
+            makeSpace();
+            // $1 Expression()
+            final INode seq5 = seq3.elementAt(1);
+            seq5.accept(this);
+          }
+        }
+      }
+      // f4 -> <PARENTHESIS_RIGHT>
+      final NodeToken n4 = n.f4;
+      n4.accept(this);
+      // f5 -> ExpressionPrime()
+      final ExpressionPrime n5 = n.f5;
+      n5.accept(this);
+    }
+    
 
+    /**
+     * Visits a {@link If} node, whose children are the following :
+     * <p>
+     * f0 -> <IF><br>
+     * f1 -> <PARENTHESIS_LEFT><br>
+     * f2 -> Expression()<br>
+     * f3 -> <PARENTHESIS_RIGHT><br>
+     * f4 -> Statement()<br>
+     * f5 -> <ELSE><br>
+     * f6 -> Statement()<br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final If n) {
+      // f0 -> <IF>
+      final NodeToken n0 = n.f0;
+      n0.accept(this);
+      makeSpace();
+      // f1 -> <PARENTHESIS_LEFT>
+      final NodeToken n1 = n.f1;
+      n1.accept(this);
+      // f2 -> Expression()
+      final Expression n2 = n.f2;
+      n2.accept(this);
+      // f3 -> <PARENTHESIS_RIGHT>
+      final NodeToken n3 = n.f3;
+      n3.accept(this);
+      makeSpace();
+      // f4 -> Statement()
+      final Statement n4 = n.f4;
+      n4.accept(this);
+      makeSpace();
+      // f5 -> <ELSE>
+      final NodeToken n5 = n.f5;
+      n5.accept(this);
+      makeSpace();
+      // f6 -> Statement()
+      final Statement n6 = n.f6;
+      n6.accept(this);
+    }
 
 	private void makeNewLine(int numTabs) {
 		buffer.append("\n");
