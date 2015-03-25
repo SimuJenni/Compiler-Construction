@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SyntaxTest" project="MiniJava_1" tests="48" started="48" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.016">
+    <testcase name="testExpression10" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression11" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression12" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression13" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression14" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression15" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression16" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression17" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression18" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression19" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression20" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression21" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression22" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression23" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression24" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression25" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testVarDeclaration" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testVarDeclaration2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testMethodDeclaration" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testId2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testId3" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testId4" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testStatement" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testType2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testType3" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testWhile" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testType" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testStatement2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testArrayAssignment" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testId" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testIf" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testClassDeclaration2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testExpression3" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression4" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression5" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression6" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression7" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression8" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testExpression9" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testProgram1" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.006"/>
+    <testcase name="testProgram2" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testProgram3" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testClassDeclaration" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="test" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testAssignment" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.001"/>
+    <testcase name="testSysout" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+    <testcase name="testExpression" classname="ch.unibe.iam.scg.minijava.SyntaxTest" time="0.0"/>
+  </testsuite>
+</testrun>

@@ -1,6 +1,5 @@
 package ch.unibe.iam.scg.minijava.prettyprint;
 
-import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
@@ -62,22 +61,6 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
       // f2 -> <SEMICOLON>
       final NodeToken n2 = n.f2;
       n2.accept(this);
-    }
-    
-    /**
-     * Visits a {@link BinaryOperator} node, whose child is the following :
-     * <p>
-     * f0 -> <BINARY_OPERATOR><br>
-     *
-     * @param n - the node to visit
-     */
-    @Override
-    public void visit(final BinaryOperator n) {
-      // f0 -> <BINARY_OPERATOR>
-      makeSpace();
-      final NodeToken n0 = n.f0;
-      n0.accept(this);
-      makeSpace();
     }
 
 	private void makeSpace() {
