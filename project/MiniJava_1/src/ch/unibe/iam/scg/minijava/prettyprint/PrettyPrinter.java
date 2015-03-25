@@ -6,9 +6,11 @@ import ch.unibe.iam.scg.javacc.syntaxtree.BooleanType;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
+import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.If;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.New;
@@ -484,6 +486,135 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
       // f6 -> Statement()
       final Statement n6 = n.f6;
       n6.accept(this);
+    }
+    
+    /**
+     * Visits a {@link MainClass} node, whose children are the following :
+     * <p>
+     * f0 -> <CLASS><br>
+     * f1 -> Identifier()<br>
+     * f2 -> <BRACE_LEFT><br>
+     * f3 -> <PUBLIC_MODIFIER><br>
+     * f4 -> <STATIC_MODIFIER><br>
+     * f5 -> <VOID_TYPE><br>
+     * f6 -> <MAIN_METHOD_NAME><br>
+     * f7 -> <PARENTHESIS_LEFT><br>
+     * f8 -> <STRING_TYPE><br>
+     * f9 -> <BRACKET_LEFT><br>
+     * f10 -> <BRACKET_RIGHT><br>
+     * f11 -> Identifier()<br>
+     * f12 -> <PARENTHESIS_RIGHT><br>
+     * f13 -> <BRACE_LEFT><br>
+     * f14 -> ( Statement() )?<br>
+     * f15 -> <BRACE_RIGHT><br>
+     * f16 -> <BRACE_RIGHT><br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final MainClass n) {
+      // f0 -> <CLASS>
+      final NodeToken n0 = n.f0;
+      n0.accept(this);
+      makeSpace();
+      // f1 -> Identifier()
+      final Identifier n1 = n.f1;
+      n1.accept(this);
+      makeSpace();
+      // f2 -> <BRACE_LEFT>
+      final NodeToken n2 = n.f2;
+      n2.accept(this);
+      makeNewLine(0);
+      indentCount++;
+      makeNewLine(indentCount);
+      // f3 -> <PUBLIC_MODIFIER>
+      final NodeToken n3 = n.f3;
+      n3.accept(this);
+      makeSpace();
+      // f4 -> <STATIC_MODIFIER>
+      final NodeToken n4 = n.f4;
+      n4.accept(this);
+      makeSpace();
+      // f5 -> <VOID_TYPE>
+      final NodeToken n5 = n.f5;
+      n5.accept(this);
+      makeSpace();
+      // f6 -> <MAIN_METHOD_NAME>
+      final NodeToken n6 = n.f6;
+      n6.accept(this);
+      // f7 -> <PARENTHESIS_LEFT>
+      final NodeToken n7 = n.f7;
+      n7.accept(this);
+      // f8 -> <STRING_TYPE>
+      final NodeToken n8 = n.f8;
+      n8.accept(this);
+      // f9 -> <BRACKET_LEFT>
+      final NodeToken n9 = n.f9;
+      n9.accept(this);
+      // f10 -> <BRACKET_RIGHT>
+      final NodeToken n10 = n.f10;
+      n10.accept(this);
+      makeSpace();
+      // f11 -> Identifier()
+      final Identifier n11 = n.f11;
+      n11.accept(this);
+      // f12 -> <PARENTHESIS_RIGHT>
+      final NodeToken n12 = n.f12;
+      n12.accept(this);
+      makeSpace();
+      // f13 -> <BRACE_LEFT>
+      final NodeToken n13 = n.f13;
+      n13.accept(this);
+      indentCount++;
+      makeNewLine(indentCount);
+      // f14 -> ( Statement() )?
+      final NodeOptional n14 = n.f14;
+      if (n14.present()) {
+        n14.accept(this);
+      }
+      indentCount--;
+      makeNewLine(indentCount);
+      // f15 -> <BRACE_RIGHT>
+      final NodeToken n15 = n.f15;
+      n15.accept(this);
+      makeNewLine(0);
+      indentCount--;
+      makeNewLine(indentCount);
+      // f16 -> <BRACE_RIGHT>
+      final NodeToken n16 = n.f16;
+      n16.accept(this);
+    }
+    
+    /**
+     * Visits a {@link Goal} node, whose children are the following :
+     * <p>
+     * f0 -> MainClass()<br>
+     * f1 -> ( ClassDeclaration() )*<br>
+     * f2 -> <EOF><br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final Goal n) {
+      buffer.append("//Pretty Printer says Hi There!\n");	
+      // f0 -> MainClass()
+      final MainClass n0 = n.f0;
+      n0.accept(this);
+      makeNewLine(0);
+      makeNewLine(0);
+      // f1 -> ( ClassDeclaration() )*
+      final NodeListOptional n1 = n.f1;
+      if (n1.present()) {
+        for (int i = 0; i < n1.size(); i++) {
+          final INode nloeai = n1.elementAt(i);
+          nloeai.accept(this);
+        }
+        makeNewLine(0);
+        makeNewLine(0);
+      }
+      // f2 -> <EOF>
+      final NodeToken n2 = n.f2;
+      n2.accept(this);
     }
 
 	private void makeNewLine(int numTabs) {
