@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor"/>
+<fullyQualifiedTypeName name="ch.unibe.iam.scg.javacc.syntaxtree.INode"/>
+</qualifiedTypeNameHistroy>
