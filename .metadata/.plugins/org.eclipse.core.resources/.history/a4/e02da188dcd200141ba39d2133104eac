@@ -53,9 +53,11 @@ public class PrettyPrinter extends DepthFirstVoidVisitor
     public void visit(final VarDeclaration n) {
       // f0 -> Type()
       final Type n0 = n.f0;
-      n0.accept(this);      
-      makeSpace();
+      n0.accept(this);
       // f1 -> Identifier()
+      
+      makeSpace();
+      
       final Identifier n1 = n.f1;
       n1.accept(this);
       // f2 -> <SEMICOLON>
