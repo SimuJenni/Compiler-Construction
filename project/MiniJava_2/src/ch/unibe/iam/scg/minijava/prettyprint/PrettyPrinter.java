@@ -1,9 +1,11 @@
 package ch.unibe.iam.scg.minijava.prettyprint;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.Assignee;
 import ch.unibe.iam.scg.javacc.syntaxtree.Assignment;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.BooleanType;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.ConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
@@ -11,16 +13,18 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.If;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
-import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
-import ch.unibe.iam.scg.javacc.syntaxtree.New;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
+import ch.unibe.iam.scg.javacc.syntaxtree.ObjectCreationExpression;
+import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclarationList;
+import ch.unibe.iam.scg.javacc.syntaxtree.ParameterList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.StatementList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Type;
+import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.WhileLoop;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
@@ -59,17 +63,17 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link VarDeclaration} node, whose children are the following :
+	 * Visits a {@link TypedDeclaration} node, whose children are the following
+	 * :
 	 * <p>
 	 * f0 -> Type()<br>
 	 * f1 -> Identifier()<br>
-	 * f2 -> <SEMICOLON><br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final VarDeclaration n) {
+	public void visit(final TypedDeclaration n) {
 		// f0 -> Type()
 		final Type n0 = n.f0;
 		n0.accept(this);
@@ -77,9 +81,25 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 		// f1 -> Identifier()
 		final Identifier n1 = n.f1;
 		n1.accept(this);
+	}
+
+	/**
+	 * Visits a {@link VarDeclaration} node, whose children are the following :
+	 * <p>
+	 * f0 -> TypedDeclaration()<br>
+	 * f1 -> <SEMICOLON><br>
+	 *
+	 * @param n
+	 *            - the node to visit
+	 */
+	@Override
+	public void visit(final VarDeclaration n) {
+		// f0 -> TypedDeclaration()
+		final TypedDeclaration n0 = n.f0;
+		n0.accept(this);
 		// f2 -> <SEMICOLON>
-		final NodeToken n2 = n.f2;
-		n2.accept(this);
+		final NodeToken n1 = n.f1;
+		n1.accept(this);
 	}
 
 	/**
@@ -100,36 +120,57 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link Assignment} node, whose child is the following :
+	 * Visits a {@link Assignment} node, whose children are the following :
 	 * <p>
-	 * f0 -> <EQUALS_SIGN><br>
+	 * f0 -> Assignee()<br>
+	 * f1 -> <EQUALS_SIGN><br>
+	 * f2 -> Expression()<br>
+	 * f3 -> <SEMICOLON><br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
 	public void visit(final Assignment n) {
-		makeSpace();
-		// f0 -> <EQUALS_SIGN>
-		final NodeToken n0 = n.f0;
+		// f0 -> Assignee()
+		final Assignee n0 = n.f0;
 		n0.accept(this);
 		makeSpace();
+		// f1 -> <EQUALS_SIGN>
+		final NodeToken n1 = n.f1;
+		n1.accept(this);
+		makeSpace();
+		// f2 -> Expression()
+		final Expression n2 = n.f2;
+		n2.accept(this);
+		// f3 -> <SEMICOLON>
+		final NodeToken n3 = n.f3;
+		n3.accept(this);
 	}
 
 	/**
-	 * Visits a {@link New} node, whose child is the following :
+	 * Visits a {@link ObjectCreationExpression} node, whose children are the
+	 * following :
 	 * <p>
 	 * f0 -> <NEW><br>
+	 * f1 -> ConstructorCall()<br>
+	 * f2 -> ExpressionPrime()<br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final New n) {
+	public void visit(final ObjectCreationExpression n) {
 		// f0 -> <NEW>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
 		makeSpace();
+		// f1 -> ConstructorCall()
+		final ConstructorCall n1 = n.f1;
+		n1.accept(this);
+		// f2 -> ExpressionPrime()
+		final ExpressionPrime n2 = n.f2;
+		n2.accept(this);
 	}
 
 	/**
@@ -250,20 +291,18 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	 * :
 	 * <p>
 	 * f0 -> <PUBLIC_MODIFIER><br>
-	 * f1 -> Type()<br>
-	 * f2 -> Identifier()<br>
-	 * f3 -> <PARENTHESIS_LEFT><br>
-	 * f4 -> ( #0 Type() #1 Identifier()<br>
-	 * .. .. . #2 ( $0 <COMMA> $1 Type() $2 Identifier() )* )?<br>
-	 * f5 -> <PARENTHESIS_RIGHT><br>
-	 * f6 -> <BRACE_LEFT><br>
-	 * f7 -> ( VarDeclaration() )*<br>
-	 * f8 -> ( Statement() )*<br>
-	 * f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
-	 * f10 -> <BRACE_RIGHT><br>
+	 * f1 -> TypedDeclaration()<br>
+	 * f2 -> <PARENTHESIS_LEFT><br>
+	 * f3 -> ParameterDeclarationList()<br>
+	 * f4 -> <PARENTHESIS_RIGHT><br>
+	 * f5 -> <BRACE_LEFT><br>
+	 * f6 -> ( VarDeclaration() )*<br>
+	 * f7 -> ( Statement() )*<br>
+	 * f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
+	 * f9 -> <BRACE_RIGHT><br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
 	public void visit(final MethodDeclaration n) {
@@ -271,58 +310,34 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
 		makeSpace();
-		// f1 -> Type()
-		final Type n1 = n.f1;
+		// f1 -> TypedDeclaration()
+		final TypedDeclaration n1 = n.f1;
 		n1.accept(this);
-		makeSpace();
-		// f2 -> Identifier()
-		final Identifier n2 = n.f2;
+		// f2 -> <PARENTHESIS_LEFT>
+		final NodeToken n2 = n.f2;
 		n2.accept(this);
-		// f3 -> <PARENTHESIS_LEFT>
-		final NodeToken n3 = n.f3;
+		// f3 -> ParameterDeclarationList()
+		final ParameterDeclarationList n3 = n.f3;
 		n3.accept(this);
-		// f4 -> ( #0 Type() #1 Identifier()
-		// .. .. . #2 ( $0 <COMMA> $1 Type() $2 Identifier() )* )?
-		final NodeOptional n4 = n.f4;
-		if (n4.present()) {
-			final NodeSequence seq = (NodeSequence) n4.node;
-			// #0 Type()
-			final INode seq1 = seq.elementAt(0);
-			seq1.accept(this);
-			makeSpace();
-			// #1 Identifier()
-			final INode seq2 = seq.elementAt(1);
-			seq2.accept(this);
-			// #2 ( $0 <COMMA> $1 Type() $2 Identifier() )*
-			final INode seq3 = seq.elementAt(2);
-			final NodeListOptional nlo = (NodeListOptional) seq3;
-			if (nlo.present()) {
-				for (int i = 0; i < nlo.size(); i++) {
-					final INode nloeai = nlo.elementAt(i);
-					final NodeSequence seq4 = (NodeSequence) nloeai;
-					// $0 <COMMA>
-					final INode seq5 = seq4.elementAt(0);
-					seq5.accept(this);
-					makeSpace();
-					// $1 Type()
-					final INode seq6 = seq4.elementAt(1);
-					seq6.accept(this);
-					makeSpace();
-					// $2 Identifier()
-					final INode seq7 = seq4.elementAt(2);
-					seq7.accept(this);
-				}
-			}
-		}
-		// f5 -> <PARENTHESIS_RIGHT>
+		// f4 -> <PARENTHESIS_RIGHT>
+		final NodeToken n4 = n.f4;
+		n4.accept(this);
+		makeSpace();
+		// f5 -> <BRACE_LEFT>
 		final NodeToken n5 = n.f5;
 		n5.accept(this);
-		makeSpace();
-		// f6 -> <BRACE_LEFT>
-		final NodeToken n6 = n.f6;
-		n6.accept(this);
 		indentCount++;
-		// f7 -> ( VarDeclaration() )*
+		// f6 -> ( VarDeclaration() )*
+		final NodeListOptional n6 = n.f6;
+		if (n6.present()) {
+			for (int i = 0; i < n6.size(); i++) {
+				makeNewLine(indentCount);
+				final INode nloeai = n6.elementAt(i);
+				nloeai.accept(this);
+			}
+			makeNewLine(0);
+		}
+		// f7 -> ( Statement() )*
 		final NodeListOptional n7 = n.f7;
 		if (n7.present()) {
 			for (int i = 0; i < n7.size(); i++) {
@@ -330,38 +345,105 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 				final INode nloeai = n7.elementAt(i);
 				nloeai.accept(this);
 			}
-			makeNewLine(0);
 		}
-		// f8 -> ( Statement() )*
-		final NodeListOptional n8 = n.f8;
+		// f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
+		final NodeOptional n8 = n.f8;
 		if (n8.present()) {
-			for (int i = 0; i < n8.size(); i++) {
-				makeNewLine(indentCount);
-				final INode nloeai = n8.elementAt(i);
-				nloeai.accept(this);
-			}
-		}
-		// f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
-		final NodeOptional n9 = n.f9;
-		if (n9.present()) {
 			makeNewLine(indentCount);
-			final NodeSequence seq8 = (NodeSequence) n9.node;
+			final NodeSequence seq = (NodeSequence) n8.node;
 			// #0 <RETURN>
-			final INode seq9 = seq8.elementAt(0);
-			seq9.accept(this);
+			final INode seq1 = seq.elementAt(0);
+			seq1.accept(this);
 			makeSpace();
 			// #1 Expression()
-			final INode seq10 = seq8.elementAt(1);
-			seq10.accept(this);
+			final INode seq2 = seq.elementAt(1);
+			seq2.accept(this);
 			// #2 <SEMICOLON>
-			final INode seq11 = seq8.elementAt(2);
-			seq11.accept(this);
+			final INode seq3 = seq.elementAt(2);
+			seq3.accept(this);
 		}
 		indentCount--;
 		makeNewLine(indentCount);
-		// f10 -> <BRACE_RIGHT>
-		final NodeToken n10 = n.f10;
-		n10.accept(this);
+		// f9 -> <BRACE_RIGHT>
+		final NodeToken n9 = n.f9;
+		n9.accept(this);
+	}
+
+	/**
+	 * Visits a {@link ParameterDeclarationList} node, whose child is the
+	 * following :
+	 * <p>
+	 * f0 -> ( #0 ParameterDeclaration()<br>
+	 * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
+	 *
+	 * @param n
+	 *            - the node to visit
+	 */
+	@Override
+	public void visit(final ParameterDeclarationList n) {
+		// f0 -> ( #0 ParameterDeclaration()
+		// .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?
+		final NodeOptional n0 = n.f0;
+		if (n0.present()) {
+			final NodeSequence seq = (NodeSequence) n0.node;
+			// #0 ParameterDeclaration()
+			final INode seq1 = seq.elementAt(0);
+			seq1.accept(this);
+			// #1 ( $0 <COMMA> $1 ParameterDeclaration() )*
+			final INode seq2 = seq.elementAt(1);
+			final NodeListOptional nlo = (NodeListOptional) seq2;
+			if (nlo.present()) {
+				for (int i = 0; i < nlo.size(); i++) {
+					final INode nloeai = nlo.elementAt(i);
+					final NodeSequence seq3 = (NodeSequence) nloeai;
+					// $0 <COMMA>
+					final INode seq4 = seq3.elementAt(0);
+					seq4.accept(this);
+					this.makeSpace();
+					// $1 ParameterDeclaration()
+					final INode seq5 = seq3.elementAt(1);
+					seq5.accept(this);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Visits a {@link ParameterList} node, whose child is the following :
+	 * <p>
+	 * f0 -> ( #0 Parameter()<br>
+	 * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
+	 *
+	 * @param n
+	 *            - the node to visit
+	 */
+	@Override
+	public void visit(final ParameterList n) {
+		// f0 -> ( #0 Parameter()
+		// .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?
+		final NodeOptional n0 = n.f0;
+		if (n0.present()) {
+			final NodeSequence seq = (NodeSequence) n0.node;
+			// #0 Parameter()
+			final INode seq1 = seq.elementAt(0);
+			seq1.accept(this);
+			// #1 ( $0 <COMMA> $1 Parameter() )*
+			final INode seq2 = seq.elementAt(1);
+			final NodeListOptional nlo = (NodeListOptional) seq2;
+			if (nlo.present()) {
+				for (int i = 0; i < nlo.size(); i++) {
+					final INode nloeai = nlo.elementAt(i);
+					final NodeSequence seq3 = (NodeSequence) nloeai;
+					// $0 <COMMA>
+					final INode seq4 = seq3.elementAt(0);
+					seq4.accept(this);
+					this.makeSpace();
+					// $1 Parameter()
+					final INode seq5 = seq3.elementAt(1);
+					seq5.accept(this);
+				}
+			}
+		}
 	}
 
 	/**
@@ -395,64 +477,6 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 		// f4 -> Statement()
 		final Statement n4 = n.f4;
 		n4.accept(this);
-	}
-
-	/**
-	 * Visits a {@link MethodCall} node, whose children are the following :
-	 * <p>
-	 * f0 -> <DOT><br>
-	 * f1 -> Identifier()<br>
-	 * f2 -> <PARENTHESIS_LEFT><br>
-	 * f3 -> ( #0 Expression()<br>
-	 * .. .. . #1 ( $0 <COMMA> $1 Expression() )* )?<br>
-	 * f4 -> <PARENTHESIS_RIGHT><br>
-	 * f5 -> ExpressionPrime()<br>
-	 *
-	 * @param n
-	 *            the node to visit
-	 */
-	@Override
-	public void visit(final MethodCall n) {
-		// f0 -> <DOT>
-		final NodeToken n0 = n.f0;
-		n0.accept(this);
-		// f1 -> Identifier()
-		final Identifier n1 = n.f1;
-		n1.accept(this);
-		// f2 -> <PARENTHESIS_LEFT>
-		final NodeToken n2 = n.f2;
-		n2.accept(this);
-		// f3 -> ( #0 Expression()
-		// .. .. . #1 ( $0 <COMMA> $1 Expression() )* )?
-		final NodeOptional n3 = n.f3;
-		if (n3.present()) {
-			final NodeSequence seq = (NodeSequence) n3.node;
-			// #0 Expression()
-			final INode seq1 = seq.elementAt(0);
-			seq1.accept(this);
-			// #1 ( $0 <COMMA> $1 Expression() )*
-			final INode seq2 = seq.elementAt(1);
-			final NodeListOptional nlo = (NodeListOptional) seq2;
-			if (nlo.present()) {
-				for (int i = 0; i < nlo.size(); i++) {
-					final INode nloeai = nlo.elementAt(i);
-					final NodeSequence seq3 = (NodeSequence) nloeai;
-					// $0 <COMMA>
-					final INode seq4 = seq3.elementAt(0);
-					seq4.accept(this);
-					makeSpace();
-					// $1 Expression()
-					final INode seq5 = seq3.elementAt(1);
-					seq5.accept(this);
-				}
-			}
-		}
-		// f4 -> <PARENTHESIS_RIGHT>
-		final NodeToken n4 = n.f4;
-		n4.accept(this);
-		// f5 -> ExpressionPrime()
-		final ExpressionPrime n5 = n.f5;
-		n5.accept(this);
 	}
 
 	/**
