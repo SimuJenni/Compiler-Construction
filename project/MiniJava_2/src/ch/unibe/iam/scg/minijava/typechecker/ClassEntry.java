@@ -1,20 +1,16 @@
 package ch.unibe.iam.scg.minijava.typechecker;
 
-import java.util.List;
-
 public class ClassEntry implements SymbolTableEntry {
 
 	private String name;
 	private ClassEntry superClass;
-	private List<VariableEntry> variables;
-	private List<MethodEntry> methods;
+	private SymbolTable environment;
 
 	public ClassEntry(String name, ClassEntry superClass,
-			List<VariableEntry> variables, List<MethodEntry> methods) {
+			SymbolTable environment) {
 		this.name = name;
 		this.superClass = superClass;
-		this.variables = variables;
-		this.methods = methods;
+		this.environment = environment;
 	}
 
 	public String getName() {
@@ -33,20 +29,12 @@ public class ClassEntry implements SymbolTableEntry {
 		this.superClass = superClass;
 	}
 
-	public List<VariableEntry> getVariables() {
-		return variables;
+	public SymbolTable getEnvironment() {
+		return environment;
 	}
 
-	public void setVariables(List<VariableEntry> variables) {
-		this.variables = variables;
-	}
-
-	public List<MethodEntry> getMethods() {
-		return methods;
-	}
-
-	public void setMethods(List<MethodEntry> methods) {
-		this.methods = methods;
+	public void setEnvironment(SymbolTable environment) {
+		this.environment = environment;
 	}
 
 }
