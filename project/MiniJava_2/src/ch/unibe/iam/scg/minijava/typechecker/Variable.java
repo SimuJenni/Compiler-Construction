@@ -2,9 +2,10 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 public class Variable implements SymbolTableEntry {
 	
-	private String id, type;
+	private String id;
+	Types type;
 
-	public Variable(String id, String type) {
+	public Variable(String id, Types type) {
 		this.id = id;
 		this.type = type;
 	}
