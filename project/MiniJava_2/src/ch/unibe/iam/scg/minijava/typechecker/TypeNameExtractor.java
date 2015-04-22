@@ -10,10 +10,10 @@ public class TypeNameExtractor extends DepthFirstRetVisitor<String> {
 	/**
 	 * Visits a {@link Type} node, whose child is the following :
 	 * <p>
-	 * f0 -> . %0 #0 <INT_TYPE> #1 <BRACKET_LEFT> #2 <BRACKET_RIGHT><br>
-	 * .. .. | %1 <INT_TYPE><br>
+	 * f0 -> . %0 IntArrayType()<br>
+	 * .. .. | %1 IntType()<br>
 	 * .. .. | %2 BooleanType()<br>
-	 * .. .. | %3 <VOID_TYPE><br>
+	 * .. .. | %3 VoidType()<br>
 	 * .. .. | %4 Identifier()<br>
 	 *
 	 * @param n
@@ -26,13 +26,13 @@ public class TypeNameExtractor extends DepthFirstRetVisitor<String> {
 		final INode ich = n.f0.choice;
 		switch (nch.which) {
 		case 0:
-			return Types.INT_ARRAY.toString();
+			return Types.INT_ARRAY.getName();
 		case 1:
-			return Types.INT.toString();
+			return Types.INT.getName();
 		case 2:
-			return Types.BOOLEAN.toString();
+			return Types.BOOLEAN.getName();
 		case 3:
-			return Types.VOID.toString();
+			return Types.VOID.getName();
 		case 4:
 			return ich.accept(new IdentifierNameExtractor());
 		default:

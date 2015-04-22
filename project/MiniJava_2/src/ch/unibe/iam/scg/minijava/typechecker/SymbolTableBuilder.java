@@ -18,20 +18,18 @@ public class SymbolTableBuilder extends DepthFirstVoidVisitor {
 		return table;
 	}
 
-	/**
-	 * Visits a {@link VarDeclaration} node, whose children are the following :
-	 * <p>
-	 * f0 -> Type()<br>
-	 * f1 -> Identifier()<br>
-	 * f2 -> <SEMICOLON><br>
-	 *
-	 * @param n
-	 *            - the node to visit
-	 */
+	  /**
+	   * Visits a {@link VarDeclaration} node, whose children are the following :
+	   * <p>
+	   * f0 -> TypedDeclaration()<br>
+	   * f1 -> <SEMICOLON><br>
+	   *
+	   * @param n - the node to visit
+	   */
 	@Override
 	public void visit(final VarDeclaration n) {
-		String typeName = n.f0.accept(new TypeNameExtractor());
-		String name = n.f1.accept(new IdentifierNameExtractor());
+		String typeName = n.f0.f0.accept(new TypeNameExtractor());
+		String name = n.f0.f1.accept(new IdentifierNameExtractor());
 		// TODO get rid of nasty cast
 		this.table.put(name, new VariableEntry(name, (ClassEntry) this.table.get(typeName)));
 		super.visit(n);

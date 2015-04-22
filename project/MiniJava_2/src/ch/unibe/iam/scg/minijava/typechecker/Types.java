@@ -10,8 +10,7 @@ public enum Types {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
+	public String getName() {
 		return this.name;
 	}
 

@@ -6,6 +6,15 @@ public class GlobalSymbolTableBuilder extends SymbolTableBuilder {
 
 	public GlobalSymbolTableBuilder(SymbolTable table) {
 		super(table);
+		// TODO get rid of nulls
+		this.table.put(Types.INT_ARRAY.getName(), new ClassEntry(
+				Types.INT_ARRAY.getName(), null, this.table));
+		this.table.put(Types.INT.getName(), new ClassEntry(Types.INT.getName(),
+				null, this.table));
+		this.table.put(Types.BOOLEAN.getName(),
+				new ClassEntry(Types.BOOLEAN.getName(), null, this.table));
+		this.table.put(Types.VOID.getName(),
+				new ClassEntry(Types.VOID.getName(), null, this.table));
 	}
 
 	/**
