@@ -34,11 +34,11 @@ public class GlobalSymbolTableBuilder extends SymbolTableBuilder {
 	 */
 	@Override
 	public void visit(ClassDeclaration n) {
-		String name = n.f1.f0.tokenImage;
-		String superClassName = n.f2.accept(new IdentifierNameExtractor());
-		// TODO use null object here
-		ClassEntry superClass = null;
-		if (superClassName != null) {
+		String name = n.f1.accept(new IdentifierNameExtractor());
+		ClassEntry superClass = new NullClassEntry();
+		if (n.f2.present()) {
+			String superClassName = n.f2.node
+					.accept(new IdentifierNameExtractor());
 			// TODO get rid of nasty cast
 			superClass = (ClassEntry) this.table.get(superClassName);
 		}

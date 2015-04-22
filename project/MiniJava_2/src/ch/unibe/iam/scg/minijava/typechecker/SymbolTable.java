@@ -7,7 +7,7 @@ import java.util.HashMap;
  * symbol-tables of all the classes.
  */
 public class SymbolTable implements SymbolTableEntry {
-	
+
 	private HashMap<String, SymbolTableEntry> entries;
 
 	public SymbolTable() {
@@ -19,7 +19,14 @@ public class SymbolTable implements SymbolTableEntry {
 	}
 
 	public SymbolTableEntry get(String key) {
+		if (!this.containsKey(key)) {
+			throw new SymbolNotFoundException(key);
+		}
 		return entries.get(key);
+	}
+
+	public boolean containsKey(String key) {
+		return entries.containsKey(key);
 	}
 
 }

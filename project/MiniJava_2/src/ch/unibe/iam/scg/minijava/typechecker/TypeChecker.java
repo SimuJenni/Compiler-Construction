@@ -14,8 +14,12 @@ public class TypeChecker {
 	}
 
 	public boolean check(Object node) {
-		SymbolTable symbolTable = builder.build(node);
-		return false;
+		try {
+			builder.build(node);
+			return true;
+		} catch (SymbolNotFoundException exception) {
+			return false;
+		}
 	}
 
 }
