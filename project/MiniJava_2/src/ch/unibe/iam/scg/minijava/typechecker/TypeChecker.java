@@ -1,8 +1,4 @@
-/**
- * 
- */
 package ch.unibe.iam.scg.minijava.typechecker;
-
 
 /**
  * Change at will.
@@ -10,18 +6,16 @@ package ch.unibe.iam.scg.minijava.typechecker;
  * @author kursjan
  *
  */
-public class TypeChecker
-{
+public class TypeChecker {
 	private SymbolTableBuilder builder;
-	
+
 	public TypeChecker() {
-		builder=new SymbolTableBuilder();
+		builder = new SymbolTableBuilder();
 	}
-	
-    public boolean check(Object node)
-    {
-    	SymbolTable symbolTable=builder.build(node);
-        return false;
-    }
+
+	public boolean check(Object node) {
+		SymbolTable symbolTable = builder.build(node);
+		return false;
+	}
 
 }
