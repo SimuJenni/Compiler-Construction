@@ -35,4 +35,7 @@ public class SymbolTableBuilder extends DepthFirstVoidVisitor {
 		super.visit(n);
 	}
 
+	public SymbolTable getTable() {
+		return table;
+	}
 }
