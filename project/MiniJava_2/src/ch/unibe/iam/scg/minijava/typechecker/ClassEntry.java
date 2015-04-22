@@ -1,16 +1,15 @@
 package ch.unibe.iam.scg.minijava.typechecker;
 
-public class ClassEntry implements SymbolTableEntry {
+public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 
 	private String name;
 	private ClassEntry superClass;
-	private SymbolTable environment;
+	private SymbolTable parent;
 
-	public ClassEntry(String name, ClassEntry superClass,
-			SymbolTable environment) {
+	public ClassEntry(String name, ClassEntry superClass, SymbolTable parent) {
 		this.name = name;
 		this.superClass = superClass;
-		this.environment = environment;
+		this.setParent(parent);
 	}
 
 	public String getName() {
@@ -29,12 +28,12 @@ public class ClassEntry implements SymbolTableEntry {
 		this.superClass = superClass;
 	}
 
-	public SymbolTable getEnvironment() {
-		return environment;
+	public SymbolTable getParent() {
+		return parent;
 	}
 
-	public void setEnvironment(SymbolTable environment) {
-		this.environment = environment;
+	public void setParent(SymbolTable parent) {
+		this.parent = parent;
 	}
 
 }

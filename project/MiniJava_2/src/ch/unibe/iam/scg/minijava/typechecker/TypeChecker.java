@@ -7,10 +7,10 @@ package ch.unibe.iam.scg.minijava.typechecker;
  *
  */
 public class TypeChecker {
-	private SymbolTableBuilder builder;
+	private GlobalSymbolTableBuilder builder;
 
 	public TypeChecker() {
-		builder = new SymbolTableBuilder();
+		builder = new GlobalSymbolTableBuilder(new SymbolTable());
 	}
 
 	public boolean check(Object node) {

@@ -2,22 +2,19 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 import java.util.List;
 
-public class MethodEntry implements SymbolTableEntry {
+public class MethodEntry extends SymbolTable implements SymbolTableEntry {
 
 	private String name;
 	private List<ClassEntry> parameterTypes;
 	private ClassEntry returnType;
-	private ClassEntry definingType;
-	private ClassEntry environment;
+	private SymbolTable parent;
 
 	public MethodEntry(String name, List<ClassEntry> parameterTypes,
-			ClassEntry returnType, ClassEntry definingType,
-			ClassEntry environment) {
+			ClassEntry returnType, SymbolTable parent) {
 		this.name = name;
 		this.parameterTypes = parameterTypes;
 		this.returnType = returnType;
-		this.setDefiningType(definingType);
-		this.environment = environment;
+		this.setParent(parent);
 	}
 
 	public String getName() {
@@ -44,20 +41,12 @@ public class MethodEntry implements SymbolTableEntry {
 		this.returnType = returnType;
 	}
 
-	public ClassEntry getDefiningType() {
-		return definingType;
+	public SymbolTable getParent() {
+		return parent;
 	}
 
-	public void setDefiningType(ClassEntry definingType) {
-		this.definingType = definingType;
-	}
-
-	public ClassEntry getEnvironment() {
-		return environment;
-	}
-
-	public void setEnvironment(ClassEntry environment) {
-		this.environment = environment;
+	public void setParent(SymbolTable parent) {
+		this.parent = parent;
 	}
 
 }
