@@ -12,10 +12,15 @@ package ch.unibe.iam.scg.minijava.typechecker;
  */
 public class TypeChecker
 {
-
+	private SymbolTableBuilder builder;
+	
+	public TypeChecker() {
+		builder=new SymbolTableBuilder();
+	}
+	
     public boolean check(Object node)
     {
-        // TODO Auto-generated method stub
+    	SymbolTable symbolTable=builder.build(node);
         return false;
     }
 
