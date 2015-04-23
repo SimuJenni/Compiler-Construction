@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+
 /**
  * Change at will.
  * 
@@ -7,21 +9,35 @@ package ch.unibe.iam.scg.minijava.typechecker;
  *
  */
 public class TypeChecker {
-	private GlobalSymbolTableBuilder builder;
-	private ExpressionVisitor expressionVisitor;
+
+	private SymbolTable globalSymbolTable;
 
 	public TypeChecker() {
-		builder = new GlobalSymbolTableBuilder(new SymbolTable());
-		expressionVisitor = new ExpressionVisitor(builder.getTable());
+		this.globalSymbolTable = new SymbolTable();
+		ClassEntry nullClassEntry = new NullClassEntry();
+		this.globalSymbolTable.put(Types.INT_ARRAY.getName(), new ClassEntry(
+				Types.INT_ARRAY.getName(), nullClassEntry,
+				this.globalSymbolTable));
+		this.globalSymbolTable.put(Types.INT.getName(), new ClassEntry(
+				Types.INT.getName(), null, this.globalSymbolTable));
+		this.globalSymbolTable.put(Types.STRING_ARRAY.getName(),
+				new ClassEntry(Types.STRING_ARRAY.getName(), nullClassEntry,
+						this.globalSymbolTable));
+		this.globalSymbolTable
+				.put(Types.STRING.getName(),
+						new ClassEntry(Types.STRING.getName(), nullClassEntry,
+								this.globalSymbolTable));
+		this.globalSymbolTable.put(Types.BOOLEAN.getName(),
+				new ClassEntry(Types.BOOLEAN.getName(), nullClassEntry,
+						this.globalSymbolTable));
+		this.globalSymbolTable.put(Types.VOID.getName(), new ClassEntry(
+				Types.VOID.getName(), nullClassEntry, this.globalSymbolTable));
 	}
 
-	public boolean check(Object node) {
-		try {
-			builder.build(node);
-			return expressionVisitor.check(node);
-		} catch (TypeCheckException exception) {
-			return false;
-		}
+	public boolean check(Object n) {
+		INode node = (INode) n;
+		return node.accept(new SymbolTableBuilderDelegator(
+				this.globalSymbolTable));
 	}
 
 }

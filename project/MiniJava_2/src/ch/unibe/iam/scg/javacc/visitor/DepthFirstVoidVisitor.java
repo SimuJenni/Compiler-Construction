@@ -6,6 +6,7 @@ import ch.unibe.iam.scg.minijava.typechecker.Operator;
 
 import java.util.*;
 
+
 /**
  * Provides default methods which visit each node in the tree in depth-first order.<br>
  * In your "Void" visitors extend this class and override part or all of these methods.
@@ -1171,8 +1172,7 @@ public class DepthFirstVoidVisitor implements IVoidVisitor {
 
 @Override
 public void visit(Operator operator) {
-	// TODO Auto-generated method stub
-	
+	operator.accept(this);
 }
 
 }

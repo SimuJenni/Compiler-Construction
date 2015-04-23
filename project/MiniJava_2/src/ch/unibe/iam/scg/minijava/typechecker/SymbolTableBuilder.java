@@ -9,6 +9,7 @@ public class SymbolTableBuilder<T extends SymbolTable> extends DepthFirstVoidVis
 	protected T table;
 
 	public SymbolTableBuilder(T table) {
+		super();
 		this.table = table;
 	}
 
