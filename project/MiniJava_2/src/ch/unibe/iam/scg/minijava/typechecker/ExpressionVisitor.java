@@ -75,17 +75,28 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	  }
 	  
 	  public void visit(Operator operator){
+		  if(operator.isBracket()){
+			  String argType=operator.getArgType();
+			  checkSameType(argType, typeStack.pop());
+			  checkSameType(Types.INT_ARRAY.getName(), typeStack.pop());
+			  if(((ClassEntry) table.get(Types.INT_ARRAY.getName())).isInitialized())
+			  		typeStack.push(Types.INT.getName());
+			  else
+			  		typeStack.push(Types.INT_ARRAY.getName());
+			  return;
+		  }
+		  
 		  if(operator.isLeftParanthesis()||operator.isRightParanthesis())
 			  return;
+		  
 		  if(operator.isUnary()){
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());
-			  if(operator.isBracket())
-				  return;
 			  expressionType=operator.getReturnType();
 			  typeStack.push(expressionType);
 			  return;
 		  }
+
 		  if(operator.isBinary()){
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());

@@ -165,14 +165,12 @@ public class ShuntingYard extends VoidVisitorAdapter {
           // %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()
           final NodeSequence seq4 = (NodeSequence) ich;
           // #0 <BRACKET_LEFT>
-          final INode seq5 = seq4.elementAt(0);
-          seq5.accept(this);
+          pushOnStack(Operator.makeLeftBracket());
           // #1 Expression()
           final INode seq6 = seq4.elementAt(1);
           seq6.accept(this);
           // #2 <BRACKET_RIGHT>
-          final INode seq7 = seq4.elementAt(2);
-          seq7.accept(this);
+          pushOnStack(Operator.makeRightBracket());
           // #3 ExpressionPrime()
           final INode seq8 = seq4.elementAt(3);
           seq8.accept(this);
@@ -253,6 +251,28 @@ public class ShuntingYard extends VoidVisitorAdapter {
       }
     }
     
+    /**
+     * Visits a {@link ObjectCreationExpression} node, whose children are the following :
+     * <p>
+     * f0 -> <NEW><br>
+     * f1 -> ConstructorCall()<br>
+     * f2 -> ExpressionPrime()<br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final ObjectCreationExpression n) {
+      // f0 -> <NEW>
+      final NodeToken n0 = n.f0;
+      n0.accept(this);
+      // f1 -> ConstructorCall()
+      final ConstructorCall n1 = n.f1;
+      n1.accept(this);
+      // f2 -> ExpressionPrime()
+      final ExpressionPrime n2 = n.f2;
+      n2.accept(this);
+    }
+    
     private void pushOnStack(Operator operator) {
     	
 		while(!operator.isLeftParanthesis()&&!stack.empty()){
@@ -261,7 +281,9 @@ public class ShuntingYard extends VoidVisitorAdapter {
 				stack.pop();
 				break;
 			}
-			if(operator.isRightParanthesis()||top.hasHigherPrecedence(operator)){
+			if(operator.isRightParanthesis()||
+					(top.hasHigherPrecedence(operator)&&operator.isLeftAssosiative())
+					||(top.hasHigherPrecedence(operator)&&operator.isLeftAssosiative())){
 				output.add(stack.pop());
 			}
 			else

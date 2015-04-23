@@ -12,6 +12,7 @@ public class Operator implements INode {
 	private OperatorType operatorType; 
 	private boolean isBracket, isLeftParanthesis, isRightParanthesis;
 	private boolean isUnary=false;
+	private boolean isLeftAssociative=true;
 	
 	public Operator(BinaryOperator node) {	
 		operatorType=extractOperatorType(node);
@@ -29,7 +30,7 @@ public class Operator implements INode {
 	}
 	
 	public Operator(boolean b, boolean c) {
-		isBracket=true;
+		isBracket=false;
 		isLeftParanthesis=b;
 		isRightParanthesis=c;
 	}
@@ -169,6 +170,7 @@ public class Operator implements INode {
 	public static Operator makeLeftBracket() {
 		Operator op=new Operator(true,false);
 		op.isBracket=true;
+		op.isLeftAssociative=false;
 		return op;
 	}
 
@@ -176,6 +178,8 @@ public class Operator implements INode {
 		Operator op=new Operator(false,true);
 		op.isBracket=true;
 		op.isUnary=true;
+		op.isLeftAssociative=false;
+		op.operatorType=OperatorType.BRACKET_RIGHT;
 		return op;
 	}
 
@@ -183,5 +187,15 @@ public class Operator implements INode {
 		// TODO Auto-generated method stub
 		return isBracket;
 	}
+	
+	public String toString(){
+		return this.operatorType.toString();
+	}
+
+	public boolean isLeftAssosiative() {
+		// TODO Auto-generated method stub
+		return isLeftAssociative;
+	}
+	
 
 }

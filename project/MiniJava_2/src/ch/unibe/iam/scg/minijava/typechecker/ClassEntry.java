@@ -5,6 +5,7 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 	private String name;
 	private ClassEntry superClass;
 	private SymbolTable parent;
+	private boolean isInitialized=false;
 
 	public ClassEntry(String name, ClassEntry superClass, SymbolTable parent) {
 		this.name = name;
@@ -55,6 +56,15 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 			return true;
 		}
 		return this.superClass.canBeAssignedTo(classEntry);
+	}
+
+	public boolean isInitialized() {
+		if(isInitialized)
+			return true;
+		else{
+			isInitialized=true;
+			return false;
+		}
 	}
 
 }
