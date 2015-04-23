@@ -17,7 +17,7 @@ public enum OperatorType {
 
 	public boolean hasHigherPrecedence(OperatorType operatorType) {
 		// TODO Auto-generated method stub
-		return precedence.indexOf(operatorType.getName())>precedence.indexOf(name);
+		return precedence.indexOf(name)>precedence.indexOf(operatorType.getName());
 	}
 
 }
