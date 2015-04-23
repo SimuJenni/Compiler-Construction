@@ -18,7 +18,7 @@ public class TypeChecker {
 	public boolean check(Object node) {
 		try {
 			builder.build(node);
-			return true;
+			return expressionVisitor.check(node);
 		} catch (TypeCheckException exception) {
 			return false;
 		}

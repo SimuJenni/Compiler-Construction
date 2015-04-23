@@ -2,6 +2,7 @@
 package ch.unibe.iam.scg.javacc.visitor;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.*;
+import ch.unibe.iam.scg.minijava.typechecker.Operator;
 
 /**
  * All "Void" visitors must implement this interface.
@@ -415,5 +416,7 @@ public interface IVoidVisitor {
    * @param n - the node to visit
    */
   public void visit(final Empty n);
+
+public void visit(Operator operator);
 
 }
