@@ -10,7 +10,7 @@ import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
 
 public class Operator implements INode {
 	private OperatorType operatorType; 
-	private boolean isBracket, isLeftParanthesis, isRightParanthesis;
+	private boolean isBracket=false, isLeftParanthesis=false, isRightParanthesis=false;
 	private boolean isUnary=false;
 	private boolean isLeftAssociative=true;
 	

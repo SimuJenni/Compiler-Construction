@@ -2,14 +2,14 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 public enum OperatorType {
 	ADD("+"), MINUS("-"), MULT("*"), GREATER_THAN(">"), AND("&&"), NOT("!"), 
-	BRACKET_LEFT("["), BRACKET_RIGHT("]");
+	BRACKET_LEFT("["), BRACKET_RIGHT("]"), LENGTH(".length");
 	
 	private String name;
 	private String precedence;
 
 	OperatorType(String name) {
 		this.name = name;
-		this.precedence="&&>+-*!]";
+		this.precedence="&&>+-*.length!]";
 	}
 
 	public String getName() {
