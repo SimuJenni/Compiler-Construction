@@ -3,15 +3,10 @@ package ch.unibe.iam.scg.minijava.typechecker;
 import java.util.Stack;
 
 import ch.unibe.iam.scg.javacc.MiniJavaImplConstants;
-import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
-import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.IntType;
-import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
-import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
-import ch.unibe.iam.scg.javacc.visitor.DepthFirstRetVisitor;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
 public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJavaImplConstants {
@@ -61,6 +56,7 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	    	type=Types.BOOLEAN.getName();
 
 	    typeStack.push(type);
+		expressionType = type;
 	    String tkIm = n.tokenImage;
 	  }
 	  

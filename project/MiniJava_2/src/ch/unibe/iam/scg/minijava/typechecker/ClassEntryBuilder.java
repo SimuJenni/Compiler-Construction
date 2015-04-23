@@ -49,6 +49,7 @@ public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
 		}
 		MethodEntry methodEntry = new MethodEntry(name, parameterTypes,
 				returnType, this.table);
+		methodEntry.put("this", this.table);
 		for (ParameterDeclaration parameterDeclaration : parameterDeclarations) {
 			String parameterTypeName = parameterDeclaration.f0.f0
 					.accept(new TypeNameExtractor());
