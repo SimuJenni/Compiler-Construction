@@ -1,5 +1,6 @@
 package ch.unibe.iam.scg.minijava.typechecker;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
@@ -16,6 +17,16 @@ public class SymbolTableBuilderDelegator extends DepthFirstRetVisitor<Boolean> {
 
 	@Override
 	public Boolean visit(Goal node) {
+		try {
+			(new GlobalSymbolTableBuilder(this.table)).build(node);
+			return true;
+		} catch (TypeCheckException exception) {
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean visit(ClassDeclaration node) {
 		try {
 			(new GlobalSymbolTableBuilder(this.table)).build(node);
 			return true;
