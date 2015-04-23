@@ -217,6 +217,8 @@ public class ShuntingYard extends AstVsisitorAdapter {
 				else
 					output.add(stack.pop());
 			}
+			else
+				break;
 		}
 		stack.push(operator);
 	}

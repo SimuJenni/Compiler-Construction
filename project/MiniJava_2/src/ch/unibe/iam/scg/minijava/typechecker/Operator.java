@@ -35,7 +35,19 @@ public class Operator implements INode {
 	}
 
 	private OperatorType extractOperatorType(UnaryOperator node) {
-		return OperatorType.valueOf(node.f0.tokenImage);
+		if(node.f0.tokenImage.toLowerCase().equals("+"))
+			return OperatorType.ADD;
+		if(node.f0.tokenImage.toLowerCase().equals("-"))
+			return OperatorType.MINUS;
+		if(node.f0.tokenImage.toLowerCase().equals("*"))
+			return OperatorType.MULT;
+		if(node.f0.tokenImage.toLowerCase().equals(">"))
+			return OperatorType.GREATER_THAN;
+		if(node.f0.tokenImage.toLowerCase().equals("!"))
+			return OperatorType.NOT;
+		if(node.f0.tokenImage.toLowerCase().equals("&&"))
+			return OperatorType.AND;
+		return null;
 	}
 
 	private OperatorType extractOperatorType(BinaryOperator node) {
@@ -82,7 +94,7 @@ public class Operator implements INode {
 	@Override
 	public void accept(IVoidVisitor vis) {
 		// TODO Auto-generated method stub
-		
+		vis.visit(this);
 	}
 
 	public static Operator makeLeftParanthesis() {
@@ -108,5 +120,11 @@ public class Operator implements INode {
 		// TODO Auto-generated method stub
 		return isUnary;
 	}
+
+	public boolean isBinary() {
+		// TODO Auto-generated method stub
+		return !isUnary;
+	}
+
 
 }
