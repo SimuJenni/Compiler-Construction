@@ -11,28 +11,24 @@ import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
 public class Operator implements INode {
 	private OperatorType operatorType; 
 	private boolean isBracket=false, isLeftParanthesis=false, isRightParanthesis=false;
-	private boolean isUnary=false;
-	private boolean isLeftAssociative=true;
+	private boolean isUnary=false, isLeftAssociative=true;
 	
 	public Operator(BinaryOperator node) {	
 		operatorType=extractOperatorType(node);
-		isBracket=false;
-		isLeftParanthesis=false;
-		isRightParanthesis=false;
 	}
 	
 	public Operator(UnaryOperator node) {
 		operatorType=extractOperatorType(node);
-		isBracket=false;
-		isLeftParanthesis=false;
-		isRightParanthesis=false;
 		isUnary=true;
 	}
 	
 	public Operator(boolean b, boolean c) {
-		isBracket=false;
 		isLeftParanthesis=b;
 		isRightParanthesis=c;
+	}
+
+	public Operator() {
+		// TODO Auto-generated constructor stub
 	}
 
 	private OperatorType extractOperatorType(UnaryOperator node) {
@@ -71,8 +67,7 @@ public class Operator implements INode {
 		// TODO Auto-generated method stub
 		return this.operatorType.hasHigherPrecedence(operator.operatorType);
 	}
-	
-	
+
 	
 	@Override
 	public <R, A> R accept(IRetArguVisitor<R, A> vis, A argu) {
@@ -143,6 +138,8 @@ public class Operator implements INode {
 			return Types.BOOLEAN.getName();
 		case BRACKET_RIGHT :
 			return Types.INT.getName();
+		case LENGTH :
+			return Types.INT_ARRAY.getName();
 		default:
 			return null;
 		}
@@ -162,6 +159,8 @@ public class Operator implements INode {
 			return Types.INT.getName();
 		case NOT :
 			return Types.BOOLEAN.getName();
+		case LENGTH :
+			return Types.INT.getName();
 		default:
 			return null;
 		}
@@ -195,6 +194,14 @@ public class Operator implements INode {
 	public boolean isLeftAssosiative() {
 		// TODO Auto-generated method stub
 		return isLeftAssociative;
+	}
+
+	public static Operator makeLength() {
+		Operator op = new Operator();
+		op.operatorType=OperatorType.LENGTH;
+//		op.isLeftAssociative=false;
+		op.isUnary=true;
+		return op;
 	}
 	
 

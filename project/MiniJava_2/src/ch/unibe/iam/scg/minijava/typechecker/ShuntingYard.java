@@ -182,8 +182,7 @@ public class ShuntingYard extends VoidVisitorAdapter {
           final INode seq10 = seq9.elementAt(0);
           seq10.accept(this);
           // #1 <LENGTH_FIELD_NAME>
-          final INode seq11 = seq9.elementAt(1);
-          seq11.accept(this);
+          pushOnStack(Operator.makeLength());
           // #2 ExpressionPrime()
           final INode seq12 = seq9.elementAt(2);
           seq12.accept(this);
