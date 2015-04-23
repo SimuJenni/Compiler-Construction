@@ -126,5 +126,43 @@ public class Operator implements INode {
 		return !isUnary;
 	}
 
+	public String getArgType() {
+		switch(this.operatorType){
+		case GREATER_THAN :
+			return Types.INT.getName();
+		case ADD :
+			return Types.INT.getName();
+		case MULT :
+			return Types.INT.getName();
+		case AND :
+			return Types.BOOLEAN.getName();
+		case MINUS :
+			return Types.INT.getName();
+		case NOT :
+			return Types.BOOLEAN.getName();
+		default:
+			return null;
+		}
+	}
+
+	public String getReturnType() {
+		switch(this.operatorType){
+		case GREATER_THAN :
+			return Types.BOOLEAN.getName();
+		case ADD :
+			return Types.INT.getName();
+		case MULT :
+			return Types.INT.getName();
+		case AND :
+			return Types.BOOLEAN.getName();
+		case MINUS :
+			return Types.INT.getName();
+		case NOT :
+			return Types.BOOLEAN.getName();
+		default:
+			return null;
+		}
+	}
+
 
 }

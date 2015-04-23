@@ -65,12 +65,16 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	  
 	  public void visit(Operator operator){
 		  if(operator.isUnary()){
-			  
+			  String argType=operator.getArgType();
+			  checkSameType(argType, typeStack.pop());
+			  typeStack.push(operator.getReturnType());
+
 		  }
 		  if(operator.isBinary()){
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());
 			  checkSameType(argType, typeStack.pop()); 
+			  typeStack.push(operator.getReturnType());
 			  
 		  }
 		  
