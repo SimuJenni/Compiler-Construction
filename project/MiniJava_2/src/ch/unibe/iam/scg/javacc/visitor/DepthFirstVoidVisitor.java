@@ -2,6 +2,8 @@
 package ch.unibe.iam.scg.javacc.visitor;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.*;
+import ch.unibe.iam.scg.minijava.typechecker.Operator;
+
 import java.util.*;
 
 /**
@@ -1166,5 +1168,11 @@ public class DepthFirstVoidVisitor implements IVoidVisitor {
   @Override
   public void visit(final Empty n) {
   }
+
+@Override
+public void visit(Operator operator) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

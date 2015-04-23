@@ -7,6 +7,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.IntType;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
@@ -39,8 +40,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	        
 	      for (INode node : sy.output) {
 	          node.accept(this);
-	      }
-	        
+	      }     
+	      
 	  }
 	  
 	  /**
@@ -63,14 +64,27 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	    String tkIm = n.tokenImage;
 	  }
 	  
+	  /**
+	   * IntType means we're dealing with an array
+	   *
+	   * @param n - the node to visit
+	   */
+	  @Override
+	  public void visit(final IntType n) {
+		  typeStack.push(Types.INT_ARRAY.getName());
+	  }
+	  
 	  public void visit(Operator operator){
 		  if(operator.isLeftParanthesis()||operator.isRightParanthesis())
 			  return;
 		  if(operator.isUnary()){
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());
-			  typeStack.push(operator.getReturnType());
-
+			  if(operator.isBracket())
+				  return;
+			  expressionType=operator.getReturnType();
+			  typeStack.push(expressionType);
+			  return;
 		  }
 		  if(operator.isBinary()){
 			  String argType=operator.getArgType();
@@ -78,9 +92,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			  checkSameType(argType, typeStack.pop()); 
 			  expressionType=operator.getReturnType();
 			  typeStack.push(expressionType);
-			  
+			  return;
 		  }
-		  
 	  }
 	
 	  private String checkSameType(String type1, String type2) {

@@ -10,26 +10,26 @@ import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
 
 public class Operator implements INode {
 	private OperatorType operatorType; 
-	private boolean isParanthesis, isLeftParanthesis, isRightParanthesis;
+	private boolean isBracket, isLeftParanthesis, isRightParanthesis;
 	private boolean isUnary=false;
 	
 	public Operator(BinaryOperator node) {	
 		operatorType=extractOperatorType(node);
-		isParanthesis=false;
+		isBracket=false;
 		isLeftParanthesis=false;
 		isRightParanthesis=false;
 	}
 	
 	public Operator(UnaryOperator node) {
 		operatorType=extractOperatorType(node);
-		isParanthesis=false;
+		isBracket=false;
 		isLeftParanthesis=false;
 		isRightParanthesis=false;
 		isUnary=true;
 	}
 	
 	public Operator(boolean b, boolean c) {
-		isParanthesis=true;
+		isBracket=true;
 		isLeftParanthesis=b;
 		isRightParanthesis=c;
 	}
@@ -140,6 +140,8 @@ public class Operator implements INode {
 			return Types.INT.getName();
 		case NOT :
 			return Types.BOOLEAN.getName();
+		case BRACKET_RIGHT :
+			return Types.INT.getName();
 		default:
 			return null;
 		}
@@ -164,5 +166,22 @@ public class Operator implements INode {
 		}
 	}
 
+	public static Operator makeLeftBracket() {
+		Operator op=new Operator(true,false);
+		op.isBracket=true;
+		return op;
+	}
+
+	public static Operator makeRightBracket() {
+		Operator op=new Operator(false,true);
+		op.isBracket=true;
+		op.isUnary=true;
+		return op;
+	}
+
+	public boolean isBracket() {
+		// TODO Auto-generated method stub
+		return isBracket;
+	}
 
 }

@@ -15,8 +15,9 @@ import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectCreationExpression;
 import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
+import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
-public class ShuntingYard extends AstVsisitorAdapter {
+public class ShuntingYard extends DepthFirstVoidVisitor {
 	private Stack<Operator> stack = new Stack<Operator>();
     List<INode> output = new ArrayList<INode>();
 
@@ -203,9 +204,56 @@ public class ShuntingYard extends AstVsisitorAdapter {
           break;
       }
     }
-
     
 
+    /**
+     * Visits a {@link ConstructorCall} node, whose child is the following :
+     * <p>
+     * f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT><br>
+     * .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final ConstructorCall n) {
+      // f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT>
+      // .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
+      final NodeChoice nch = n.f0;
+      final INode ich = nch.choice;
+      switch (nch.which) {
+        case 0:
+          // %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT>
+          final NodeSequence seq = (NodeSequence) ich;
+          // #0 Identifier()
+          final INode seq1 = seq.elementAt(0);
+          seq1.accept(this);
+          // #1 <PARENTHESIS_LEFT>
+          final INode seq2 = seq.elementAt(1);
+          seq2.accept(this);
+          // #2 <PARENTHESIS_RIGHT>
+          final INode seq3 = seq.elementAt(2);
+          seq3.accept(this);
+          break;
+        case 1:
+          // %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
+          final NodeSequence seq4 = (NodeSequence) ich;
+          // #0 IntType()
+          final INode seq5 = seq4.elementAt(0);
+          output.add(seq5);
+          // #1 <BRACKET_LEFT>
+          pushOnStack(Operator.makeLeftBracket());
+          // #2 Expression()
+          final INode seq7 = seq4.elementAt(2);
+          seq7.accept(this);
+          // #3 <BRACKET_RIGHT>
+          pushOnStack(Operator.makeRightBracket());
+          break;
+        default:
+          // should not occur !!!
+          break;
+      }
+    }
+    
     private void pushOnStack(Operator operator) {
     	
 		while(!operator.isLeftParanthesis()&&!stack.empty()){

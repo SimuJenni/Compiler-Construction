@@ -1,6 +1,7 @@
 package ch.unibe.iam.scg.javacc.syntaxtree;
 
 import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
+import ch.unibe.iam.scg.minijava.typechecker.Operator;
 
 public class AstVsisitorAdapter implements IVoidVisitor {
 
@@ -224,6 +225,12 @@ public class AstVsisitorAdapter implements IVoidVisitor {
 	public void visit(Empty n) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void visit(Operator operator) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
