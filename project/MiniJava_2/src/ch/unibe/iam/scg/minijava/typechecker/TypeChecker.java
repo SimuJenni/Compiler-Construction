@@ -19,7 +19,7 @@ public class TypeChecker {
 				Types.INT_ARRAY.getName(), nullClassEntry,
 				this.globalSymbolTable));
 		this.globalSymbolTable.put(Types.INT.getName(), new ClassEntry(
-				Types.INT.getName(), null, this.globalSymbolTable));
+				Types.INT.getName(), nullClassEntry, this.globalSymbolTable));
 		this.globalSymbolTable.put(Types.STRING_ARRAY.getName(),
 				new ClassEntry(Types.STRING_ARRAY.getName(), nullClassEntry,
 						this.globalSymbolTable));

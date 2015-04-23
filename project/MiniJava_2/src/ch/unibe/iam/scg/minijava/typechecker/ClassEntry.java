@@ -44,11 +44,11 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 			// noop
 		}
 		try {
-			return this.superClass.get(key);
+			return this.superClass.lookup(key);
 		} catch (SymbolNotFoundException exception) {
 			// noop
 		}
-		return this.parent.get(key);
+		return this.parent.lookup(key);
 	}
 
 	public boolean canBeAssignedTo(ClassEntry classEntry) {
