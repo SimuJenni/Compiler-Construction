@@ -4,15 +4,15 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
-public class SymbolTableBuilder extends DepthFirstVoidVisitor {
+public class SymbolTableBuilder<T extends SymbolTable> extends DepthFirstVoidVisitor {
 
-	protected SymbolTable table;
+	protected T table;
 
-	public SymbolTableBuilder(SymbolTable table) {
+	public SymbolTableBuilder(T table) {
 		this.table = table;
 	}
 
-	public SymbolTable build(Object node) {
+	public T build(Object node) {
 		INode n = (INode) node;
 		n.accept(this);
 		return table;
@@ -31,7 +31,7 @@ public class SymbolTableBuilder extends DepthFirstVoidVisitor {
 		String typeName = n.f0.f0.accept(new TypeNameExtractor());
 		String name = n.f0.f1.accept(new IdentifierNameExtractor());
 		// TODO get rid of nasty cast
-		this.table.put(name, new VariableEntry(name, (ClassEntry) this.table.get(typeName)));
+		this.table.put(name, new VariableEntry(name, (ClassEntry) this.table.lookup(typeName)));
 		super.visit(n);
 	}
 

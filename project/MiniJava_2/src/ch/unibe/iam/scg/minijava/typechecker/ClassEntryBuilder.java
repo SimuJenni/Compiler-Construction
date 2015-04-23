@@ -6,7 +6,7 @@ import java.util.List;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclaration;
 
-public class ClassEntryBuilder extends SymbolTableBuilder {
+public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
 
 	public ClassEntryBuilder(ClassEntry classEntry) {
 		super(classEntry);
@@ -37,14 +37,14 @@ public class ClassEntryBuilder extends SymbolTableBuilder {
 		List<ParameterDeclaration> parameterDeclarations = new ArrayList<ParameterDeclaration>();
 		n.f3.accept(new ParameterDeclarationsExtractor(), parameterDeclarations);
 		// TODO get rid of nasty cast
-		ClassEntry returnType = (ClassEntry) this.table.get(returnTypeName);
+		ClassEntry returnType = (ClassEntry) this.table.lookup(returnTypeName);
 		List<ClassEntry> parameterTypes = new ArrayList<ClassEntry>();
 		for (ParameterDeclaration parameterDeclaration : parameterDeclarations) {
 			String parameterTypeName = parameterDeclaration.f0.f0
 					.accept(new TypeNameExtractor());
 			// TODO get rid of nasty cast
 			ClassEntry parameterType = (ClassEntry) this.table
-					.get(parameterTypeName);
+					.lookup(parameterTypeName);
 			parameterTypes.add(parameterType);
 		}
 		MethodEntry methodEntry = new MethodEntry(name, parameterTypes,
@@ -54,7 +54,7 @@ public class ClassEntryBuilder extends SymbolTableBuilder {
 					.accept(new TypeNameExtractor());
 			// TODO get rid of nasty cast
 			ClassEntry parameterType = (ClassEntry) this.table
-					.get(parameterTypeName);
+					.lookup(parameterTypeName);
 			String parameterName = parameterDeclaration.f0.f1
 					.accept(new IdentifierNameExtractor());
 			methodEntry.put(parameterName, new VariableEntry(parameterName,

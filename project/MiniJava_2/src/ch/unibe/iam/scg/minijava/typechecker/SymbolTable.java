@@ -2,10 +2,6 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 import java.util.HashMap;
 
-/**
- * Root symbol-table in the symbol-table hierarchy. Stores references to the
- * symbol-tables of all the classes.
- */
 public class SymbolTable implements SymbolTableEntry {
 
 	private HashMap<String, SymbolTableEntry> entries;
@@ -27,6 +23,10 @@ public class SymbolTable implements SymbolTableEntry {
 
 	public boolean containsKey(String key) {
 		return entries.containsKey(key);
+	}
+
+	public SymbolTableEntry lookup(String key) {
+		return this.get(key);
 	}
 
 }

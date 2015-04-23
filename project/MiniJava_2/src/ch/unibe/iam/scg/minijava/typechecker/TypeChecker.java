@@ -17,7 +17,7 @@ public class TypeChecker {
 		try {
 			builder.build(node);
 			return true;
-		} catch (SymbolNotFoundException exception) {
+		} catch (TypeCheckException exception) {
 			return false;
 		}
 	}

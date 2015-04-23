@@ -2,7 +2,11 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 
-public class GlobalSymbolTableBuilder extends SymbolTableBuilder {
+/**
+ * Root symbol-table in the symbol-table hierarchy. Stores references to the
+ * symbol-tables of all the classes.
+ */
+public class GlobalSymbolTableBuilder extends SymbolTableBuilder<SymbolTable> {
 
 	public GlobalSymbolTableBuilder(SymbolTable table) {
 		super(table);
@@ -40,7 +44,7 @@ public class GlobalSymbolTableBuilder extends SymbolTableBuilder {
 			String superClassName = n.f2.node
 					.accept(new IdentifierNameExtractor());
 			// TODO get rid of nasty cast
-			superClass = (ClassEntry) this.table.get(superClassName);
+			superClass = (ClassEntry) this.table.lookup(superClassName);
 		}
 		ClassEntry classEntry = new ClassEntry(name, superClass, this.table);
 		this.table.put(name, classEntry);
