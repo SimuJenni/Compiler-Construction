@@ -49,15 +49,9 @@ public class MethodEntry extends SymbolTable implements SymbolTableEntry {
 		this.parent = parent;
 	}
 
-	@Override
-	public boolean containsKey(String key) {
-		return super.containsKey(key) || this.parent.containsKey(key);
-	}
-
-	@Override
-	public SymbolTableEntry get(String key) {
+	public SymbolTableEntry lookup(String key) {
 		try {
-			return super.get(key);
+			return this.get(key);
 		} catch (SymbolNotFoundException exception) {
 			// noop
 		}

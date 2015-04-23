@@ -36,16 +36,9 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 		this.parent = parent;
 	}
 
-	@Override
-	public boolean containsKey(String key) {
-		return super.containsKey(key) || this.superClass.containsKey(key)
-				|| this.parent.containsKey(key);
-	}
-
-	@Override
-	public SymbolTableEntry get(String key) {
+	public SymbolTableEntry lookup(String key) {
 		try {
-			return super.get(key);
+			return this.get(key);
 		} catch (SymbolNotFoundException exception) {
 			// noop
 		}
@@ -55,6 +48,13 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 			// noop
 		}
 		return this.parent.get(key);
+	}
+
+	public boolean canBeAssignedTo(ClassEntry classEntry) {
+		if (classEntry == this) {
+			return true;
+		}
+		return this.superClass.canBeAssignedTo(classEntry);
 	}
 
 }
