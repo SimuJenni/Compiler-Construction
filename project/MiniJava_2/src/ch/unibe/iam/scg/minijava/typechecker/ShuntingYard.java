@@ -19,7 +19,6 @@ import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
 public class ShuntingYard extends AstVsisitorAdapter {
 	private Stack<Operator> stack = new Stack<Operator>();
     List<INode> output = new ArrayList<INode>();
-    
 
     /**
      * Visits a {@link Expression} node, whose child is the following :
@@ -211,11 +210,12 @@ public class ShuntingYard extends AstVsisitorAdapter {
     	
 		while(!operator.isLeftParanthesis()&&!stack.empty()){
 			Operator top=stack.peek();
+			if(top.isLeftParanthesis()){
+				stack.pop();
+				break;
+			}
 			if(operator.isRightParanthesis()||top.hasHigherPrecedence(operator)){
-				if(top.isLeftParanthesis())
-					stack.pop();
-				else
-					output.add(stack.pop());
+				output.add(stack.pop());
 			}
 			else
 				break;

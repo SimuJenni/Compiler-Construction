@@ -15,7 +15,7 @@ import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
 public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJavaImplConstants {
 	private SymbolTable table;
-	private String expectedType;
+	public String expressionType;
 	private boolean valid;
 	private Stack<String> typeStack = new Stack<String>();
 
@@ -64,6 +64,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	  }
 	  
 	  public void visit(Operator operator){
+		  if(operator.isLeftParanthesis()||operator.isRightParanthesis())
+			  return;
 		  if(operator.isUnary()){
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());
@@ -74,7 +76,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			  String argType=operator.getArgType();
 			  checkSameType(argType, typeStack.pop());
 			  checkSameType(argType, typeStack.pop()); 
-			  typeStack.push(operator.getReturnType());
+			  expressionType=operator.getReturnType();
+			  typeStack.push(expressionType);
 			  
 		  }
 		  
