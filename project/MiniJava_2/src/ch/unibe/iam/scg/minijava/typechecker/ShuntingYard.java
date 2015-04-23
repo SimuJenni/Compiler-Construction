@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import ch.unibe.iam.scg.javacc.syntaxtree.AstVsisitorAdapter;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.ConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
@@ -16,7 +15,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectCreationExpression;
 import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
 
-public class ShuntingYard extends AstVsisitorAdapter {
+public class ShuntingYard extends VoidVisitorAdapter {
 	private Stack<Operator> stack = new Stack<Operator>();
     List<INode> output = new ArrayList<INode>();
 
