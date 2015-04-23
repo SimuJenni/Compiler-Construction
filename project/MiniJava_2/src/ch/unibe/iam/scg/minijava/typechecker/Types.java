@@ -2,7 +2,7 @@ package ch.unibe.iam.scg.minijava.typechecker;
 
 public enum Types {
 	
-	INT_ARRAY("int[]"), INT("int"), BOOLEAN("boolean"), VOID("void");
+	INT_ARRAY("int[]"), STRING_ARRAY("String[]"), STRING("String"), INT("int"), BOOLEAN("boolean"), VOID("void");
 
 	private String name;
 
