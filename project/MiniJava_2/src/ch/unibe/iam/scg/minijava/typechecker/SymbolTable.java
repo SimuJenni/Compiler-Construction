@@ -11,6 +11,9 @@ public class SymbolTable implements SymbolTableEntry {
 	}
 
 	public void put(String key, SymbolTableEntry entry) {
+		if (this.containsKey(key)) {
+			throw new SymbolRedeclaredException(key);
+		}
 		entries.put(key, entry);
 	}
 
