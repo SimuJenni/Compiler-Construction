@@ -35,7 +35,7 @@ public class MethodEntryBuilder extends SymbolTableBuilder<MethodEntry> {
 		if (n.f8.present()){
 			Expression expression = n.f8.accept(new FirstExpressionExtractor());
 			ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.table);
-			expression.accept(expressionVisitor);
+			expressionVisitor.check(expression);
 			// TODO get rid of cast
 			ClassEntry returnedType =  (ClassEntry) this.table.lookup(expressionVisitor.expressionType);
 			if (!returnedType.canBeAssignedTo(this.table.getReturnType())){

@@ -55,7 +55,7 @@ public class MethodEntry extends SymbolTable implements SymbolTableEntry {
 		} catch (SymbolNotFoundException exception) {
 			// noop
 		}
-		return this.parent.get(key);
+		return this.parent.lookup(key);
 	}
 
 }

@@ -7,6 +7,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.IntType;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
@@ -28,6 +29,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	public boolean check(Object node) {
 		INode n = (INode) node;
 		n.accept(this);
+		if(!typeStack.isEmpty())
+			expressionType=typeStack.pop();
 		return valid;
 	}
 	
@@ -40,8 +43,7 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	        
 	      for (INode node : sy.output) {
 	          node.accept(this);
-	      }     
-	      
+	      }         
 	  }
 	  
 	  /**
@@ -105,6 +107,21 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			  typeStack.push(expressionType);
 			  return;
 		  }
+	  }
+	  
+	  /**
+	   * Visits a {@link Identifier} node, whose child is the following :
+	   * <p>
+	   * f0 -> <IDENTIFIER><br>
+	   *
+	   * @param n - the node to visit
+	   */
+	  @Override
+	  public void visit(final Identifier n) {
+	    // f0 -> <IDENTIFIER>
+	    final NodeToken n0 = n.f0;
+	    VariableEntry var=(VariableEntry) this.table.get(n0.tokenImage);
+	    typeStack.push(var.getType().getName());
 	  }
 	
 	  private String checkSameType(String type1, String type2) {

@@ -4,7 +4,7 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 
 	private String name;
 	private ClassEntry superClass;
-	private SymbolTable parent;
+	SymbolTable parent;
 	private boolean isInitialized=false;
 
 	public ClassEntry(String name, ClassEntry superClass, SymbolTable parent) {
@@ -55,7 +55,11 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 		if (classEntry == this) {
 			return true;
 		}
+		try{
 		return this.superClass.canBeAssignedTo(classEntry);
+		} catch (NullPointerException e){
+			throw new TypeCheckException();
+		}
 	}
 
 	public boolean isInitialized() {
