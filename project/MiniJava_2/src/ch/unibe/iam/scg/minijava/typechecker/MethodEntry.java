@@ -58,4 +58,9 @@ public class MethodEntry extends SymbolTable implements SymbolTableEntry {
 		return this.parent.lookup(key);
 	}
 
+	@Override
+	public String getEntryTypeName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 }

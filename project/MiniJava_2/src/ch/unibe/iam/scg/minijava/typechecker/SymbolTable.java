@@ -29,4 +29,10 @@ public class SymbolTable implements SymbolTableEntry {
 		return this.get(key);
 	}
 
+	@Override
+	public String getEntryTypeName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

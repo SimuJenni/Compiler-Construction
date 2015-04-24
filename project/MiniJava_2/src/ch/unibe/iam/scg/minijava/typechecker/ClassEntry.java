@@ -70,5 +70,11 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 			return false;
 		}
 	}
+	
+	@Override
+	public String getEntryTypeName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
 
 }

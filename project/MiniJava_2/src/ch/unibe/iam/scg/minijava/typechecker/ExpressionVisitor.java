@@ -127,8 +127,10 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	  public void visit(final Identifier n) {
 	    // f0 -> <IDENTIFIER>
 	    final NodeToken n0 = n.f0;
-	    VariableEntry var=(VariableEntry) this.table.get(n0.tokenImage);
-	    typeStack.push(var.getType().getName());
+//	    VariableEntry var=(VariableEntry) this.table.get(n0.tokenImage);
+	    SymbolTableEntry id=this.table.lookup(n0.tokenImage);
+	    
+	    typeStack.push(id.getEntryTypeName());
 	  }
 	
 	  private String checkSameType(String type1, String type2) {

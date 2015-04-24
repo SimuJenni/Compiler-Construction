@@ -225,7 +225,7 @@ public class ShuntingYard extends VoidVisitorAdapter {
           final NodeSequence seq = (NodeSequence) ich;
           // #0 Identifier()
           final INode seq1 = seq.elementAt(0);
-          seq1.accept(this);
+          output.add(seq1);
           // #1 <PARENTHESIS_LEFT>
           final INode seq2 = seq.elementAt(1);
           seq2.accept(this);

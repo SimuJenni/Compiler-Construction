@@ -26,4 +26,10 @@ public class VariableEntry implements SymbolTableEntry {
 		this.type = type;
 	}
 
+	@Override
+	public String getEntryTypeName() {
+		// TODO Auto-generated method stub
+		return type.getName();
+	}
+
 }
