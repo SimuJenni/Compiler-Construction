@@ -15,6 +15,11 @@ public class NullClassEntry extends ClassEntry {
 	public SymbolTableEntry get(String key) {
 		throw new SymbolNotFoundException(key);
 	}
+	
+	@Override
+	public SymbolTableEntry lookup(String key) {
+		throw new SymbolNotFoundException(key);
+	}
 
 	@Override
 	public void put(String key, SymbolTableEntry entry) {
