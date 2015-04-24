@@ -9,10 +9,13 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
+import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectCreationExpression;
+import ch.unibe.iam.scg.javacc.syntaxtree.ParameterList;
 import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
@@ -270,6 +273,39 @@ public class ShuntingYard extends VoidVisitorAdapter {
       // f2 -> ExpressionPrime()
       final ExpressionPrime n2 = n.f2;
       n2.accept(this);
+    }
+    
+    /**
+     * Visits a {@link MethodCall} node, whose children are the following :
+     * <p>
+     * f0 -> <DOT><br>
+     * f1 -> Identifier()<br>
+     * f2 -> <PARENTHESIS_LEFT><br>
+     * f3 -> ParameterList()<br>
+     * f4 -> <PARENTHESIS_RIGHT><br>
+     * f5 -> ExpressionPrime()<br>
+     *
+     * @param n - the node to visit
+     */
+    @Override
+    public void visit(final MethodCall n) {
+      // f0 -> <DOT>
+      pushOnStack(Operator.makeDot());
+      // f1 -> Identifier()
+      final Identifier n1 = n.f1;
+      output.add(n1);
+      // f2 -> <PARENTHESIS_LEFT>
+      final NodeToken n2 = n.f2;
+      n2.accept(this);
+      // f3 -> ParameterList()
+      final ParameterList n3 = n.f3;
+      n3.accept(this);
+      // f4 -> <PARENTHESIS_RIGHT>
+      final NodeToken n4 = n.f4;
+      n4.accept(this);
+      // f5 -> ExpressionPrime()
+      final ExpressionPrime n5 = n.f5;
+      n5.accept(this);
     }
     
     private void pushOnStack(Operator operator) {

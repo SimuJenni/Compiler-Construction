@@ -94,6 +94,17 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			  typeStack.push(expressionType);
 			  return;
 		  }
+		  
+		  if(operator.isDot()){
+			  String className=typeStack.pop();
+			  String methodName=typeStack.pop();
+			  ClassEntry clEntry=(ClassEntry) this.table.lookup(className);
+			  MethodEntry mEntry=(MethodEntry) this.table.lookup(methodName);
+			  
+			  typeStack.push(mEntry.getReturnType().getName());
+
+
+		  }
 
 		  if(operator.isBinary()){
 			  String argType=operator.getArgType();

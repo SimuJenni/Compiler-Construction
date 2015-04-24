@@ -11,7 +11,7 @@ import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
 public class Operator implements INode {
 	private OperatorType operatorType; 
 	private boolean isBracket=false, isLeftParanthesis=false, isRightParanthesis=false;
-	private boolean isUnary=false, isLeftAssociative=true;
+	private boolean isUnary=false, isLeftAssociative=true, isDot=false;
 	
 	public Operator(BinaryOperator node) {	
 		operatorType=extractOperatorType(node);
@@ -199,9 +199,20 @@ public class Operator implements INode {
 	public static Operator makeLength() {
 		Operator op = new Operator();
 		op.operatorType=OperatorType.LENGTH;
-//		op.isLeftAssociative=false;
 		op.isUnary=true;
 		return op;
+	}
+
+	public static Operator makeDot() {
+		Operator op = new Operator();
+		op.operatorType=OperatorType.DOT;
+		op.isDot=true;
+		return op;
+	}
+
+	public boolean isDot() {
+		// TODO Auto-generated method stub
+		return isDot;
 	}
 	
 
