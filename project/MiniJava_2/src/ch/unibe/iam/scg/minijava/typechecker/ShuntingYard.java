@@ -316,6 +316,10 @@ public class ShuntingYard extends VoidVisitorAdapter {
 				stack.pop();
 				break;
 			}
+			if(top.isDot()&&operator.isDot()){
+				output.add(stack.pop());
+				break;
+			}
 			if(operator.isRightParanthesis()||
 					(top.hasHigherPrecedence(operator)&&operator.isLeftAssosiative())
 					||(operator.hasHigherPrecedence(top)&&!operator.isLeftAssosiative())){

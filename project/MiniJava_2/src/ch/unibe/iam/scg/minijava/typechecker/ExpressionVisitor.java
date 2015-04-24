@@ -56,6 +56,9 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	    	type=Types.BOOLEAN.getName();
 	    if(tokenType.equals("\"false\""))
 	    	type=Types.BOOLEAN.getName();
+	    if(tokenType.equals("\"this\""))
+	    	type="this";
+
 
 	    typeStack.push(type);
 		expressionType = type;
