@@ -61,6 +61,7 @@ public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
 			methodEntry.put(parameterName, new VariableEntry(parameterName,
 					parameterType));
 		}
+		this.table.put(name, methodEntry);
 		MethodEntryBuilder methodEntryBuilder = new MethodEntryBuilder(
 				methodEntry);
 		// delegate
