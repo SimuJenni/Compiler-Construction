@@ -96,10 +96,11 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 		  }
 		  
 		  if(operator.isDot()){
-			  String className=typeStack.pop();
 			  String methodName=typeStack.pop();
+			  String className=typeStack.pop();
+
 			  ClassEntry clEntry=(ClassEntry) this.table.lookup(className);
-			  MethodEntry mEntry=(MethodEntry) this.table.lookup(methodName);
+			  MethodEntry mEntry=(MethodEntry) clEntry.lookup(methodName);
 			  
 			  typeStack.push(mEntry.getReturnType().getName());
 
@@ -127,10 +128,12 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	  public void visit(final Identifier n) {
 	    // f0 -> <IDENTIFIER>
 	    final NodeToken n0 = n.f0;
-//	    VariableEntry var=(VariableEntry) this.table.get(n0.tokenImage);
+	    try{
 	    SymbolTableEntry id=this.table.lookup(n0.tokenImage);
-	    
 	    typeStack.push(id.getEntryTypeName());
+	    } catch(SymbolNotFoundException e){
+		    typeStack.push(n0.tokenImage);
+	    }
 	  }
 	
 	  private String checkSameType(String type1, String type2) {
@@ -145,8 +148,6 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			return null;
 		}
 	}
-
-
 
 
 }
