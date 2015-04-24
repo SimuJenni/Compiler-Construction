@@ -103,7 +103,7 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 			  MethodEntry mEntry=(MethodEntry) clEntry.lookup(methodName);
 			  
 			  typeStack.push(mEntry.getReturnType().getName());
-
+			  return;
 
 		  }
 
