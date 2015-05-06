@@ -1,4 +1,4 @@
-package ch.unibe.iam.scg.minijava.typechecker.scope;
+package ch.unibe.iam.scg.minijava.typechecker.type;
 
 public class LookupException extends Exception {
 

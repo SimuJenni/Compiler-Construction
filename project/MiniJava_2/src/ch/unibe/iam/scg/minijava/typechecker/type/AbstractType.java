@@ -6,13 +6,13 @@ import java.util.Map;
 public abstract class AbstractType implements IType {
 
 	protected String name;
-	protected IType superType;
+	protected IType parent;
 	protected Map<String, Variable> variables;
 	protected Map<String, Method> methods;
 
 	public AbstractType(String name, IType superType) {
 		this.name = name;
-		this.superType = superType;
+		this.parent = superType;
 		this.variables = new HashMap<String, Variable>();
 		this.methods = new HashMap<String, Method>();
 	}
@@ -23,8 +23,8 @@ public abstract class AbstractType implements IType {
 	}
 
 	@Override
-	public IType getSuperType() {
-		return this.superType;
+	public IType getParent() {
+		return this.parent;
 	}
 
 	@Override
@@ -45,6 +45,14 @@ public abstract class AbstractType implements IType {
 	}
 
 	@Override
+	public Variable lookupVariable(String name) throws LookupException {
+		if (this.hasVariable(name)) {
+			return this.getVariable(name);
+		}
+		return this.parent.lookupVariable(name);
+	}
+
+	@Override
 	public boolean hasMethod(String name) {
 		return this.methods.containsKey(name);
 	}
@@ -59,6 +67,14 @@ public abstract class AbstractType implements IType {
 	public void putMethod(String name, Method method) {
 		assert !this.hasVariable(name);
 		this.methods.put(name, method);
+	}
+
+	@Override
+	public Method lookupMethod(String name) throws LookupException {
+		if (this.hasMethod(name)) {
+			return this.getMethod(name);
+		}
+		return this.parent.lookupMethod(name);
 	}
 
 }

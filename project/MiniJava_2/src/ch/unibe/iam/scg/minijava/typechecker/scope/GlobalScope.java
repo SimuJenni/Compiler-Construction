@@ -7,6 +7,7 @@ import ch.unibe.iam.scg.minijava.typechecker.type.ArrayType;
 import ch.unibe.iam.scg.minijava.typechecker.type.BooleanType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IntType;
+import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.ObjectType;
 import ch.unibe.iam.scg.minijava.typechecker.type.StringType;
 import ch.unibe.iam.scg.minijava.typechecker.type.VoidType;

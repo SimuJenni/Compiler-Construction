@@ -1,6 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.scope;
 
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
+import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.Method;
 import ch.unibe.iam.scg.minijava.typechecker.type.Variable;
 
@@ -15,18 +16,20 @@ public class ClassScope extends AbstractScope {
 
 	@Override
 	public Method lookupMethod(String name) throws LookupException {
-		if (this.type.hasMethod(name)) {
-			return this.type.getMethod(name);
+		try {
+			return this.type.lookupMethod(name);
+		} catch (LookupException exception) {
+			return super.lookupMethod(name);
 		}
-		return super.lookupMethod(name);
 	}
 
 	@Override
 	public Variable lookupVariable(String name) throws LookupException {
-		if (this.type.hasVariable(name)) {
-			return this.type.getVariable(name);
+		try {
+			return this.type.lookupVariable(name);
+		} catch (LookupException exception) {
+			return super.lookupVariable(name);
 		}
-		return super.lookupVariable(name);
 	}
 
 }

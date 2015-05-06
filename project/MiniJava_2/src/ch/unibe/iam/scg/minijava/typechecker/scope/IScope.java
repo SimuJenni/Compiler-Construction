@@ -1,6 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.scope;
 
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
+import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.Method;
 import ch.unibe.iam.scg.minijava.typechecker.type.Variable;
 

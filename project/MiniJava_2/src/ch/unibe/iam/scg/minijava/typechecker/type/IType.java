@@ -2,20 +2,24 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 
 public interface IType {
 
-	public abstract String getName();
+	public String getName();
 
-	public abstract IType getSuperType();
+	public IType getParent();
 
-	public abstract boolean hasVariable(String name);
+	public boolean hasVariable(String name);
 
-	public abstract Variable getVariable(String name);
+	public Variable getVariable(String name);
 
-	public abstract void putVariable(String name, Variable variable);
+	public void putVariable(String name, Variable variable);
 
-	public abstract boolean hasMethod(String name);
+	public Variable lookupVariable(String name) throws LookupException;
 
-	public abstract Method getMethod(String name);
+	public boolean hasMethod(String name);
 
-	public abstract void putMethod(String name, Method method);
+	public Method getMethod(String name);
+
+	public void putMethod(String name, Method method);
+
+	public Method lookupMethod(String name) throws LookupException;
 
 }

@@ -10,7 +10,7 @@ public class NullType implements IType {
 	}
 
 	@Override
-	public IType getSuperType() {
+	public IType getParent() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -30,6 +30,11 @@ public class NullType implements IType {
 	}
 
 	@Override
+	public Variable lookupVariable(String name) throws LookupException {
+		throw new LookupException(name);
+	}
+
+	@Override
 	public boolean hasMethod(String name) {
 		return false;
 	}
@@ -42,6 +47,11 @@ public class NullType implements IType {
 	@Override
 	public void putMethod(String name, Method method) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Method lookupMethod(String name) throws LookupException {
+		throw new LookupException(name);
 	}
 
 }

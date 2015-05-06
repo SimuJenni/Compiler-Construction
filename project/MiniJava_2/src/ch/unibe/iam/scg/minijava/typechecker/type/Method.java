@@ -1,20 +1,26 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Method {
 
+	protected IType type;
 	protected String name;
 	protected IType returnType;
 	protected Map<String, Variable> parameters;
 	protected Map<String, Variable> variables;
 
-	public Method(String name, IType returnType,
-			Map<String, Variable> parameters, Map<String, Variable> variables) {
+	public Method(IType type, String name, IType returnType) {
+		this.type = type;
 		this.name = name;
 		this.returnType = returnType;
-		this.parameters = parameters;
-		this.variables = variables;
+		this.parameters = new HashMap<String, Variable>();
+		this.variables = new HashMap<String, Variable>();
+	}
+
+	public IType getType() {
+		return this.type;
 	}
 
 	public String getName() {
