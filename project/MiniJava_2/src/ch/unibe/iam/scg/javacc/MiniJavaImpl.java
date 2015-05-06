@@ -208,49 +208,92 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
-  TypedDeclaration n2 = null;
-  NodeToken n3 = null;
-  Token n4 = null;
-  ParameterDeclarationList n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
-  NodeToken n8 = null;
-  Token n9 = null;
-  NodeListOptional n10 = new NodeListOptional();
-  VarDeclaration n11 = null;
-  NodeListOptional n12 = new NodeListOptional();
-  Statement n13 = null;
-  NodeOptional n14 = new NodeOptional();
-  NodeSequence n15 = null;
+  Type n2 = null;
+  Identifier n3 = null;
+  NodeToken n4 = null;
+  Token n5 = null;
+  NodeOptional n6 = new NodeOptional();
+  NodeSequence n7 = null;
+  ParameterDeclaration n8 = null;
+  NodeListOptional n9 = null;
+  NodeSequence n10 = null;
+  NodeToken n11 = null;
+  Token n12 = null;
+  ParameterDeclaration n13 = null;
+  NodeToken n14 = null;
+  Token n15 = null;
   NodeToken n16 = null;
   Token n17 = null;
-  Expression n18 = null;
-  NodeToken n19 = null;
-  Token n20 = null;
-  NodeToken n21 = null;
-  Token n22 = null;
+  NodeListOptional n18 = new NodeListOptional();
+  VarDeclaration n19 = null;
+  NodeListOptional n20 = new NodeListOptional();
+  Statement n21 = null;
+  NodeOptional n22 = new NodeOptional();
+  NodeSequence n23 = null;
+  NodeToken n24 = null;
+  Token n25 = null;
+  Expression n26 = null;
+  NodeToken n27 = null;
+  Token n28 = null;
+  NodeToken n29 = null;
+  Token n30 = null;
     n1 = jj_consume_token(PUBLIC_MODIFIER);
     n0 = JTBToolkit.makeNodeToken(n1);
-    n2 = TypedDeclaration();
-    n4 = jj_consume_token(PARENTHESIS_LEFT);
-    n3 = JTBToolkit.makeNodeToken(n4);
-    n5 = ParameterDeclarationList();
-    n7 = jj_consume_token(PARENTHESIS_RIGHT);
-    n6 = JTBToolkit.makeNodeToken(n7);
-    n9 = jj_consume_token(BRACE_LEFT);
-    n8 = JTBToolkit.makeNodeToken(n9);
-    label_4:
+    n2 = Type();
+    n3 = Identifier();
+    n5 = jj_consume_token(PARENTHESIS_LEFT);
+    n4 = JTBToolkit.makeNodeToken(n5);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VOID_TYPE:
+    case INT_TYPE:
+    case BOOLEAN_TYPE:
+    case IDENTIFIER:
+      n9 = new NodeListOptional();
+      n7 = new NodeSequence(2);
+      n8 = ParameterDeclaration();
+      n7.addNode(n8);
+      label_4:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case COMMA:
+          ;
+          break;
+        default:
+          jj_la1[5] = jj_gen;
+          break label_4;
+        }
+        n10 = new NodeSequence(2);
+        n12 = jj_consume_token(COMMA);
+        n11 = JTBToolkit.makeNodeToken(n12);
+        n10.addNode(n11);
+        n13 = ParameterDeclaration();
+        n10.addNode(n13);
+        n9.addNode(n10);
+      }
+      n9.nodes.trimToSize();
+      n7.addNode(n9);
+      n6.addNode(n7);
+      break;
+    default:
+      jj_la1[6] = jj_gen;
+      ;
+    }
+    n15 = jj_consume_token(PARENTHESIS_RIGHT);
+    n14 = JTBToolkit.makeNodeToken(n15);
+    n17 = jj_consume_token(BRACE_LEFT);
+    n16 = JTBToolkit.makeNodeToken(n17);
+    label_5:
     while (true) {
       if (jj_2_1(2)) {
         ;
       } else {
-        break label_4;
+        break label_5;
       }
-      n11 = VarDeclaration();
-      n10.addNode(n11);
+      n19 = VarDeclaration();
+      n18.addNode(n19);
     }
-    n10.nodes.trimToSize();
-    label_5:
+    n18.nodes.trimToSize();
+    label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRINT_METHOD:
@@ -261,82 +304,33 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
         ;
         break;
       default:
-        jj_la1[5] = jj_gen;
-        break label_5;
+        jj_la1[7] = jj_gen;
+        break label_6;
       }
-      n13 = Statement();
-      n12.addNode(n13);
+      n21 = Statement();
+      n20.addNode(n21);
     }
-    n12.nodes.trimToSize();
+    n20.nodes.trimToSize();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RETURN:
-      n15 = new NodeSequence(3);
-      n17 = jj_consume_token(RETURN);
-      n16 = JTBToolkit.makeNodeToken(n17);
-      n15.addNode(n16);
-      n18 = Expression();
-      n15.addNode(n18);
-      n20 = jj_consume_token(SEMICOLON);
-      n19 = JTBToolkit.makeNodeToken(n20);
-      n15.addNode(n19);
-      n14.addNode(n15);
-      break;
-    default:
-      jj_la1[6] = jj_gen;
-      ;
-    }
-    n22 = jj_consume_token(BRACE_RIGHT);
-    n21 = JTBToolkit.makeNodeToken(n22);
-    {if (true) return new MethodDeclaration(n0, n2, n3, n5, n6, n8, n10, n12, n14, n21);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public ParameterDeclarationList ParameterDeclarationList() throws ParseException {
-  // --- JTB generated node declarations ---
-  NodeOptional n0 = new NodeOptional();
-  NodeSequence n1 = null;
-  ParameterDeclaration n2 = null;
-  NodeListOptional n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  ParameterDeclaration n7 = null;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case VOID_TYPE:
-    case INT_TYPE:
-    case BOOLEAN_TYPE:
-    case IDENTIFIER:
-      n3 = new NodeListOptional();
-      n1 = new NodeSequence(2);
-      n2 = ParameterDeclaration();
-      n1.addNode(n2);
-      label_6:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case COMMA:
-          ;
-          break;
-        default:
-          jj_la1[7] = jj_gen;
-          break label_6;
-        }
-        n4 = new NodeSequence(2);
-        n6 = jj_consume_token(COMMA);
-        n5 = JTBToolkit.makeNodeToken(n6);
-        n4.addNode(n5);
-        n7 = ParameterDeclaration();
-        n4.addNode(n7);
-        n3.addNode(n4);
-      }
-      n3.nodes.trimToSize();
-      n1.addNode(n3);
-      n0.addNode(n1);
+      n23 = new NodeSequence(3);
+      n25 = jj_consume_token(RETURN);
+      n24 = JTBToolkit.makeNodeToken(n25);
+      n23.addNode(n24);
+      n26 = Expression();
+      n23.addNode(n26);
+      n28 = jj_consume_token(SEMICOLON);
+      n27 = JTBToolkit.makeNodeToken(n28);
+      n23.addNode(n27);
+      n22.addNode(n23);
       break;
     default:
       jj_la1[8] = jj_gen;
       ;
     }
-    {if (true) return new ParameterDeclarationList(n0);}
+    n30 = jj_consume_token(BRACE_RIGHT);
+    n29 = JTBToolkit.makeNodeToken(n30);
+    {if (true) return new MethodDeclaration(n0, n2, n3, n4, n6, n14, n16, n18, n20, n22, n29);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1069,89 +1063,6 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     finally { jj_save(3, xla); }
   }
 
-  private boolean jj_3R_12() {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_scan_token(LENGTH_FIELD_NAME)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13() {
-    if (jj_3R_16()) return true;
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_21() {
-    if (jj_scan_token(INT_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_15() {
-    if (jj_scan_token(BRACKET_LEFT)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_23() {
-    if (jj_scan_token(VOID_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_20() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_19() {
-    if (jj_3R_23()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_14() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_11() {
-    if (jj_3R_14()) return true;
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
-  private boolean jj_3_4() {
-    if (jj_3R_12()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18() {
-    if (jj_3R_22()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_17() {
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_22() {
-    if (jj_scan_token(BOOLEAN_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2() {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_9() {
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
-  private boolean jj_3_1() {
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
   private boolean jj_3R_16() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1182,6 +1093,89 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
+  private boolean jj_3R_12() {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(LENGTH_FIELD_NAME)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_13() {
+    if (jj_3R_16()) return true;
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_21() {
+    if (jj_scan_token(INT_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_15() {
+    if (jj_scan_token(BRACKET_LEFT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_23() {
+    if (jj_scan_token(VOID_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_20() {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_14() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_19() {
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_11() {
+    if (jj_3R_14()) return true;
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  private boolean jj_3_4() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_9() {
+    if (jj_3R_13()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_18() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_17() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_22() {
+    if (jj_scan_token(BOOLEAN_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2() {
+    if (jj_3R_10()) return true;
+    return false;
+  }
+
   /** Generated Token Manager. */
   public MiniJavaImplTokenManager token_source;
   SimpleCharStream jj_input_stream;
@@ -1201,10 +1195,10 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x100000,0xa000480,0x800000,0xa0000000,0x200000,0xa000480,0x1000000,0x20000,0xa0000000,0xa0000000,0xa000480,0xa000480,0x0,0x10004100,0x80000000,0x1200,0x40000,0x20000,0x10004100,};
+      jj_la1_0 = new int[] {0x100000,0xa000480,0x800000,0xa0000000,0x200000,0x20000,0xa0000000,0xa000480,0x1000000,0xa0000000,0xa000480,0xa000480,0x0,0x10004100,0x80000000,0x1200,0x40000,0x20000,0x10004100,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x20,0x0,0x21,0x0,0x20,0x0,0x0,0x21,0x21,0x20,0x20,0x20,0x3e,0x20,0x0,0x0,0x0,0x3e,};
+      jj_la1_1 = new int[] {0x0,0x20,0x0,0x21,0x0,0x0,0x21,0x20,0x0,0x21,0x20,0x20,0x20,0x3e,0x20,0x0,0x0,0x0,0x3e,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[4];
   private boolean jj_rescan = false;

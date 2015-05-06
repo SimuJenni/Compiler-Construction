@@ -154,33 +154,23 @@ public interface IRetArguVisitor<R, A> {
    * Visits a {@link MethodDeclaration} node, whose children are the following :
    * <p>
    * f0 -> <PUBLIC_MODIFIER><br>
-   * f1 -> TypedDeclaration()<br>
-   * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterDeclarationList()<br>
-   * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> <BRACE_LEFT><br>
-   * f6 -> ( VarDeclaration() )*<br>
-   * f7 -> ( Statement() )*<br>
-   * f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
-   * f9 -> <BRACE_RIGHT><br>
+   * f1 -> Type()<br>
+   * f2 -> Identifier()<br>
+   * f3 -> <PARENTHESIS_LEFT><br>
+   * f4 -> ( #0 ParameterDeclaration()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
+   * f5 -> <PARENTHESIS_RIGHT><br>
+   * f6 -> <BRACE_LEFT><br>
+   * f7 -> ( VarDeclaration() )*<br>
+   * f8 -> ( Statement() )*<br>
+   * f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
+   * f10 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    * @return the user return information
    */
   public R visit(final MethodDeclaration n, final A argu);
-
-  /**
-   * Visits a {@link ParameterDeclarationList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 ParameterDeclaration()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   * @return the user return information
-   */
-  public R visit(final ParameterDeclarationList n, final A argu);
 
   /**
    * Visits a {@link ParameterDeclaration} node, whose child is the following :

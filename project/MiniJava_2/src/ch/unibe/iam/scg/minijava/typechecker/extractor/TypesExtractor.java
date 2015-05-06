@@ -14,7 +14,7 @@ import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
 public class TypesExtractor {
 
-	public static class ClassesVisitor extends DepthFirstVoidVisitor {
+	protected static class ClassesVisitor extends DepthFirstVoidVisitor {
 
 		protected IType implicitSuperType;
 		protected List<String> classNames;

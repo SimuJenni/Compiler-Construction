@@ -9,32 +9,33 @@ import ch.unibe.iam.scg.minijava.typechecker.type.Variable;
 
 public class VariableExtractor {
 
-	public static class VariableVisitor extends DepthFirstVoidVisitor {
+	protected static class TypedDeclarationVisitor extends
+			DepthFirstVoidVisitor {
 
 		protected String typeName;
-		protected String identifierName;
+		protected String name;
 
 		public String getTypeName() {
 			return typeName;
 		}
 
-		public String getIdentifierName() {
-			return identifierName;
+		public String getName() {
+			return name;
 		}
 
 		@Override
 		public void visit(TypedDeclaration n) {
 			this.typeName = (new TypeNameExtractor()).extract(n.f0);
-			this.identifierName = (new IdentifierNameExtractor()).extract(n.f1);
+			this.name = (new IdentifierNameExtractor()).extract(n.f1);
 		}
 
 	}
 
 	public Variable extract(INode node, IScope scope) throws LookupException {
-		VariableVisitor visitor = new VariableVisitor();
+		TypedDeclarationVisitor visitor = new TypedDeclarationVisitor();
 		node.accept(visitor);
-		return new Variable(visitor.getIdentifierName(),
-				scope.lookupType(visitor.getTypeName()));
+		return new Variable(visitor.getName(), scope.lookupType(visitor
+				.getTypeName()));
 	}
 
 }

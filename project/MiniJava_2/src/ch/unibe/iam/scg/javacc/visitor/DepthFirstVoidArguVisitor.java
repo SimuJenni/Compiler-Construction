@@ -308,15 +308,17 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    * Visits a {@link MethodDeclaration} node, whose children are the following :
    * <p>
    * f0 -> <PUBLIC_MODIFIER><br>
-   * f1 -> TypedDeclaration()<br>
-   * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterDeclarationList()<br>
-   * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> <BRACE_LEFT><br>
-   * f6 -> ( VarDeclaration() )*<br>
-   * f7 -> ( Statement() )*<br>
-   * f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
-   * f9 -> <BRACE_RIGHT><br>
+   * f1 -> Type()<br>
+   * f2 -> Identifier()<br>
+   * f3 -> <PARENTHESIS_LEFT><br>
+   * f4 -> ( #0 ParameterDeclaration()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
+   * f5 -> <PARENTHESIS_RIGHT><br>
+   * f6 -> <BRACE_LEFT><br>
+   * f7 -> ( VarDeclaration() )*<br>
+   * f8 -> ( Statement() )*<br>
+   * f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
+   * f10 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -326,72 +328,20 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     // f0 -> <PUBLIC_MODIFIER>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
-    // f1 -> TypedDeclaration()
-    final TypedDeclaration n1 = n.f1;
+    // f1 -> Type()
+    final Type n1 = n.f1;
     n1.accept(this, argu);
-    // f2 -> <PARENTHESIS_LEFT>
-    final NodeToken n2 = n.f2;
+    // f2 -> Identifier()
+    final Identifier n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> ParameterDeclarationList()
-    final ParameterDeclarationList n3 = n.f3;
+    // f3 -> <PARENTHESIS_LEFT>
+    final NodeToken n3 = n.f3;
     n3.accept(this, argu);
-    // f4 -> <PARENTHESIS_RIGHT>
-    final NodeToken n4 = n.f4;
-    n4.accept(this, argu);
-    // f5 -> <BRACE_LEFT>
-    final NodeToken n5 = n.f5;
-    n5.accept(this, argu);
-    // f6 -> ( VarDeclaration() )*
-    final NodeListOptional n6 = n.f6;
-    if (n6.present()) {
-      for (int i = 0; i < n6.size(); i++) {
-        final INode nloeai = n6.elementAt(i);
-        nloeai.accept(this, argu);
-      }
-    }
-    // f7 -> ( Statement() )*
-    final NodeListOptional n7 = n.f7;
-    if (n7.present()) {
-      for (int i = 0; i < n7.size(); i++) {
-        final INode nloeai = n7.elementAt(i);
-        nloeai.accept(this, argu);
-      }
-    }
-    // f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
-    final NodeOptional n8 = n.f8;
-    if (n8.present()) {
-      final NodeSequence seq = (NodeSequence) n8.node;
-      // #0 <RETURN>
-      final INode seq1 = seq.elementAt(0);
-      seq1.accept(this, argu);
-      // #1 Expression()
-      final INode seq2 = seq.elementAt(1);
-      seq2.accept(this, argu);
-      // #2 <SEMICOLON>
-      final INode seq3 = seq.elementAt(2);
-      seq3.accept(this, argu);
-    }
-    // f9 -> <BRACE_RIGHT>
-    final NodeToken n9 = n.f9;
-    n9.accept(this, argu);
-  }
-
-  /**
-   * Visits a {@link ParameterDeclarationList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 ParameterDeclaration()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final ParameterDeclarationList n, final A argu) {
-    // f0 -> ( #0 ParameterDeclaration()
+    // f4 -> ( #0 ParameterDeclaration()
     // .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?
-    final NodeOptional n0 = n.f0;
-    if (n0.present()) {
-      final NodeSequence seq = (NodeSequence) n0.node;
+    final NodeOptional n4 = n.f4;
+    if (n4.present()) {
+      final NodeSequence seq = (NodeSequence) n4.node;
       // #0 ParameterDeclaration()
       final INode seq1 = seq.elementAt(0);
       seq1.accept(this, argu);
@@ -411,6 +361,45 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
         }
       }
     }
+    // f5 -> <PARENTHESIS_RIGHT>
+    final NodeToken n5 = n.f5;
+    n5.accept(this, argu);
+    // f6 -> <BRACE_LEFT>
+    final NodeToken n6 = n.f6;
+    n6.accept(this, argu);
+    // f7 -> ( VarDeclaration() )*
+    final NodeListOptional n7 = n.f7;
+    if (n7.present()) {
+      for (int i = 0; i < n7.size(); i++) {
+        final INode nloeai = n7.elementAt(i);
+        nloeai.accept(this, argu);
+      }
+    }
+    // f8 -> ( Statement() )*
+    final NodeListOptional n8 = n.f8;
+    if (n8.present()) {
+      for (int i = 0; i < n8.size(); i++) {
+        final INode nloeai = n8.elementAt(i);
+        nloeai.accept(this, argu);
+      }
+    }
+    // f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
+    final NodeOptional n9 = n.f9;
+    if (n9.present()) {
+      final NodeSequence seq6 = (NodeSequence) n9.node;
+      // #0 <RETURN>
+      final INode seq7 = seq6.elementAt(0);
+      seq7.accept(this, argu);
+      // #1 Expression()
+      final INode seq8 = seq6.elementAt(1);
+      seq8.accept(this, argu);
+      // #2 <SEMICOLON>
+      final INode seq9 = seq6.elementAt(2);
+      seq9.accept(this, argu);
+    }
+    // f10 -> <BRACE_RIGHT>
+    final NodeToken n10 = n.f10;
+    n10.accept(this, argu);
   }
 
   /**
