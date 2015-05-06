@@ -4,22 +4,18 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production StatementList:<br>
+ * JTB node class for the production IntArrayConstructorCall:<br>
  * Corresponding grammar:<br>
- * f0 -> <BRACE_LEFT><br>
- * f1 -> ( Statement() )*<br>
- * f2 -> <BRACE_RIGHT><br>
+ * f0 -> IntType()<br>
+ * f1 -> ArrayAccess()<br>
  */
-public class StatementList implements INode {
+public class IntArrayConstructorCall implements INode {
 
   /** Child node 1 */
-  public NodeToken f0;
+  public IntType f0;
 
   /** Child node 2 */
-  public NodeListOptional f1;
-
-  /** Child node 3 */
-  public NodeToken f2;
+  public ArrayAccess f1;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -29,12 +25,10 @@ public class StatementList implements INode {
    *
    * @param n0 - first child node
    * @param n1 - next child node
-   * @param n2 - next child node
    */
-  public StatementList(final NodeToken n0, final NodeListOptional n1, final NodeToken n2) {
+  public IntArrayConstructorCall(final IntType n0, final ArrayAccess n1) {
     f0 = n0;
     f1 = n1;
-    f2 = n2;
   }
 
   /**

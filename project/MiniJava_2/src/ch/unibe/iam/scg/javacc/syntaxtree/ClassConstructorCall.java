@@ -4,29 +4,37 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production Statement:<br>
+ * JTB node class for the production ClassConstructorCall:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 BlockStatement()<br>
- * .. .. | %1 IfStatement()<br>
- * .. .. | %2 WhileStatement()<br>
- * .. .. | %3 PrintStatement()<br>
- * .. .. | %4 AssignmentStatement()<br>
+ * f0 -> Identifier()<br>
+ * f1 -> <PARENTHESIS_LEFT><br>
+ * f2 -> <PARENTHESIS_RIGHT><br>
  */
-public class Statement implements INode {
+public class ClassConstructorCall implements INode {
 
   /** Child node 1 */
-  public NodeChoice f0;
+  public Identifier f0;
+
+  /** Child node 2 */
+  public NodeToken f1;
+
+  /** Child node 3 */
+  public NodeToken f2;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
 
   /**
-   * Constructs the node with its child node.
+   * Constructs the node with all its children nodes.
    *
-   * @param n0 - the child node
+   * @param n0 - first child node
+   * @param n1 - next child node
+   * @param n2 - next child node
    */
-  public Statement(final NodeChoice n0) {
+  public ClassConstructorCall(final Identifier n0, final NodeToken n1, final NodeToken n2) {
     f0 = n0;
+    f1 = n1;
+    f2 = n2;
   }
 
   /**

@@ -4,15 +4,12 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production Statement:<br>
+ * JTB node class for the production ConstructorCall:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 BlockStatement()<br>
- * .. .. | %1 IfStatement()<br>
- * .. .. | %2 WhileStatement()<br>
- * .. .. | %3 PrintStatement()<br>
- * .. .. | %4 AssignmentStatement()<br>
+ * f0 -> . %0 ClassConstructorCall()<br>
+ * .. .. | %1 IntArrayConstructorCall()<br>
  */
-public class Statement implements INode {
+public class ConstructorCall implements INode {
 
   /** Child node 1 */
   public NodeChoice f0;
@@ -25,7 +22,7 @@ public class Statement implements INode {
    *
    * @param n0 - the child node
    */
-  public Statement(final NodeChoice n0) {
+  public ConstructorCall(final NodeChoice n0) {
     f0 = n0;
   }
 

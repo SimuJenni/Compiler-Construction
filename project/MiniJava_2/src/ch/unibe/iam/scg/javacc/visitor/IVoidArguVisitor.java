@@ -206,11 +206,11 @@ public interface IVoidArguVisitor<A> {
   /**
    * Visits a {@link Statement} node, whose child is the following :
    * <p>
-   * f0 -> . %0 StatementList()<br>
-   * .. .. | %1 If()<br>
-   * .. .. | %2 WhileLoop()<br>
-   * .. .. | %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON><br>
-   * .. .. | %4 Assignment()<br>
+   * f0 -> . %0 BlockStatement()<br>
+   * .. .. | %1 IfStatement()<br>
+   * .. .. | %2 WhileStatement()<br>
+   * .. .. | %3 PrintStatement()<br>
+   * .. .. | %4 AssignmentStatement()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -218,45 +218,19 @@ public interface IVoidArguVisitor<A> {
   public void visit(final Statement n, final A argu);
 
   /**
-   * Visits a {@link Assignment} node, whose children are the following :
+   * Visits a {@link BlockStatement} node, whose children are the following :
    * <p>
-   * f0 -> Assignee()<br>
-   * f1 -> <EQUALS_SIGN><br>
-   * f2 -> Expression()<br>
-   * f3 -> <SEMICOLON><br>
+   * f0 -> <BRACE_LEFT><br>
+   * f1 -> ( Statement() )*<br>
+   * f2 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
-  public void visit(final Assignment n, final A argu);
+  public void visit(final BlockStatement n, final A argu);
 
   /**
-   * Visits a {@link Assignee} node, whose child is the following :
-   * <p>
-   * f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
-   * .. .. | %1 Identifier()<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  public void visit(final Assignee n, final A argu);
-
-  /**
-   * Visits a {@link WhileLoop} node, whose children are the following :
-   * <p>
-   * f0 -> <WHILE><br>
-   * f1 -> <PARENTHESIS_LEFT><br>
-   * f2 -> Expression()<br>
-   * f3 -> <PARENTHESIS_RIGHT><br>
-   * f4 -> Statement()<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  public void visit(final WhileLoop n, final A argu);
-
-  /**
-   * Visits a {@link If} node, whose children are the following :
+   * Visits a {@link IfStatement} node, whose children are the following :
    * <p>
    * f0 -> <IF><br>
    * f1 -> <PARENTHESIS_LEFT><br>
@@ -269,24 +243,87 @@ public interface IVoidArguVisitor<A> {
    * @param n - the node to visit
    * @param argu - the user argument
    */
-  public void visit(final If n, final A argu);
+  public void visit(final IfStatement n, final A argu);
 
   /**
-   * Visits a {@link StatementList} node, whose children are the following :
+   * Visits a {@link WhileStatement} node, whose children are the following :
    * <p>
-   * f0 -> <BRACE_LEFT><br>
-   * f1 -> ( Statement() )*<br>
-   * f2 -> <BRACE_RIGHT><br>
+   * f0 -> <WHILE><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> Statement()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
-  public void visit(final StatementList n, final A argu);
+  public void visit(final WhileStatement n, final A argu);
+
+  /**
+   * Visits a {@link PrintStatement} node, whose children are the following :
+   * <p>
+   * f0 -> <PRINT_METHOD><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final PrintStatement n, final A argu);
+
+  /**
+   * Visits a {@link AssignmentStatement} node, whose children are the following :
+   * <p>
+   * f0 -> Assignee()<br>
+   * f1 -> <EQUALS_SIGN><br>
+   * f2 -> Expression()<br>
+   * f3 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final AssignmentStatement n, final A argu);
+
+  /**
+   * Visits a {@link Assignee} node, whose child is the following :
+   * <p>
+   * f0 -> . %0 AssignableArrayAccess()<br>
+   * .. .. | %1 Identifier()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final Assignee n, final A argu);
+
+  /**
+   * Visits a {@link AssignableArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final AssignableArrayAccess n, final A argu);
+
+  /**
+   * Visits a {@link ArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <BRACKET_LEFT><br>
+   * f1 -> Expression()<br>
+   * f2 -> <BRACKET_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final ArrayAccess n, final A argu);
 
   /**
    * Visits a {@link Expression} node, whose child is the following :
    * <p>
-   * f0 -> . %0 ObjectCreationExpression()<br>
+   * f0 -> . %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()<br>
    * .. .. | %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()<br>
    * .. .. | %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()<br>
    * .. .. | %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()<br>
@@ -301,22 +338,21 @@ public interface IVoidArguVisitor<A> {
   public void visit(final Expression n, final A argu);
 
   /**
-   * Visits a {@link ObjectCreationExpression} node, whose children are the following :
+   * Visits a {@link ObjectInstantiationExpression} node, whose children are the following :
    * <p>
    * f0 -> <NEW><br>
    * f1 -> ConstructorCall()<br>
-   * f2 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
-  public void visit(final ObjectCreationExpression n, final A argu);
+  public void visit(final ObjectInstantiationExpression n, final A argu);
 
   /**
    * Visits a {@link ConstructorCall} node, whose child is the following :
    * <p>
-   * f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT><br>
-   * .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+   * f0 -> . %0 ClassConstructorCall()<br>
+   * .. .. | %1 IntArrayConstructorCall()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -324,18 +360,52 @@ public interface IVoidArguVisitor<A> {
   public void visit(final ConstructorCall n, final A argu);
 
   /**
+   * Visits a {@link ClassConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> <PARENTHESIS_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final ClassConstructorCall n, final A argu);
+
+  /**
+   * Visits a {@link IntArrayConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> IntType()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final IntArrayConstructorCall n, final A argu);
+
+  /**
    * Visits a {@link ExpressionPrime} node, whose child is the following :
    * <p>
    * f0 -> . %0 #0 BinaryOperator() #1 Expression() #2 ExpressionPrime()<br>
-   * .. .. | %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()<br>
-   * .. .. | %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()<br>
-   * .. .. | %3 MethodCall()<br>
+   * .. .. | %1 #0 ArrayAccess() #1 ExpressionPrime()<br>
+   * .. .. | %2 #0 ArrayLengthAccess() #1 ExpressionPrime()<br>
+   * .. .. | %3 #0 MethodCall() #1 ExpressionPrime()<br>
    * .. .. | %4 Empty()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   public void visit(final ExpressionPrime n, final A argu);
+
+  /**
+   * Visits a {@link ArrayLengthAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <DOT><br>
+   * f1 -> <LENGTH_FIELD_NAME><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  public void visit(final ArrayLengthAccess n, final A argu);
 
   /**
    * Visits a {@link MethodCall} node, whose children are the following :
@@ -345,7 +415,6 @@ public interface IVoidArguVisitor<A> {
    * f2 -> <PARENTHESIS_LEFT><br>
    * f3 -> ParameterList()<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument

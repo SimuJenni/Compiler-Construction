@@ -4,30 +4,18 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production WhileLoop:<br>
+ * JTB node class for the production ArrayLengthAccess:<br>
  * Corresponding grammar:<br>
- * f0 -> <WHILE><br>
- * f1 -> <PARENTHESIS_LEFT><br>
- * f2 -> Expression()<br>
- * f3 -> <PARENTHESIS_RIGHT><br>
- * f4 -> Statement()<br>
+ * f0 -> <DOT><br>
+ * f1 -> <LENGTH_FIELD_NAME><br>
  */
-public class WhileLoop implements INode {
+public class ArrayLengthAccess implements INode {
 
   /** Child node 1 */
   public NodeToken f0;
 
   /** Child node 2 */
   public NodeToken f1;
-
-  /** Child node 3 */
-  public Expression f2;
-
-  /** Child node 4 */
-  public NodeToken f3;
-
-  /** Child node 5 */
-  public Statement f4;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -37,16 +25,10 @@ public class WhileLoop implements INode {
    *
    * @param n0 - first child node
    * @param n1 - next child node
-   * @param n2 - next child node
-   * @param n3 - next child node
-   * @param n4 - next child node
    */
-  public WhileLoop(final NodeToken n0, final NodeToken n1, final Expression n2, final NodeToken n3, final Statement n4) {
+  public ArrayLengthAccess(final NodeToken n0, final NodeToken n1) {
     f0 = n0;
     f1 = n1;
-    f2 = n2;
-    f3 = n3;
-    f4 = n4;
   }
 
   /**

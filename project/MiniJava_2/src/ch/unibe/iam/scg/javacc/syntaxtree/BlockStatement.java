@@ -4,22 +4,22 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production ObjectCreationExpression:<br>
+ * JTB node class for the production BlockStatement:<br>
  * Corresponding grammar:<br>
- * f0 -> <NEW><br>
- * f1 -> ConstructorCall()<br>
- * f2 -> ExpressionPrime()<br>
+ * f0 -> <BRACE_LEFT><br>
+ * f1 -> ( Statement() )*<br>
+ * f2 -> <BRACE_RIGHT><br>
  */
-public class ObjectCreationExpression implements INode {
+public class BlockStatement implements INode {
 
   /** Child node 1 */
   public NodeToken f0;
 
   /** Child node 2 */
-  public ConstructorCall f1;
+  public NodeListOptional f1;
 
   /** Child node 3 */
-  public ExpressionPrime f2;
+  public NodeToken f2;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -31,7 +31,7 @@ public class ObjectCreationExpression implements INode {
    * @param n1 - next child node
    * @param n2 - next child node
    */
-  public ObjectCreationExpression(final NodeToken n0, final ConstructorCall n1, final ExpressionPrime n2) {
+  public BlockStatement(final NodeToken n0, final NodeListOptional n1, final NodeToken n2) {
     f0 = n0;
     f1 = n1;
     f2 = n2;

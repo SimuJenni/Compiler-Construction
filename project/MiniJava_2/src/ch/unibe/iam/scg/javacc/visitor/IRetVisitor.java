@@ -206,11 +206,11 @@ public interface IRetVisitor<R> {
   /**
    * Visits a {@link Statement} node, whose child is the following :
    * <p>
-   * f0 -> . %0 StatementList()<br>
-   * .. .. | %1 If()<br>
-   * .. .. | %2 WhileLoop()<br>
-   * .. .. | %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON><br>
-   * .. .. | %4 Assignment()<br>
+   * f0 -> . %0 BlockStatement()<br>
+   * .. .. | %1 IfStatement()<br>
+   * .. .. | %2 WhileStatement()<br>
+   * .. .. | %3 PrintStatement()<br>
+   * .. .. | %4 AssignmentStatement()<br>
    *
    * @param n - the node to visit
    * @return the user return information
@@ -218,45 +218,19 @@ public interface IRetVisitor<R> {
   public R visit(final Statement n);
 
   /**
-   * Visits a {@link Assignment} node, whose children are the following :
+   * Visits a {@link BlockStatement} node, whose children are the following :
    * <p>
-   * f0 -> Assignee()<br>
-   * f1 -> <EQUALS_SIGN><br>
-   * f2 -> Expression()<br>
-   * f3 -> <SEMICOLON><br>
+   * f0 -> <BRACE_LEFT><br>
+   * f1 -> ( Statement() )*<br>
+   * f2 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @return the user return information
    */
-  public R visit(final Assignment n);
+  public R visit(final BlockStatement n);
 
   /**
-   * Visits a {@link Assignee} node, whose child is the following :
-   * <p>
-   * f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
-   * .. .. | %1 Identifier()<br>
-   *
-   * @param n - the node to visit
-   * @return the user return information
-   */
-  public R visit(final Assignee n);
-
-  /**
-   * Visits a {@link WhileLoop} node, whose children are the following :
-   * <p>
-   * f0 -> <WHILE><br>
-   * f1 -> <PARENTHESIS_LEFT><br>
-   * f2 -> Expression()<br>
-   * f3 -> <PARENTHESIS_RIGHT><br>
-   * f4 -> Statement()<br>
-   *
-   * @param n - the node to visit
-   * @return the user return information
-   */
-  public R visit(final WhileLoop n);
-
-  /**
-   * Visits a {@link If} node, whose children are the following :
+   * Visits a {@link IfStatement} node, whose children are the following :
    * <p>
    * f0 -> <IF><br>
    * f1 -> <PARENTHESIS_LEFT><br>
@@ -269,24 +243,87 @@ public interface IRetVisitor<R> {
    * @param n - the node to visit
    * @return the user return information
    */
-  public R visit(final If n);
+  public R visit(final IfStatement n);
 
   /**
-   * Visits a {@link StatementList} node, whose children are the following :
+   * Visits a {@link WhileStatement} node, whose children are the following :
    * <p>
-   * f0 -> <BRACE_LEFT><br>
-   * f1 -> ( Statement() )*<br>
-   * f2 -> <BRACE_RIGHT><br>
+   * f0 -> <WHILE><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> Statement()<br>
    *
    * @param n - the node to visit
    * @return the user return information
    */
-  public R visit(final StatementList n);
+  public R visit(final WhileStatement n);
+
+  /**
+   * Visits a {@link PrintStatement} node, whose children are the following :
+   * <p>
+   * f0 -> <PRINT_METHOD><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final PrintStatement n);
+
+  /**
+   * Visits a {@link AssignmentStatement} node, whose children are the following :
+   * <p>
+   * f0 -> Assignee()<br>
+   * f1 -> <EQUALS_SIGN><br>
+   * f2 -> Expression()<br>
+   * f3 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final AssignmentStatement n);
+
+  /**
+   * Visits a {@link Assignee} node, whose child is the following :
+   * <p>
+   * f0 -> . %0 AssignableArrayAccess()<br>
+   * .. .. | %1 Identifier()<br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final Assignee n);
+
+  /**
+   * Visits a {@link AssignableArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final AssignableArrayAccess n);
+
+  /**
+   * Visits a {@link ArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <BRACKET_LEFT><br>
+   * f1 -> Expression()<br>
+   * f2 -> <BRACKET_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final ArrayAccess n);
 
   /**
    * Visits a {@link Expression} node, whose child is the following :
    * <p>
-   * f0 -> . %0 ObjectCreationExpression()<br>
+   * f0 -> . %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()<br>
    * .. .. | %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()<br>
    * .. .. | %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()<br>
    * .. .. | %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()<br>
@@ -301,22 +338,21 @@ public interface IRetVisitor<R> {
   public R visit(final Expression n);
 
   /**
-   * Visits a {@link ObjectCreationExpression} node, whose children are the following :
+   * Visits a {@link ObjectInstantiationExpression} node, whose children are the following :
    * <p>
    * f0 -> <NEW><br>
    * f1 -> ConstructorCall()<br>
-   * f2 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @return the user return information
    */
-  public R visit(final ObjectCreationExpression n);
+  public R visit(final ObjectInstantiationExpression n);
 
   /**
    * Visits a {@link ConstructorCall} node, whose child is the following :
    * <p>
-   * f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT><br>
-   * .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+   * f0 -> . %0 ClassConstructorCall()<br>
+   * .. .. | %1 IntArrayConstructorCall()<br>
    *
    * @param n - the node to visit
    * @return the user return information
@@ -324,18 +360,52 @@ public interface IRetVisitor<R> {
   public R visit(final ConstructorCall n);
 
   /**
+   * Visits a {@link ClassConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> <PARENTHESIS_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final ClassConstructorCall n);
+
+  /**
+   * Visits a {@link IntArrayConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> IntType()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final IntArrayConstructorCall n);
+
+  /**
    * Visits a {@link ExpressionPrime} node, whose child is the following :
    * <p>
    * f0 -> . %0 #0 BinaryOperator() #1 Expression() #2 ExpressionPrime()<br>
-   * .. .. | %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()<br>
-   * .. .. | %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()<br>
-   * .. .. | %3 MethodCall()<br>
+   * .. .. | %1 #0 ArrayAccess() #1 ExpressionPrime()<br>
+   * .. .. | %2 #0 ArrayLengthAccess() #1 ExpressionPrime()<br>
+   * .. .. | %3 #0 MethodCall() #1 ExpressionPrime()<br>
    * .. .. | %4 Empty()<br>
    *
    * @param n - the node to visit
    * @return the user return information
    */
   public R visit(final ExpressionPrime n);
+
+  /**
+   * Visits a {@link ArrayLengthAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <DOT><br>
+   * f1 -> <LENGTH_FIELD_NAME><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final ArrayLengthAccess n);
 
   /**
    * Visits a {@link MethodCall} node, whose children are the following :
@@ -345,7 +415,6 @@ public interface IRetVisitor<R> {
    * f2 -> <PARENTHESIS_LEFT><br>
    * f3 -> ParameterList()<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @return the user return information

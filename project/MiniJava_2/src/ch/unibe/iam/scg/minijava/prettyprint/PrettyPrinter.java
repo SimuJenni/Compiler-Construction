@@ -1,32 +1,31 @@
 package ch.unibe.iam.scg.minijava.prettyprint;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.Assignee;
-import ch.unibe.iam.scg.javacc.syntaxtree.Assignment;
+import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
+import ch.unibe.iam.scg.javacc.syntaxtree.BlockStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.BooleanType;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.ConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
-import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
 import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
-import ch.unibe.iam.scg.javacc.syntaxtree.If;
+import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
-import ch.unibe.iam.scg.javacc.syntaxtree.ObjectCreationExpression;
+import ch.unibe.iam.scg.javacc.syntaxtree.ObjectInstantiationExpression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclarationList;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
-import ch.unibe.iam.scg.javacc.syntaxtree.StatementList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Type;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
-import ch.unibe.iam.scg.javacc.syntaxtree.WhileLoop;
+import ch.unibe.iam.scg.javacc.syntaxtree.WhileStatement;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 
 /**
@@ -120,7 +119,8 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link Assignment} node, whose children are the following :
+	 * Visits a {@link AssignmentStatement} node, whose children are the
+	 * following :
 	 * <p>
 	 * f0 -> Assignee()<br>
 	 * f1 -> <EQUALS_SIGN><br>
@@ -131,7 +131,7 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final Assignment n) {
+	public void visit(final AssignmentStatement n) {
 		// f0 -> Assignee()
 		final Assignee n0 = n.f0;
 		n0.accept(this);
@@ -149,18 +149,17 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link ObjectCreationExpression} node, whose children are the
-	 * following :
+	 * Visits a {@link ObjectInstantiationExpression} node, whose children are
+	 * the following :
 	 * <p>
 	 * f0 -> <NEW><br>
 	 * f1 -> ConstructorCall()<br>
-	 * f2 -> ExpressionPrime()<br>
 	 *
 	 * @param n
 	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final ObjectCreationExpression n) {
+	public void visit(final ObjectInstantiationExpression n) {
 		// f0 -> <NEW>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
@@ -168,23 +167,20 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 		// f1 -> ConstructorCall()
 		final ConstructorCall n1 = n.f1;
 		n1.accept(this);
-		// f2 -> ExpressionPrime()
-		final ExpressionPrime n2 = n.f2;
-		n2.accept(this);
 	}
 
 	/**
-	 * Visits a {@link StatementList} node, whose children are the following :
+	 * Visits a {@link BlockStatement} node, whose children are the following :
 	 * <p>
 	 * f0 -> <BRACE_LEFT><br>
 	 * f1 -> ( Statement() )*<br>
 	 * f2 -> <BRACE_RIGHT><br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final StatementList n) {
+	public void visit(final BlockStatement n) {
 		// f0 -> <BRACE_LEFT>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
@@ -447,7 +443,7 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link WhileLoop} node, whose children are the following :
+	 * Visits a {@link WhileStatement} node, whose children are the following :
 	 * <p>
 	 * f0 -> <WHILE><br>
 	 * f1 -> <PARENTHESIS_LEFT><br>
@@ -456,10 +452,10 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	 * f4 -> Statement()<br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final WhileLoop n) {
+	public void visit(final WhileStatement n) {
 		// f0 -> <WHILE>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
@@ -480,7 +476,7 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	/**
-	 * Visits a {@link If} node, whose children are the following :
+	 * Visits a {@link IfStatement} node, whose children are the following :
 	 * <p>
 	 * f0 -> <IF><br>
 	 * f1 -> <PARENTHESIS_LEFT><br>
@@ -491,10 +487,10 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	 * f6 -> Statement()<br>
 	 *
 	 * @param n
-	 *            the node to visit
+	 *            - the node to visit
 	 */
 	@Override
-	public void visit(final If n) {
+	public void visit(final IfStatement n) {
 		// f0 -> <IF>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);

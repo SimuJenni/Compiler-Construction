@@ -4,17 +4,18 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production Assignment:<br>
+ * JTB node class for the production WhileStatement:<br>
  * Corresponding grammar:<br>
- * f0 -> Assignee()<br>
- * f1 -> <EQUALS_SIGN><br>
+ * f0 -> <WHILE><br>
+ * f1 -> <PARENTHESIS_LEFT><br>
  * f2 -> Expression()<br>
- * f3 -> <SEMICOLON><br>
+ * f3 -> <PARENTHESIS_RIGHT><br>
+ * f4 -> Statement()<br>
  */
-public class Assignment implements INode {
+public class WhileStatement implements INode {
 
   /** Child node 1 */
-  public Assignee f0;
+  public NodeToken f0;
 
   /** Child node 2 */
   public NodeToken f1;
@@ -24,6 +25,9 @@ public class Assignment implements INode {
 
   /** Child node 4 */
   public NodeToken f3;
+
+  /** Child node 5 */
+  public Statement f4;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -35,12 +39,14 @@ public class Assignment implements INode {
    * @param n1 - next child node
    * @param n2 - next child node
    * @param n3 - next child node
+   * @param n4 - next child node
    */
-  public Assignment(final Assignee n0, final NodeToken n1, final Expression n2, final NodeToken n3) {
+  public WhileStatement(final NodeToken n0, final NodeToken n1, final Expression n2, final NodeToken n3, final Statement n4) {
     f0 = n0;
     f1 = n1;
     f2 = n2;
     f3 = n3;
+    f4 = n4;
   }
 
   /**

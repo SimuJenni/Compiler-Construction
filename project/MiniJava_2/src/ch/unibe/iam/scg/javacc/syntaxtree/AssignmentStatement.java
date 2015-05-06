@@ -4,29 +4,43 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production Statement:<br>
+ * JTB node class for the production AssignmentStatement:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 BlockStatement()<br>
- * .. .. | %1 IfStatement()<br>
- * .. .. | %2 WhileStatement()<br>
- * .. .. | %3 PrintStatement()<br>
- * .. .. | %4 AssignmentStatement()<br>
+ * f0 -> Assignee()<br>
+ * f1 -> <EQUALS_SIGN><br>
+ * f2 -> Expression()<br>
+ * f3 -> <SEMICOLON><br>
  */
-public class Statement implements INode {
+public class AssignmentStatement implements INode {
 
   /** Child node 1 */
-  public NodeChoice f0;
+  public Assignee f0;
+
+  /** Child node 2 */
+  public NodeToken f1;
+
+  /** Child node 3 */
+  public Expression f2;
+
+  /** Child node 4 */
+  public NodeToken f3;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
 
   /**
-   * Constructs the node with its child node.
+   * Constructs the node with all its children nodes.
    *
-   * @param n0 - the child node
+   * @param n0 - first child node
+   * @param n1 - next child node
+   * @param n2 - next child node
+   * @param n3 - next child node
    */
-  public Statement(final NodeChoice n0) {
+  public AssignmentStatement(final Assignee n0, final NodeToken n1, final Expression n2, final NodeToken n3) {
     f0 = n0;
+    f1 = n1;
+    f2 = n2;
+    f3 = n3;
   }
 
   /**
