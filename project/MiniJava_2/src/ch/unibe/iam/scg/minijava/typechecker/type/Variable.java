@@ -3,9 +3,9 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 public class Variable {
 
 	protected String name;
-	protected Type type;
+	protected IType type;
 
-	public Variable(String name, Type type) {
+	public Variable(String name, IType type) {
 		this.name = name;
 		this.type = type;
 	}
@@ -14,7 +14,7 @@ public class Variable {
 		return name;
 	}
 
-	public Type getType() {
+	public IType getType() {
 		return type;
 	}
 

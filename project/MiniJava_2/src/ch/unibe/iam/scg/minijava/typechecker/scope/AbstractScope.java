@@ -4,29 +4,27 @@ import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 import ch.unibe.iam.scg.minijava.typechecker.type.Method;
 import ch.unibe.iam.scg.minijava.typechecker.type.Variable;
 
-public class ClassScope extends AbstractScope {
+public abstract class AbstractScope implements IScope {
 
-	protected IType type;
+	protected IScope parent;
 
-	public ClassScope(IScope parent, IType type) {
-		super(parent);
-		this.type = type;
+	public AbstractScope(IScope parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public IType lookupType(String name) throws LookupException {
+		return this.parent.lookupType(name);
 	}
 
 	@Override
 	public Method lookupMethod(String name) throws LookupException {
-		if (this.type.hasMethod(name)) {
-			return this.type.getMethod(name);
-		}
-		return super.lookupMethod(name);
+		return this.parent.lookupMethod(name);
 	}
 
 	@Override
 	public Variable lookupVariable(String name) throws LookupException {
-		if (this.type.hasVariable(name)) {
-			return this.type.getVariable(name);
-		}
-		return super.lookupVariable(name);
+		return this.parent.lookupVariable(name);
 	}
 
 }
