@@ -4,6 +4,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstRetVisitor;
 
 public class SymbolTableBuilderDelegator extends DepthFirstRetVisitor<Boolean> {
@@ -51,4 +52,8 @@ public class SymbolTableBuilderDelegator extends DepthFirstRetVisitor<Boolean> {
 		return (new ExpressionVisitor(this.table)).check(node);
 	}
 
+	@Override
+	public Boolean visit(Statement node) {
+		return (new StatementVisitor(this.table)).check(node);
+	}
 }

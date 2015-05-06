@@ -59,10 +59,8 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	    if(tokenType.equals("\"this\""))
 	    	type="this";
 
-
 	    typeStack.push(type);
 		expressionType = type;
-	    String tkIm = n.tokenImage;
 	  }
 	  
 	  /**
