@@ -3,14 +3,14 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractType implements IType {
+public class Type implements IType {
 
 	protected String name;
 	protected IType parent;
 	protected Map<String, Variable> variables;
 	protected Map<String, Method> methods;
 
-	public AbstractType(String name, IType superType) {
+	public Type(String name, IType superType) {
 		this.name = name;
 		this.parent = superType;
 		this.variables = new HashMap<String, Variable>();

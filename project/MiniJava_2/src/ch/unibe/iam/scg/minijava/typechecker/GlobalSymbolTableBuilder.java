@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
 
 /**
  * Root symbol-table in the symbol-table hierarchy. Stores references to the

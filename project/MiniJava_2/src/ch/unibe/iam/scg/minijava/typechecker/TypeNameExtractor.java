@@ -4,6 +4,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.Type;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstRetVisitor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
 
 public class TypeNameExtractor extends DepthFirstRetVisitor<String> {
 
