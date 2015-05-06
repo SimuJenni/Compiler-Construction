@@ -6,6 +6,7 @@ import java.util.List;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclaration;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.TypeNameExtractor;
 
 public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
 

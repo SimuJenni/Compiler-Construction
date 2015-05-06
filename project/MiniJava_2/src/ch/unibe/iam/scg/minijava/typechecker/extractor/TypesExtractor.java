@@ -12,7 +12,7 @@ import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
-public class ClassesExtractor {
+public class TypesExtractor {
 
 	public static class ClassesVisitor extends DepthFirstVoidVisitor {
 
@@ -40,7 +40,7 @@ public class ClassesExtractor {
 			String className = n.f1.f0.tokenImage;
 			String superClassName = implicitSuperType.getName();
 			if (n.f2.present()) {
-				superClassName = IdentifierNameExtractor.extractFrom(n.f2);
+				superClassName = (new IdentifierNameExtractor()).extract(n.f2);
 			}
 			this.classNames.add(className);
 			if (!this.classNames.contains(superClassName)) {
@@ -51,7 +51,7 @@ public class ClassesExtractor {
 
 	}
 
-	public Map<String, IType> getTypes(INode node, IType implicitSuperType)
+	public Map<String, IType> extract(INode node, IType implicitSuperType)
 			throws NameCollisionException, LookupException {
 		ClassesVisitor visitor = new ClassesVisitor(implicitSuperType);
 		node.accept(visitor);
@@ -102,4 +102,5 @@ public class ClassesExtractor {
 		}
 		return sorted;
 	}
+	
 }

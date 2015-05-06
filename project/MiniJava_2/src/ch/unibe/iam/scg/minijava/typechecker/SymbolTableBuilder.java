@@ -4,6 +4,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.TypeNameExtractor;
 
 public class SymbolTableBuilder<T extends SymbolTable> extends DepthFirstVoidVisitor {
 
