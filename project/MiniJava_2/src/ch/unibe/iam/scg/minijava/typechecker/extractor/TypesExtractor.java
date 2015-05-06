@@ -14,13 +14,13 @@ import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
 public class TypesExtractor {
 
-	protected static class ClassesVisitor extends DepthFirstVoidVisitor {
+	protected static class ClassDeclarationVisitor extends DepthFirstVoidVisitor {
 
 		protected IType implicitSuperType;
 		protected List<String> classNames;
 		protected Map<String, String> inheritances;
 
-		public ClassesVisitor(IType implicitSuperType) {
+		public ClassDeclarationVisitor(IType implicitSuperType) {
 			super();
 			this.implicitSuperType = implicitSuperType;
 			this.classNames = new ArrayList<String>();
@@ -53,7 +53,7 @@ public class TypesExtractor {
 
 	public Map<String, IType> extract(INode node, IType implicitSuperType)
 			throws NameCollisionException, LookupException {
-		ClassesVisitor visitor = new ClassesVisitor(implicitSuperType);
+		ClassDeclarationVisitor visitor = new ClassDeclarationVisitor(implicitSuperType);
 		node.accept(visitor);
 		List<String> classNames = visitor.getClassNames();
 		Map<String, String> inheritances = visitor.getInheritances();
