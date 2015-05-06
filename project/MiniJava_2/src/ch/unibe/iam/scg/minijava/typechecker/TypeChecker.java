@@ -1,6 +1,14 @@
 package ch.unibe.iam.scg.minijava.typechecker;
 
+import java.util.Map;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.NameCollisionException;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesPreExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.scope.GlobalScope;
+import ch.unibe.iam.scg.minijava.typechecker.type.IType;
+import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 
 /**
  * Change at will.
@@ -10,34 +18,34 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
  */
 public class TypeChecker {
 
-	private SymbolTable globalSymbolTable;
+	protected GlobalScope globalScope;
 
 	public TypeChecker() {
-		this.globalSymbolTable = new SymbolTable();
-		ClassEntry nullClassEntry = new NullClassEntry();
-		this.globalSymbolTable.put(Types.INT_ARRAY.getName(), new ClassEntry(
-				Types.INT_ARRAY.getName(), nullClassEntry,
-				this.globalSymbolTable));
-		this.globalSymbolTable.put(Types.INT.getName(), new ClassEntry(
-				Types.INT.getName(), null, this.globalSymbolTable));
-		this.globalSymbolTable.put(Types.STRING_ARRAY.getName(),
-				new ClassEntry(Types.STRING_ARRAY.getName(), nullClassEntry,
-						this.globalSymbolTable));
-		this.globalSymbolTable
-				.put(Types.STRING.getName(),
-						new ClassEntry(Types.STRING.getName(), nullClassEntry,
-								this.globalSymbolTable));
-		this.globalSymbolTable.put(Types.BOOLEAN.getName(),
-				new ClassEntry(Types.BOOLEAN.getName(), nullClassEntry,
-						this.globalSymbolTable));
-		this.globalSymbolTable.put(Types.VOID.getName(), new ClassEntry(
-				Types.VOID.getName(), nullClassEntry, this.globalSymbolTable));
+		this.globalScope = new GlobalScope();
 	}
 
-	public boolean check(Object n) {
-		INode node = (INode) n;
-		return node.accept(new SymbolTableBuilderDelegator(
-				this.globalSymbolTable));
+	public boolean check(Object o) {
+		INode n = (INode) o;
+		try {
+			// first pass: extract flat class declarations
+			Map<String, IType> types = (new TypesPreExtractor()).extract(n,
+					this.globalScope.getImplicitSuperType());
+			for (Map.Entry<String, IType> entry : types.entrySet()) {
+				if (this.globalScope.hasType(entry.getKey())) {
+					throw new NameCollisionException(entry.getKey());
+				}
+				this.globalScope.putType(entry.getKey(), entry.getValue());
+			}
+			// second pass: extract full class declarations
+			types = (new TypesExtractor()).extract(n, this.globalScope);
+			return true;
+		} catch (NameCollisionException exception) {
+			exception.printStackTrace();
+			return false;
+		} catch (LookupException exception) {
+			exception.printStackTrace();
+			return false;
+		}
 	}
 
 }

@@ -77,4 +77,12 @@ public class Type implements IType {
 		return this.parent.lookupMethod(name);
 	}
 
+	@Override
+	public boolean canBeAssignedTo(IType type) {
+		if (type == this) {
+			return true;
+		}
+		return this.parent.canBeAssignedTo(type);
+	}
+
 }

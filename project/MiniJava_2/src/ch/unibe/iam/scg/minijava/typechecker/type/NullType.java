@@ -54,4 +54,9 @@ public class NullType implements IType {
 		throw new LookupException(name);
 	}
 
+	@Override
+	public boolean canBeAssignedTo(IType type) {
+		return false;
+	}
+
 }

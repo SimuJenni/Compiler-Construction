@@ -22,4 +22,6 @@ public interface IType {
 
 	public Method lookupMethod(String name) throws LookupException;
 
+	public boolean canBeAssignedTo(IType type);
+
 }

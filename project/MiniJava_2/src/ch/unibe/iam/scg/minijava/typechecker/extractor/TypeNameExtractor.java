@@ -16,7 +16,8 @@ public class TypeNameExtractor {
 
 		@Override
 		public void visit(Type n) {
-			this.typeName = n.f0.choice.toString();
+			this.typeName = (new NodeTokenConcatenatingExtractor())
+					.extract(n.f0.choice);
 		}
 
 	}
