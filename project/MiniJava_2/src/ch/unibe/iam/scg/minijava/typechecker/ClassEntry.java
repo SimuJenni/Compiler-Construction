@@ -77,4 +77,9 @@ public class ClassEntry extends SymbolTable implements SymbolTableEntry {
 		return name;
 	}
 
+	public void uninit() {
+		// TODO Auto-generated method stub
+		isInitialized=false;
+	}
+
 }

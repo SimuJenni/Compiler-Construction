@@ -3,7 +3,11 @@ package ch.unibe.iam.scg.minijava.typechecker;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclaration;
 
 public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
@@ -66,6 +70,40 @@ public class ClassEntryBuilder extends SymbolTableBuilder<ClassEntry> {
 				methodEntry);
 		// delegate
 		n.accept(methodEntryBuilder);
+		
+		
+//	    // f6 -> ( VarDeclaration() )*
+//	    final NodeListOptional n6 = n.f6;
+//	    if (n6.present()) {
+//	      VarDeclarationVisitor varVisitor=new VarDeclarationVisitor(methodEntry);
+//		  for (int i = 0; i < n6.size(); i++) {
+//		    final INode nloeai = n6.elementAt(i);
+//		    nloeai.accept(varVisitor);
+//		  }
+//	    }
+//		
+//	    // f7 -> ( Statement() )*
+//		StatementVisitor statementVisitor=new StatementVisitor(methodEntry);
+//	    final NodeListOptional n7 = n.f7;
+//	    if (n7.present()) {
+//	      for (int i = 0; i < n7.size(); i++) {
+//	        final INode nloeai = n7.elementAt(i);
+//	        statementVisitor.check(nloeai);
+//	      }
+//	    }
+//		
+//		// f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
+//	    final NodeOptional n8 = n.f8;
+//	    if (n8.present()) {
+//	      final NodeSequence seq = (NodeSequence) n8.node;
+//	      // #1 Expression()
+//	      final INode seq2 = seq.elementAt(1);
+//	      ExpressionVisitor expressionVisitor = new ExpressionVisitor(methodEntry);
+//		  boolean b=expressionVisitor.check(seq2);
+//		  ClassEntry returnedType =  (ClassEntry) this.table.lookup(expressionVisitor.expressionType);
+////	      if(!returnedType.getName().equals(returnType))
+////	    	  throw new ReturnedTypeCanNotBeAssignedToReturnTypeException(returnedType, returnType);
+//	    }
 	}
 
 }

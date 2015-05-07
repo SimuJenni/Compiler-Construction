@@ -32,6 +32,11 @@ public class MethodEntryBuilder extends SymbolTableBuilder<MethodEntry> {
 		if (!n.f8.present() && this.table.getReturnType() != this.table.lookup(Types.VOID.getName())){
 			throw new ReturnValueFromVoidMethodException();
 		}
+		super.visit(n.f1);
+		super.visit(n.f3);
+		super.visit(n.f6);
+		super.visit(n.f7);
+
 		if (n.f8.present()){
 			Expression expression = n.f8.accept(new FirstExpressionExtractor());
 			ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.table);
@@ -42,7 +47,6 @@ public class MethodEntryBuilder extends SymbolTableBuilder<MethodEntry> {
 				throw new ReturnedTypeCanNotBeAssignedToReturnTypeException(returnedType, this.table.getReturnType());
 			}
 		}
-		super.visit(n);
 	}
 
 }

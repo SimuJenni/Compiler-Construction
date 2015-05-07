@@ -16,6 +16,7 @@ public class StatementVisitor extends DepthFirstVoidVisitor {
 	private SymbolTable table;
 	private boolean valid;
 	private ExpressionVisitor expressionVisistor;
+	private String assigneeType;
 	
 	public StatementVisitor(SymbolTable table) {
 		this.table=table;
@@ -108,14 +109,57 @@ public class StatementVisitor extends DepthFirstVoidVisitor {
 	    // f0 -> Assignee()
 	    final Assignee n0 = n.f0;
 	    n0.accept(this);
-	    // f1 -> <EQUALS_SIGN>
-	    final NodeToken n1 = n.f1;
-	    n1.accept(this);
 	    // f2 -> Expression()
 	    final Expression n2 = n.f2;
         valid=this.expressionVisistor.check(n2);
+        valid=this.expressionVisistor.expressionType.equals(assigneeType);
 	    // f3 -> <SEMICOLON>
 	    final NodeToken n3 = n.f3;
 	    n3.accept(this);
+	  }
+	  
+	  
+	  /**
+	   * Visits a {@link Assignee} node, whose child is the following :
+	   * <p>
+	   * f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+	   * .. .. | %1 Identifier()<br>
+	   *
+	   * @param n - the node to visit
+	   */
+	  @Override
+	  public void visit(final Assignee n) {
+	    // f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
+	    // .. .. | %1 Identifier()
+	    final NodeChoice nch = n.f0;
+	    final INode ich = nch.choice;
+	    switch (nch.which) {
+	      case 0:
+	        // %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
+	        final NodeSequence seq = (NodeSequence) ich;
+	        String id=ich.accept(new IdentifierNameExtractor());
+	        VariableEntry varType =  (VariableEntry)this.table.lookup(id);
+	        assigneeType=varType.getEntryTypeName();
+	        assigneeType="int";
+	        // #2 Expression()
+	        final INode seq3 = seq.elementAt(2);
+			ExpressionVisitor expressionVisitor = new ExpressionVisitor(this.table);
+			expressionVisitor.check(seq3);
+			ClassEntry returnedType =  (ClassEntry) this.table.lookup(expressionVisitor.expressionType);
+			valid = returnedType.getName().equals(Types.INT.getName());
+	        // #3 <BRACKET_RIGHT>
+	        final INode seq4 = seq.elementAt(3);
+	        seq4.accept(this);
+	        break;
+	      case 1:
+	        // %1 Identifier()
+	    	id=ich.accept(new IdentifierNameExtractor());
+		    varType =  (VariableEntry)this.table.lookup(id);
+		    assigneeType=varType.getEntryTypeName();
+	        break;
+	      default:
+	        // should not occur !!!
+	        break;
+	    }
 	  }
 }

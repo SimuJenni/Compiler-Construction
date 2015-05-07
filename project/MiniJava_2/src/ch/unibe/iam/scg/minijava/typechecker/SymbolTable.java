@@ -16,6 +16,13 @@ public class SymbolTable implements SymbolTableEntry {
 		}
 		entries.put(key, entry);
 	}
+	
+	public void putAndRemoveIfExists(String key, SymbolTableEntry entry) {
+		if (this.containsKey(key)) {
+			this.entries.remove(key);
+		}
+		entries.put(key, entry);
+	}
 
 	public SymbolTableEntry get(String key) {
 		if (!this.containsKey(key)) {
@@ -37,5 +44,7 @@ public class SymbolTable implements SymbolTableEntry {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
