@@ -4,7 +4,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
-import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
+import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.Variable;
 
 public class VariableExtractor {

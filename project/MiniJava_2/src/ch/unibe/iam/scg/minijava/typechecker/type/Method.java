@@ -1,26 +1,25 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
+import ch.unibe.iam.scg.minijava.typechecker.scope.Scope;
 
 public class Method {
 
-	protected IType type;
 	protected String name;
 	protected IType returnType;
-	protected Map<String, Variable> parameters;
-	protected Map<String, Variable> variables;
+	protected List<Variable> parameters;
+	protected IScope scope;
 
-	public Method(IType type, String name, IType returnType) {
-		this.type = type;
+	public Method(IScope parent, String name, IType returnType, List<Variable> parameters) {
 		this.name = name;
 		this.returnType = returnType;
-		this.parameters = new HashMap<String, Variable>();
-		this.variables = new HashMap<String, Variable>();
-	}
-
-	public IType getType() {
-		return this.type;
+		this.parameters = parameters;
+		this.scope = new Scope(parent);
+		for (Variable parameter : parameters) {
+			this.scope.putVariable(parameter.getName(), parameter);
+		}
 	}
 
 	public String getName() {
@@ -31,32 +30,12 @@ public class Method {
 		return this.returnType;
 	}
 
-	public boolean hasParameter(String name) {
-		return this.parameters.containsKey(name);
+	public List<Variable> getParameters() {
+		return this.parameters;
 	}
 
-	public Variable getParameter(String name) {
-		assert this.hasParameter(name);
-		return this.parameters.get(name);
-	}
-
-	public void putParameter(String name, Variable parameter) {
-		assert !this.hasParameter(name);
-		this.parameters.put(name, parameter);
-	}
-
-	public boolean hasVariable(String name) {
-		return this.variables.containsKey(name);
-	}
-
-	public Variable getVariable(String name) {
-		assert this.hasVariable(name);
-		return this.variables.get(name);
-	}
-
-	public void putVariable(String name, Variable variable) {
-		assert !this.hasVariable(name);
-		this.variables.put(name, variable);
+	public IScope getScope() {
+		return this.scope;
 	}
 
 }

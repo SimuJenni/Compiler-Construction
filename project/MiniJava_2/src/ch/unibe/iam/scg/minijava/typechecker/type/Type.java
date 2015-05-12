@@ -1,20 +1,20 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-import java.util.HashMap;
-import java.util.Map;
+import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
+import ch.unibe.iam.scg.minijava.typechecker.scope.Scope;
 
 public class Type implements IType {
 
 	protected String name;
 	protected IType parent;
-	protected Map<String, Variable> variables;
-	protected Map<String, Method> methods;
+	protected IScope scope;
 
-	public Type(String name, IType superType) {
+	public Type(String name, IType parent) {
 		this.name = name;
-		this.parent = superType;
-		this.variables = new HashMap<String, Variable>();
-		this.methods = new HashMap<String, Method>();
+		this.parent = parent;
+		this.scope = new Scope(parent.getScope());
+		Variable thisVariable = new Variable("this", this);
+		this.scope.putVariable(thisVariable.getName(), thisVariable);
 	}
 
 	@Override
@@ -28,61 +28,16 @@ public class Type implements IType {
 	}
 
 	@Override
-	public boolean hasVariable(String name) {
-		return this.variables.containsKey(name);
-	}
-
-	@Override
-	public Variable getVariable(String name) {
-		assert this.hasVariable(name);
-		return this.variables.get(name);
-	}
-
-	@Override
-	public void putVariable(String name, Variable variable) {
-		assert !this.hasVariable(name);
-		this.variables.put(name, variable);
-	}
-
-	@Override
-	public Variable lookupVariable(String name) throws LookupException {
-		if (this.hasVariable(name)) {
-			return this.getVariable(name);
-		}
-		return this.parent.lookupVariable(name);
-	}
-
-	@Override
-	public boolean hasMethod(String name) {
-		return this.methods.containsKey(name);
-	}
-
-	@Override
-	public Method getMethod(String name) {
-		assert this.hasMethod(name);
-		return this.methods.get(name);
-	}
-
-	@Override
-	public void putMethod(String name, Method method) {
-		assert !this.hasVariable(name);
-		this.methods.put(name, method);
-	}
-
-	@Override
-	public Method lookupMethod(String name) throws LookupException {
-		if (this.hasMethod(name)) {
-			return this.getMethod(name);
-		}
-		return this.parent.lookupMethod(name);
-	}
-
-	@Override
 	public boolean canBeAssignedTo(IType type) {
 		if (type == this) {
 			return true;
 		}
 		return this.parent.canBeAssignedTo(type);
+	}
+
+	@Override
+	public IScope getScope(){
+		return this.scope;
 	}
 
 }

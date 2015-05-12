@@ -8,8 +8,9 @@ import java.util.Map;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
+import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
+import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
-import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
 public class TypesPreExtractor {
@@ -43,6 +44,9 @@ public class TypesPreExtractor {
 			if (n.f2.present()) {
 				superClassName = (new IdentifierNameExtractor()).extract(n.f2);
 			}
+			if (this.classNames.contains(className)) {
+				throw new NameCollisionException(className);
+			}
 			this.classNames.add(className);
 			if (!this.classNames.contains(superClassName)) {
 				this.classNames.add(superClassName);
@@ -66,9 +70,6 @@ public class TypesPreExtractor {
 		for (String className : classNames) {
 			if (className.equals(implicitSuperType.getName())) {
 				continue;
-			}
-			if (types.containsKey(className)) {
-				throw new NameCollisionException(className);
 			}
 			String superClassName = inheritances.get(className);
 			if (!types.containsKey(superClassName)) {
@@ -95,7 +96,7 @@ public class TypesPreExtractor {
 		candidates.removeAll(inheritances.keySet());
 		while (!candidates.isEmpty()) {
 			String current = candidates.remove(0);
-			if (sorted.contains(current)){
+			if (sorted.contains(current)) {
 				continue;
 			}
 			sorted.add(current);

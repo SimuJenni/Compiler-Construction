@@ -3,12 +3,14 @@ package ch.unibe.iam.scg.minijava.typechecker;
 import java.util.Map;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
-import ch.unibe.iam.scg.minijava.typechecker.extractor.NameCollisionException;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.ScopeMapExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesPreExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.GlobalScope;
+import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
+import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
+import ch.unibe.iam.scg.minijava.typechecker.scope.ScopeMap;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
-import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
 
 /**
  * Change at will.
@@ -18,24 +20,11 @@ import ch.unibe.iam.scg.minijava.typechecker.type.LookupException;
  */
 public class TypeChecker {
 
-	protected GlobalScope globalScope;
-
-	public TypeChecker() {
-		this.globalScope = new GlobalScope();
-	}
-
 	public boolean check(Object o) {
 		INode n = (INode) o;
 		try {
-			// first pass: extract flat class declarations
-			Map<String, IType> types = (new TypesPreExtractor()).extract(n,
-					this.globalScope.getImplicitSuperType());
-			for (Map.Entry<String, IType> entry : types.entrySet()) {
-				if (this.globalScope.hasType(entry.getKey())) {
-					throw new NameCollisionException(entry.getKey());
-				}
-				this.globalScope.putType(entry.getKey(), entry.getValue());
-			}
+			GlobalScope globalScope = this.buildGlobalScope(n);
+			ScopeMap scopeMap = this.buildScopeMap(n, globalScope);
 			// second pass: extract full class declarations
 			types = (new TypesExtractor()).extract(n, this.globalScope);
 			return true;
@@ -46,6 +35,24 @@ public class TypeChecker {
 			exception.printStackTrace();
 			return false;
 		}
+	}
+
+	protected ScopeMap buildScopeMap(INode n, GlobalScope globalScope) {
+		return (new ScopeMapExtractor()).extract(n, globalScope);
+	}
+
+	protected GlobalScope buildGlobalScope(INode n)
+			throws NameCollisionException, LookupException {
+		GlobalScope globalScope = new GlobalScope();
+		Map<String, IType> types = (new TypesPreExtractor()).extract(n,
+				globalScope.getImplicitSuperType());
+		for (Map.Entry<String, IType> entry : types.entrySet()) {
+			if (globalScope.hasType(entry.getKey())) {
+				throw new NameCollisionException(entry.getKey());
+			}
+			globalScope.putType(entry.getKey(), entry.getValue());
+		}
+		return globalScope;
 	}
 
 }
