@@ -1,6 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
-public class TypesPreExtractor {
+public class TypesExtractor {
 
 	protected static class ClassDeclarationVisitor extends
 			DepthFirstVoidVisitor {
@@ -56,7 +57,7 @@ public class TypesPreExtractor {
 
 	}
 
-	public Map<String, IType> extract(INode node, IType implicitSuperType)
+	public Collection<IType> extract(INode node, IType implicitSuperType)
 			throws NameCollisionException, LookupException {
 		ClassDeclarationVisitor visitor = new ClassDeclarationVisitor(
 				implicitSuperType);
@@ -80,7 +81,7 @@ public class TypesPreExtractor {
 			types.put(thisType.getName(), thisType);
 		}
 		types.remove(implicitSuperType.getName());
-		return types;
+		return types.values();
 	}
 
 	/**

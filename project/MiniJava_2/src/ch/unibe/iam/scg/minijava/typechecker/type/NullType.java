@@ -1,7 +1,5 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
-import ch.unibe.iam.scg.minijava.typechecker.scope.NullScope;
 
 public class NullType implements IType {
 
@@ -20,11 +18,6 @@ public class NullType implements IType {
 	@Override
 	public boolean canBeAssignedTo(IType type) {
 		return false;
-	}
-
-	@Override
-	public IScope getScope(){
-		return NullScope.INSTANCE;
 	}
 
 }

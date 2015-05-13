@@ -5,7 +5,7 @@ import java.util.Map;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.ScopeMapExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesExtractor;
-import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesPreExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.TypesExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.GlobalScope;
 import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
@@ -44,7 +44,7 @@ public class TypeChecker {
 	protected GlobalScope buildGlobalScope(INode n)
 			throws NameCollisionException, LookupException {
 		GlobalScope globalScope = new GlobalScope();
-		Map<String, IType> types = (new TypesPreExtractor()).extract(n,
+		Map<String, IType> types = (new TypesExtractor()).extract(n,
 				globalScope.getImplicitSuperType());
 		for (Map.Entry<String, IType> entry : types.entrySet()) {
 			if (globalScope.hasType(entry.getKey())) {

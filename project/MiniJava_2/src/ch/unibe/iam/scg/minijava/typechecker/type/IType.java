@@ -1,6 +1,5 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 
 public interface IType {
 
@@ -9,7 +8,5 @@ public interface IType {
 	public IType getParent();
 
 	public boolean canBeAssignedTo(IType type);
-
-	public IScope getScope();
 
 }

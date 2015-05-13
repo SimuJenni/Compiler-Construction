@@ -1,8 +1,8 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.ParameterDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
@@ -28,7 +28,7 @@ public class MethodExtractor {
 			return returnTypeName;
 		}
 
-		public INode getParameterDeclarations() {
+		public List<ParameterDeclaration> getParameterDeclarations() {
 			return parameterDeclarations;
 		}
 
@@ -36,13 +36,13 @@ public class MethodExtractor {
 		public void visit(MethodDeclaration n) {
 			this.name = (new IdentifierNameExtractor()).extract(n.f2);
 			this.returnTypeName = (new TypeNameExtractor()).extract(n.f1);
-			this.parameterDeclarations = n.f4;
+			this.parameterDeclarations = new ArrayList<ParameterDeclaration>();
+			super.visit(n);
 		}
-		
+
 		@Override
 		public void visit(ParameterDeclaration n) {
-			// TODO Auto-generated method stub
-			super.visit(n);
+			this.parameterDeclarations.add(n);
 		}
 
 	}
@@ -51,12 +51,15 @@ public class MethodExtractor {
 			throws NameCollisionException, LookupException {
 		MethodVisitor visitor = new MethodVisitor();
 		node.accept(visitor);
+		List<Variable> parameters = new ArrayList<Variable>();
+		for (ParameterDeclaration parameterDeclaration : visitor
+				.getParameterDeclarations()) {
+			Variable parameter = (new VariableExtractor()).extract(
+					parameterDeclaration, scope);
+			parameters.add(parameter);
+		}
 		Method method = new Method(visitor.getName(), scope.lookupType(visitor
 				.getReturnTypeName()), parameters);
-		for (Map.Entry<String, Variable> entry : (new VariablesExtractor())
-				.extract(visitor.getParameterDeclarations(), scope).entrySet()) {
-			method.putParameter(entry.getKey(), entry.getValue());
-		}
 		return method;
 	}
 
