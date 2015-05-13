@@ -12,6 +12,8 @@ import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstRetVisitor;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.OperatorToken;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ShuntingYard;
 
 public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJavaImplConstants {
 	private SymbolTable table;
@@ -53,17 +55,17 @@ public class ExpressionVisitor extends DepthFirstVoidVisitor implements MiniJava
 	    String tokenType=tokenImage[n.kind];
 	    String type=null;
 	    if(tokenType.equals("<INTEGER_LITERAL>"))
-	    	type=Types.INT.getName();
+	    	type=Types.INT.getSymbol();
 	    if(tokenType.equals("\"true\""))
-	    	type=Types.BOOLEAN.getName();
+	    	type=Types.BOOLEAN.getSymbol();
 	    if(tokenType.equals("\"false\""))
-	    	type=Types.BOOLEAN.getName();
+	    	type=Types.BOOLEAN.getSymbol();
 
 	    typeStack.push(type);
 	    String tkIm = n.tokenImage;
 	  }
 	  
-	  public void visit(Operator operator){
+	  public void visit(OperatorToken operator){
 		  if(operator.isLeftParanthesis()||operator.isRightParanthesis())
 			  return;
 		  if(operator.isUnary()){
