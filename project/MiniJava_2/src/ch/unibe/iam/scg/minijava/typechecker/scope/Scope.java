@@ -1,5 +1,6 @@
 package ch.unibe.iam.scg.minijava.typechecker.scope;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
@@ -15,6 +16,9 @@ public class Scope implements IScope {
 
 	public Scope(IScope parent) {
 		this.parent = parent;
+		this.types = new HashMap<String, IType>();
+		this.methods = new HashMap<String, Method>();
+		this.variables = new HashMap<String, Variable>();
 	}
 
 	@Override
