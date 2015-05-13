@@ -13,13 +13,13 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectInstantiationExpression;
-import ch.unibe.iam.scg.javacc.syntaxtree.ParameterList;
 import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.Type;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
@@ -285,12 +285,21 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 	}
 
 	@Override
-	public void visit(final ParameterList n) {
-		// f0 -> ( #0 Parameter()
+	public void visit(MethodCall n) {
+		// f0 -> <DOT>
+		final NodeToken n0 = n.f0;
+		n0.accept(this);
+		// f1 -> Identifier()
+		final Identifier n1 = n.f1;
+		n1.accept(this);
+		// f2 -> <PARENTHESIS_LEFT>
+		final NodeToken n2 = n.f2;
+		n2.accept(this);
+		// f3 -> ( #0 Parameter()
 		// .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?
-		final NodeOptional n0 = n.f0;
-		if (n0.present()) {
-			final NodeSequence seq = (NodeSequence) n0.node;
+		final NodeOptional n3 = n.f3;
+		if (n3.present()) {
+			final NodeSequence seq = (NodeSequence) n3.node;
 			// #0 Parameter()
 			final INode seq1 = seq.elementAt(0);
 			seq1.accept(this);
@@ -311,6 +320,9 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 				}
 			}
 		}
+		// f4 -> <PARENTHESIS_RIGHT>
+		final NodeToken n4 = n.f4;
+		n4.accept(this);
 	}
 
 	@Override

@@ -875,31 +875,21 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   Identifier n2 = null;
   NodeToken n3 = null;
   Token n4 = null;
-  ParameterList n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
+  NodeOptional n5 = new NodeOptional();
+  NodeSequence n6 = null;
+  Parameter n7 = null;
+  NodeListOptional n8 = null;
+  NodeSequence n9 = null;
+  NodeToken n10 = null;
+  Token n11 = null;
+  Parameter n12 = null;
+  NodeToken n13 = null;
+  Token n14 = null;
     n1 = jj_consume_token(DOT);
     n0 = JTBToolkit.makeNodeToken(n1);
     n2 = Identifier();
     n4 = jj_consume_token(PARENTHESIS_LEFT);
     n3 = JTBToolkit.makeNodeToken(n4);
-    n5 = ParameterList();
-    n7 = jj_consume_token(PARENTHESIS_RIGHT);
-    n6 = JTBToolkit.makeNodeToken(n7);
-    {if (true) return new MethodCall(n0, n2, n3, n5, n6);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public ParameterList ParameterList() throws ParseException {
-  // --- JTB generated node declarations ---
-  NodeOptional n0 = new NodeOptional();
-  NodeSequence n1 = null;
-  Parameter n2 = null;
-  NodeListOptional n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  Parameter n7 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case UNARY_OPERATOR:
     case PARENTHESIS_LEFT:
@@ -909,10 +899,10 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     case FALSE:
     case INTEGER_LITERAL:
     case IDENTIFIER:
-      n3 = new NodeListOptional();
-      n1 = new NodeSequence(2);
-      n2 = Parameter();
-      n1.addNode(n2);
+      n8 = new NodeListOptional();
+      n6 = new NodeSequence(2);
+      n7 = Parameter();
+      n6.addNode(n7);
       label_8:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -923,23 +913,25 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
           jj_la1[17] = jj_gen;
           break label_8;
         }
-        n4 = new NodeSequence(2);
-        n6 = jj_consume_token(COMMA);
-        n5 = JTBToolkit.makeNodeToken(n6);
-        n4.addNode(n5);
-        n7 = Parameter();
-        n4.addNode(n7);
-        n3.addNode(n4);
+        n9 = new NodeSequence(2);
+        n11 = jj_consume_token(COMMA);
+        n10 = JTBToolkit.makeNodeToken(n11);
+        n9.addNode(n10);
+        n12 = Parameter();
+        n9.addNode(n12);
+        n8.addNode(n9);
       }
-      n3.nodes.trimToSize();
-      n1.addNode(n3);
-      n0.addNode(n1);
+      n8.nodes.trimToSize();
+      n6.addNode(n8);
+      n5.addNode(n6);
       break;
     default:
       jj_la1[18] = jj_gen;
       ;
     }
-    {if (true) return new ParameterList(n0);}
+    n14 = jj_consume_token(PARENTHESIS_RIGHT);
+    n13 = JTBToolkit.makeNodeToken(n14);
+    {if (true) return new MethodCall(n0, n2, n3, n5, n13);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1082,14 +1074,13 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
-  private boolean jj_3R_10() {
-    if (jj_scan_token(INT_TYPE)) return true;
-    if (jj_scan_token(BRACKET_LEFT)) return true;
+  private boolean jj_3_3() {
+    if (jj_3R_11()) return true;
     return false;
   }
 
-  private boolean jj_3_3() {
-    if (jj_3R_11()) return true;
+  private boolean jj_3R_22() {
+    if (jj_scan_token(BOOLEAN_TYPE)) return true;
     return false;
   }
 
@@ -1104,14 +1095,15 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
-  private boolean jj_3R_13() {
-    if (jj_3R_16()) return true;
-    if (jj_3R_14()) return true;
+  private boolean jj_3R_10() {
+    if (jj_scan_token(INT_TYPE)) return true;
+    if (jj_scan_token(BRACKET_LEFT)) return true;
     return false;
   }
 
-  private boolean jj_3R_21() {
-    if (jj_scan_token(INT_TYPE)) return true;
+  private boolean jj_3R_13() {
+    if (jj_3R_16()) return true;
+    if (jj_3R_14()) return true;
     return false;
   }
 
@@ -1120,18 +1112,13 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
-  private boolean jj_3R_23() {
-    if (jj_scan_token(VOID_TYPE)) return true;
+  private boolean jj_3R_21() {
+    if (jj_scan_token(INT_TYPE)) return true;
     return false;
   }
 
   private boolean jj_3R_20() {
     if (jj_3R_14()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_14() {
-    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
@@ -1166,8 +1153,13 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
-  private boolean jj_3R_22() {
-    if (jj_scan_token(BOOLEAN_TYPE)) return true;
+  private boolean jj_3R_23() {
+    if (jj_scan_token(VOID_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_14() {
+    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 

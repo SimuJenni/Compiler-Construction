@@ -9,7 +9,8 @@ import ch.unibe.iam.scg.javacc.visitor.*;
  * f0 -> <DOT><br>
  * f1 -> Identifier()<br>
  * f2 -> <PARENTHESIS_LEFT><br>
- * f3 -> ParameterList()<br>
+ * f3 -> ( #0 Parameter()<br>
+ * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
  * f4 -> <PARENTHESIS_RIGHT><br>
  */
 public class MethodCall implements INode {
@@ -24,7 +25,7 @@ public class MethodCall implements INode {
   public NodeToken f2;
 
   /** Child node 4 */
-  public ParameterList f3;
+  public NodeOptional f3;
 
   /** Child node 5 */
   public NodeToken f4;
@@ -41,7 +42,7 @@ public class MethodCall implements INode {
    * @param n3 - next child node
    * @param n4 - next child node
    */
-  public MethodCall(final NodeToken n0, final Identifier n1, final NodeToken n2, final ParameterList n3, final NodeToken n4) {
+  public MethodCall(final NodeToken n0, final Identifier n1, final NodeToken n2, final NodeOptional n3, final NodeToken n4) {
     f0 = n0;
     f1 = n1;
     f2 = n2;

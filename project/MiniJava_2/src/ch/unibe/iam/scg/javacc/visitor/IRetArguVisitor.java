@@ -436,7 +436,8 @@ public interface IRetArguVisitor<R, A> {
    * f0 -> <DOT><br>
    * f1 -> Identifier()<br>
    * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterList()<br>
+   * f3 -> ( #0 Parameter()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
    *
    * @param n - the node to visit
@@ -444,18 +445,6 @@ public interface IRetArguVisitor<R, A> {
    * @return the user return information
    */
   public R visit(final MethodCall n, final A argu);
-
-  /**
-   * Visits a {@link ParameterList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 Parameter()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   * @return the user return information
-   */
-  public R visit(final ParameterList n, final A argu);
 
   /**
    * Visits a {@link Parameter} node, whose child is the following :

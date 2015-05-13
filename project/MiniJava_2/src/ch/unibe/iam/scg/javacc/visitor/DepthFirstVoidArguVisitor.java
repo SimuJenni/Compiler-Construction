@@ -1074,7 +1074,8 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    * f0 -> <DOT><br>
    * f1 -> Identifier()<br>
    * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterList()<br>
+   * f3 -> ( #0 Parameter()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
    *
    * @param n - the node to visit
@@ -1091,30 +1092,11 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     // f2 -> <PARENTHESIS_LEFT>
     final NodeToken n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> ParameterList()
-    final ParameterList n3 = n.f3;
-    n3.accept(this, argu);
-    // f4 -> <PARENTHESIS_RIGHT>
-    final NodeToken n4 = n.f4;
-    n4.accept(this, argu);
-  }
-
-  /**
-   * Visits a {@link ParameterList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 Parameter()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final ParameterList n, final A argu) {
-    // f0 -> ( #0 Parameter()
+    // f3 -> ( #0 Parameter()
     // .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?
-    final NodeOptional n0 = n.f0;
-    if (n0.present()) {
-      final NodeSequence seq = (NodeSequence) n0.node;
+    final NodeOptional n3 = n.f3;
+    if (n3.present()) {
+      final NodeSequence seq = (NodeSequence) n3.node;
       // #0 Parameter()
       final INode seq1 = seq.elementAt(0);
       seq1.accept(this, argu);
@@ -1134,6 +1116,9 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
         }
       }
     }
+    // f4 -> <PARENTHESIS_RIGHT>
+    final NodeToken n4 = n.f4;
+    n4.accept(this, argu);
   }
 
   /**

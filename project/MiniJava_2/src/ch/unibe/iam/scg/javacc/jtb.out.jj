@@ -891,9 +891,16 @@ MethodCall MethodCall() :
   Identifier n2 = null;
   NodeToken n3 = null;
   Token n4 = null;
-  ParameterList n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
+  NodeOptional n5 = new NodeOptional();
+  NodeSequence n6 = null;
+  Parameter n7 = null;
+  NodeListOptional n8 = null;
+  NodeSequence n9 = null;
+  NodeToken n10 = null;
+  Token n11 = null;
+  Parameter n12 = null;
+  NodeToken n13 = null;
+  Token n14 = null;
 }
 {
   n1 = < DOT >
@@ -901,44 +908,27 @@ MethodCall MethodCall() :
   n2 = Identifier()
   n4 = < PARENTHESIS_LEFT >
   { n3 = JTBToolkit.makeNodeToken(n4); }
-  n5 = ParameterList()
-  n7 = < PARENTHESIS_RIGHT >
-  { n6 = JTBToolkit.makeNodeToken(n7); }
-  { return new MethodCall(n0, n2, n3, n5, n6); }
-}
-
-ParameterList ParameterList() :
-{
-  // --- JTB generated node declarations ---
-  NodeOptional n0 = new NodeOptional();
-  NodeSequence n1 = null;
-  Parameter n2 = null;
-  NodeListOptional n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  Parameter n7 = null;
-}
-{
   (
-    { n3 = new NodeListOptional(); }
-    { n1 = new NodeSequence(2); }
-    n2 = Parameter()
-    { n1.addNode(n2); }
+    { n8 = new NodeListOptional(); }
+    { n6 = new NodeSequence(2); }
+    n7 = Parameter()
+    { n6.addNode(n7); }
     (
-      { n4 = new NodeSequence(2); }
-      n6 = < COMMA >
-      { n5 = JTBToolkit.makeNodeToken(n6); }
-      { n4.addNode(n5); }
-      n7 = Parameter()
-      { n4.addNode(n7); }
-      { n3.addNode(n4); }
+      { n9 = new NodeSequence(2); }
+      n11 = < COMMA >
+      { n10 = JTBToolkit.makeNodeToken(n11); }
+      { n9.addNode(n10); }
+      n12 = Parameter()
+      { n9.addNode(n12); }
+      { n8.addNode(n9); }
     )*
-    { n3.nodes.trimToSize(); }
-    { n1.addNode(n3); }
-    { n0.addNode(n1); }
+    { n8.nodes.trimToSize(); }
+    { n6.addNode(n8); }
+    { n5.addNode(n6); }
   )?
-  { return new ParameterList(n0); }
+  n14 = < PARENTHESIS_RIGHT >
+  { n13 = JTBToolkit.makeNodeToken(n14); }
+  { return new MethodCall(n0, n2, n3, n5, n13); }
 }
 
 Parameter Parameter() :

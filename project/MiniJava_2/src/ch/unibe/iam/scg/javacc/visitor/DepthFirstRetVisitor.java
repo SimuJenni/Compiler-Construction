@@ -1137,7 +1137,8 @@ public class DepthFirstRetVisitor<R> implements IRetVisitor<R> {
    * f0 -> <DOT><br>
    * f1 -> Identifier()<br>
    * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterList()<br>
+   * f3 -> ( #0 Parameter()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
    *
    * @param n - the node to visit
@@ -1155,32 +1156,11 @@ public class DepthFirstRetVisitor<R> implements IRetVisitor<R> {
     // f2 -> <PARENTHESIS_LEFT>
     final NodeToken n2 = n.f2;
     nRes = n2.accept(this);
-    // f3 -> ParameterList()
-    final ParameterList n3 = n.f3;
-    nRes = n3.accept(this);
-    // f4 -> <PARENTHESIS_RIGHT>
-    final NodeToken n4 = n.f4;
-    nRes = n4.accept(this);
-    return nRes;
-  }
-
-  /**
-   * Visits a {@link ParameterList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 Parameter()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @return the user return information
-   */
-  @Override
-  public R visit(final ParameterList n) {
-    R nRes = null;
-    // f0 -> ( #0 Parameter()
+    // f3 -> ( #0 Parameter()
     // .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?
-    final NodeOptional n0 = n.f0;
-    if (n0.present()) {
-      final NodeSequence seq = (NodeSequence) n0.node;
+    final NodeOptional n3 = n.f3;
+    if (n3.present()) {
+      final NodeSequence seq = (NodeSequence) n3.node;
       // #0 Parameter()
       final INode seq1 = seq.elementAt(0);
       nRes = seq1.accept(this);
@@ -1200,6 +1180,9 @@ public class DepthFirstRetVisitor<R> implements IRetVisitor<R> {
         }
       }
     }
+    // f4 -> <PARENTHESIS_RIGHT>
+    final NodeToken n4 = n.f4;
+    nRes = n4.accept(this);
     return nRes;
   }
 
