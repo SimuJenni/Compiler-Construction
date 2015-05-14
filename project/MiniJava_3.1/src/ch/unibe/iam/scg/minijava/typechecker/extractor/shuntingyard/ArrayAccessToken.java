@@ -3,6 +3,8 @@ package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 import java.util.Stack;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ArrayAccess;
+import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
+import ch.unibe.iam.scg.minijava.bcel.generator.CodeGeneratorVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 import ch.unibe.iam.scg.minijava.typechecker.type.ArrayType;
@@ -28,6 +30,12 @@ public class ArrayAccessToken extends AbstractFunctionToken<ArrayAccess> {
 					ObjectType.INSTANCE));
 		}
 		return ((ArrayType) objectType).getElementType();
+	}
+
+	@Override
+	public void accept(CodeGeneratorVisitor vis) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

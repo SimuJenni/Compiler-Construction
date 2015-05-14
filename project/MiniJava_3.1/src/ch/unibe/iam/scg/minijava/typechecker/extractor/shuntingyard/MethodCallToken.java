@@ -7,6 +7,8 @@ import java.util.Stack;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.Parameter;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
+import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
+import ch.unibe.iam.scg.minijava.bcel.generator.CodeGeneratorVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
@@ -65,4 +67,12 @@ public class MethodCallToken extends AbstractFunctionToken<MethodCall> {
 		}
 		return method.getReturnType();
 	}
+
+	@Override
+	public void accept(CodeGeneratorVisitor vis) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

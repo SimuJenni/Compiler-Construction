@@ -333,7 +333,6 @@ public class JavaBytecodeGeneratorTest
         int[] expected = new int[2];
         int[] result = (int[]) evaluateExpression(str, MiniJavaTypes.ARRAY);
         assertArrayEquals(expected, result);
-        
     }
     
     @Test

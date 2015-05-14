@@ -6,6 +6,8 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ClassConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.IntArrayConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectInstantiationExpression;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
+import ch.unibe.iam.scg.javacc.visitor.IVoidVisitor;
+import ch.unibe.iam.scg.minijava.bcel.generator.CodeGeneratorVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 import ch.unibe.iam.scg.minijava.typechecker.type.ArrayType;
@@ -55,5 +57,11 @@ public class ObjectInstantiationToken extends
 		}
 		return type;
 	}
+
+	@Override
+	public void accept(CodeGeneratorVisitor vis) {
+		vis.visit(this);		
+	}
+
 
 }
