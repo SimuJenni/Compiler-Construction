@@ -8,6 +8,8 @@ import org.apache.bcel.generic.InstructionFactory;
 import org.apache.bcel.generic.InstructionList;
 import org.apache.bcel.generic.MethodGen;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+
 /**
  * Change at will! 
  * (http://funnyasduck.net/wp-content/uploads/2013/01/funny-star-trek-picard-tv-fire-will-pics.jpg)
@@ -65,5 +67,8 @@ import org.apache.bcel.generic.MethodGen;
     
     public void generate(Object node)
     {
+    	INode n=(INode) node;
+    	CodeGeneratorVisitor visitor=new CodeGeneratorVisitor(il);
+    	n.accept(visitor);
     }
 }
