@@ -1,6 +1,8 @@
 package ch.unibe.iam.scg.minijava.bcel.generator;
 
 
+import java.util.Map;
+
 import org.apache.bcel.Constants;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ClassGen;
@@ -9,6 +11,8 @@ import org.apache.bcel.generic.InstructionList;
 import org.apache.bcel.generic.MethodGen;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.minijava.typechecker.TypeChecker;
+import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 
 /**
  * Change at will! 
@@ -64,11 +68,13 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
     }
     
 
-    
     public void generate(Object node)
     {
     	INode n=(INode) node;
-    	CodeGeneratorVisitor visitor=new CodeGeneratorVisitor(il);
-    	n.accept(visitor);
+    	CodeGeneratorVisitor cgv = new CodeGeneratorVisitor(cg,mg,il,iFact);
+    	TypeChecker tc = new TypeChecker();
+    	tc.check(n);
+    	Map<INode, IScope> scopeMap = tc.getScopeMap();
+    	cgv.generate(n, scopeMap);
     }
 }

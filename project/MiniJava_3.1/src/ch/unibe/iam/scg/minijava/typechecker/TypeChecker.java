@@ -28,6 +28,8 @@ import ch.unibe.iam.scg.minijava.typechecker.type.VoidType;
  *
  */
 public class TypeChecker {
+	
+	private Map<INode, IScope> scopeMap;
 
 	public boolean check(Object o) {
 		INode n = (INode) o;
@@ -35,7 +37,7 @@ public class TypeChecker {
 			// first pass: build global scope
 			IScope globalScope = this.buildGlobalScope(n);
 			// second pass: build all scopes
-			Map<INode, IScope> scopeMap = this.buildScopeMap(n, globalScope);
+			scopeMap = this.buildScopeMap(n, globalScope);
 			// third pass: evaluate
 			this.evaluate(n, scopeMap);
 			return true;
@@ -81,6 +83,10 @@ public class TypeChecker {
 			throws LookupException {
 		Evaluator evaluator = new Evaluator(scopeMap);
 		evaluator.evaluate(n);
+	}
+
+	public Map<INode, IScope> getScopeMap() {
+		return scopeMap;
 	}
 
 }

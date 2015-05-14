@@ -7,10 +7,12 @@ import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 
 public class LiteralToken implements IToken {
 
-	protected IType type;
+	public IType type;
+	public String value;
 
-	public LiteralToken(IType type) {
+	public LiteralToken(IType type, String value) {
 		this.type = type;
+		this.value = value;
 	}
 
 	@Override

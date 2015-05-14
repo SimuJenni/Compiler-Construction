@@ -124,7 +124,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()
 			final NodeSequence seq12 = (NodeSequence) ich;
 			// #0 <INTEGER_LITERAL>
-			this.output.add(new LiteralToken(IntType.INSTANCE));
+			final NodeToken t1 = (NodeToken) seq12.elementAt(0);
+			this.output.add(new LiteralToken(IntType.INSTANCE,t1.tokenImage));
 			// #1 ExpressionPrime()
 			final INode seq14 = seq12.elementAt(1);
 			seq14.accept(this);
@@ -133,7 +134,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %4 #0 <TRUE> #1 ExpressionPrime()
 			final NodeSequence seq15 = (NodeSequence) ich;
 			// #0 <TRUE>
-			this.output.add(new LiteralToken(BooleanType.INSTANCE));
+			final NodeToken t2 = (NodeToken) seq15.elementAt(0);
+			this.output.add(new LiteralToken(BooleanType.INSTANCE,t2.tokenImage));
 			// #1 ExpressionPrime()
 			final INode seq17 = seq15.elementAt(1);
 			seq17.accept(this);
@@ -142,7 +144,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %5 #0 <FALSE> #1 ExpressionPrime()
 			final NodeSequence seq18 = (NodeSequence) ich;
 			// #0 <FALSE>
-			this.output.add(new LiteralToken(BooleanType.INSTANCE));
+			final NodeToken t3 = (NodeToken) seq18.elementAt(0);
+			this.output.add(new LiteralToken(BooleanType.INSTANCE,t3.tokenImage));
 			// #1 ExpressionPrime()
 			final INode seq20 = seq18.elementAt(1);
 			seq20.accept(this);
@@ -152,7 +155,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq21 = (NodeSequence) ich;
 			// #0 <THIS>
 			this.output.add(new LiteralToken(this.scope.lookupVariable("this")
-					.getType()));
+					.getType(),this.scope.lookupVariable("this").getName()));
 			// #1 ExpressionPrime()
 			final INode seq23 = seq21.elementAt(1);
 			seq23.accept(this);
@@ -163,7 +166,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// #0 Identifier()
 			final INode seq25 = seq24.elementAt(0);
 			this.output.add(new LiteralToken(this.scope.lookupVariable(
-					((Identifier) seq25).f0.tokenImage).getType()));
+					((Identifier) seq25).f0.tokenImage).getType(), 
+					this.scope.lookupVariable(((Identifier) seq25).f0.tokenImage).getName()));
 			// #1 ExpressionPrime()
 			final INode seq26 = seq24.elementAt(1);
 			seq26.accept(this);
