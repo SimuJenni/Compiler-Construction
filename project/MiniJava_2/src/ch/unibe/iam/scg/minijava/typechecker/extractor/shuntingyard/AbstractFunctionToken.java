@@ -2,21 +2,21 @@ package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 
-public class NodeToken implements IToken {
+public abstract class AbstractFunctionToken<T extends INode> implements IToken {
 
-	protected INode node;
+	protected T node;
 
-	public NodeToken(INode node) {
+	public AbstractFunctionToken(T node) {
 		this.node = node;
 	}
 
-	public INode getNode() {
+	public T getNode() {
 		return this.node;
 	}
 
 	@Override
-	public boolean isNode() {
-		return true;
+	public boolean isLiteral() {
+		return false;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class NodeToken implements IToken {
 
 	@Override
 	public boolean isFunction() {
-		return false;
+		return true;
 	}
 
 }

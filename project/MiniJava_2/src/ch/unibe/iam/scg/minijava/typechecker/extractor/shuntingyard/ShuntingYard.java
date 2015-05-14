@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.ArrayAccess;
+import ch.unibe.iam.scg.javacc.syntaxtree.ArrayLengthAccess;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.ExpressionPrime;
@@ -14,16 +16,23 @@ import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
+import ch.unibe.iam.scg.javacc.syntaxtree.ObjectInstantiationExpression;
 import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
+import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
+import ch.unibe.iam.scg.minijava.typechecker.type.BooleanType;
+import ch.unibe.iam.scg.minijava.typechecker.type.IntType;
 
 public class ShuntingYard extends DepthFirstVoidVisitor {
 
 	protected Stack<IToken> stack;
 	protected List<IToken> output;
+	protected IScope scope;
 
-	public ShuntingYard() {
+	public ShuntingYard(IScope scope) {
 		super();
+		this.scope = scope;
 		this.stack = new Stack<IToken>();
 		this.output = new ArrayList<IToken>();
 	}
@@ -74,7 +83,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq = (NodeSequence) ich;
 			// #0 ObjectInstantiationExpression()
 			final INode seq1 = seq.elementAt(0);
-			this.stack.push(new FunctionToken(seq1));
+			this.stack.push(new ObjectInstantiationToken(
+					(ObjectInstantiationExpression) seq1));
 			seq1.accept(this);
 			// #1 ExpressionPrime()
 			final INode seq2 = seq.elementAt(1);
@@ -85,7 +95,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq3 = (NodeSequence) ich;
 			// #0 UnaryOperator()
 			final INode seq4 = seq3.elementAt(0);
-			this.pushOperator(OperatorToken.build((UnaryOperator) seq4));
+			this.pushOperator(new UnaryOperatorToken((UnaryOperator) seq4));
 			// #1 Expression()
 			final INode seq5 = seq3.elementAt(1);
 			seq5.accept(this);
@@ -112,8 +122,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()
 			final NodeSequence seq12 = (NodeSequence) ich;
 			// #0 <INTEGER_LITERAL>
-			final INode seq13 = seq12.elementAt(0);
-			this.output.add(new NodeToken(seq13));
+			this.output.add(new LiteralToken(IntType.INSTANCE));
 			// #1 ExpressionPrime()
 			final INode seq14 = seq12.elementAt(1);
 			seq14.accept(this);
@@ -122,8 +131,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %4 #0 <TRUE> #1 ExpressionPrime()
 			final NodeSequence seq15 = (NodeSequence) ich;
 			// #0 <TRUE>
-			final INode seq16 = seq15.elementAt(0);
-			this.output.add(new NodeToken(seq16));
+			this.output.add(new LiteralToken(BooleanType.INSTANCE));
 			// #1 ExpressionPrime()
 			final INode seq17 = seq15.elementAt(1);
 			seq17.accept(this);
@@ -132,8 +140,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %5 #0 <FALSE> #1 ExpressionPrime()
 			final NodeSequence seq18 = (NodeSequence) ich;
 			// #0 <FALSE>
-			final INode seq19 = seq18.elementAt(0);
-			this.output.add(new NodeToken(seq19));
+			this.output.add(new LiteralToken(BooleanType.INSTANCE));
 			// #1 ExpressionPrime()
 			final INode seq20 = seq18.elementAt(1);
 			seq20.accept(this);
@@ -142,8 +149,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// %6 #0 <THIS> #1 ExpressionPrime()
 			final NodeSequence seq21 = (NodeSequence) ich;
 			// #0 <THIS>
-			final INode seq22 = seq21.elementAt(0);
-			this.output.add(new NodeToken(seq22));
+			this.output.add(new LiteralToken(this.scope.lookupVariable("this")
+					.getType()));
 			// #1 ExpressionPrime()
 			final INode seq23 = seq21.elementAt(1);
 			seq23.accept(this);
@@ -153,7 +160,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq24 = (NodeSequence) ich;
 			// #0 Identifier()
 			final INode seq25 = seq24.elementAt(0);
-			this.output.add(new NodeToken(seq25));
+			this.output.add(new LiteralToken(this.scope.lookupVariable(
+					((Identifier) seq25).f0.tokenImage).getType()));
 			// #1 ExpressionPrime()
 			final INode seq26 = seq24.elementAt(1);
 			seq26.accept(this);
@@ -191,7 +199,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq = (NodeSequence) ich;
 			// #0 BinaryOperator()
 			final INode seq1 = seq.elementAt(0);
-			this.pushOperator(OperatorToken.build((BinaryOperator) seq1));
+			this.pushOperator(new BinaryOperatorToken((BinaryOperator) seq1));
 			// #1 Expression()
 			final INode seq2 = seq.elementAt(1);
 			seq2.accept(this);
@@ -204,7 +212,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq4 = (NodeSequence) ich;
 			// #0 ArrayAccess()
 			final INode seq5 = seq4.elementAt(0);
-			this.stack.push(new FunctionToken(seq5));
+			this.stack.push(new ArrayAccessToken((ArrayAccess) seq5));
 			this.pushLeftParenthesis();
 			seq5.accept(this);
 			this.pushRightParenthesis();
@@ -217,7 +225,8 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq7 = (NodeSequence) ich;
 			// #0 ArrayLengthAccess()
 			final INode seq8 = seq7.elementAt(0);
-			this.stack.push(new FunctionToken(seq8));
+			this.stack
+					.push(new ArrayLengthAccessToken((ArrayLengthAccess) seq8));
 			seq8.accept(this);
 			// #1 ExpressionPrime()
 			final INode seq9 = seq7.elementAt(1);
@@ -228,7 +237,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq10 = (NodeSequence) ich;
 			// #0 MethodCall()
 			final INode seq11 = seq10.elementAt(0);
-			this.stack.push(new FunctionToken(seq11));
+			this.stack.push(new MethodCallToken((MethodCall) seq11));
 			seq11.accept(this);
 			// #1 ExpressionPrime()
 			final INode seq12 = seq10.elementAt(1);
@@ -260,7 +269,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 	@Override
 	public void visit(final MethodCall n) {
 		// f0 -> <DOT>
-		final ch.unibe.iam.scg.javacc.syntaxtree.NodeToken n0 = n.f0;
+		final NodeToken n0 = n.f0;
 		n0.accept(this);
 		// f1 -> Identifier()
 		final Identifier n1 = n.f1;
@@ -299,13 +308,13 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 		this.pushRightParenthesis();
 	}
 
-	protected void pushOperator(OperatorToken operator) {
+	protected void pushOperator(AbstractOperatorToken operator) {
 		IToken top = this.stack.peek();
 		while (top.isOperator()
 				&& (((operator.getAssociativity() == Associativity.LEFT && operator
-						.getPrecedence() <= ((OperatorToken) top)
+						.getPrecedence() <= ((AbstractOperatorToken) top)
 						.getPrecedence())) || (operator.getAssociativity() == Associativity.RIGHT && operator
-						.getPrecedence() < ((OperatorToken) top)
+						.getPrecedence() < ((AbstractOperatorToken) top)
 						.getPrecedence()))) {
 			this.output.add(this.stack.pop());
 		}
