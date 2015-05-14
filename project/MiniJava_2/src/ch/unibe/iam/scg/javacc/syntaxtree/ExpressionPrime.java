@@ -7,9 +7,9 @@ import ch.unibe.iam.scg.javacc.visitor.*;
  * JTB node class for the production ExpressionPrime:<br>
  * Corresponding grammar:<br>
  * f0 -> . %0 #0 BinaryOperator() #1 Expression() #2 ExpressionPrime()<br>
- * .. .. | %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()<br>
- * .. .. | %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()<br>
- * .. .. | %3 MethodCall()<br>
+ * .. .. | %1 #0 ArrayAccess() #1 ExpressionPrime()<br>
+ * .. .. | %2 #0 ArrayLengthAccess() #1 ExpressionPrime()<br>
+ * .. .. | %3 #0 MethodCall() #1 ExpressionPrime()<br>
  * .. .. | %4 Empty()<br>
  */
 public class ExpressionPrime implements INode {

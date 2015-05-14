@@ -6,11 +6,11 @@ import ch.unibe.iam.scg.javacc.visitor.*;
 /**
  * JTB node class for the production Statement:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 StatementList()<br>
- * .. .. | %1 If()<br>
- * .. .. | %2 WhileLoop()<br>
- * .. .. | %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON><br>
- * .. .. | %4 Assignment()<br>
+ * f0 -> . %0 BlockStatement()<br>
+ * .. .. | %1 IfStatement()<br>
+ * .. .. | %2 WhileStatement()<br>
+ * .. .. | %3 PrintStatement()<br>
+ * .. .. | %4 AssignmentStatement()<br>
  */
 public class Statement implements INode {
 

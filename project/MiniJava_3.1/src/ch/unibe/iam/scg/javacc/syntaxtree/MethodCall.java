@@ -9,9 +9,9 @@ import ch.unibe.iam.scg.javacc.visitor.*;
  * f0 -> <DOT><br>
  * f1 -> Identifier()<br>
  * f2 -> <PARENTHESIS_LEFT><br>
- * f3 -> ParameterList()<br>
+ * f3 -> ( #0 Parameter()<br>
+ * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
  * f4 -> <PARENTHESIS_RIGHT><br>
- * f5 -> ExpressionPrime()<br>
  */
 public class MethodCall implements INode {
 
@@ -25,13 +25,10 @@ public class MethodCall implements INode {
   public NodeToken f2;
 
   /** Child node 4 */
-  public ParameterList f3;
+  public NodeOptional f3;
 
   /** Child node 5 */
   public NodeToken f4;
-
-  /** Child node 6 */
-  public ExpressionPrime f5;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -44,15 +41,13 @@ public class MethodCall implements INode {
    * @param n2 - next child node
    * @param n3 - next child node
    * @param n4 - next child node
-   * @param n5 - next child node
    */
-  public MethodCall(final NodeToken n0, final Identifier n1, final NodeToken n2, final ParameterList n3, final NodeToken n4, final ExpressionPrime n5) {
+  public MethodCall(final NodeToken n0, final Identifier n1, final NodeToken n2, final NodeOptional n3, final NodeToken n4) {
     f0 = n0;
     f1 = n1;
     f2 = n2;
     f3 = n3;
     f4 = n4;
-    f5 = n5;
   }
 
   /**

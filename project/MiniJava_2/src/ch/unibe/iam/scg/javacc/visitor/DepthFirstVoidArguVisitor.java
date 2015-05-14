@@ -308,15 +308,17 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    * Visits a {@link MethodDeclaration} node, whose children are the following :
    * <p>
    * f0 -> <PUBLIC_MODIFIER><br>
-   * f1 -> TypedDeclaration()<br>
-   * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterDeclarationList()<br>
-   * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> <BRACE_LEFT><br>
-   * f6 -> ( VarDeclaration() )*<br>
-   * f7 -> ( Statement() )*<br>
-   * f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
-   * f9 -> <BRACE_RIGHT><br>
+   * f1 -> Type()<br>
+   * f2 -> Identifier()<br>
+   * f3 -> <PARENTHESIS_LEFT><br>
+   * f4 -> ( #0 ParameterDeclaration()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
+   * f5 -> <PARENTHESIS_RIGHT><br>
+   * f6 -> <BRACE_LEFT><br>
+   * f7 -> ( VarDeclaration() )*<br>
+   * f8 -> ( Statement() )*<br>
+   * f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
+   * f10 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -326,72 +328,20 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     // f0 -> <PUBLIC_MODIFIER>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
-    // f1 -> TypedDeclaration()
-    final TypedDeclaration n1 = n.f1;
+    // f1 -> Type()
+    final Type n1 = n.f1;
     n1.accept(this, argu);
-    // f2 -> <PARENTHESIS_LEFT>
-    final NodeToken n2 = n.f2;
+    // f2 -> Identifier()
+    final Identifier n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> ParameterDeclarationList()
-    final ParameterDeclarationList n3 = n.f3;
+    // f3 -> <PARENTHESIS_LEFT>
+    final NodeToken n3 = n.f3;
     n3.accept(this, argu);
-    // f4 -> <PARENTHESIS_RIGHT>
-    final NodeToken n4 = n.f4;
-    n4.accept(this, argu);
-    // f5 -> <BRACE_LEFT>
-    final NodeToken n5 = n.f5;
-    n5.accept(this, argu);
-    // f6 -> ( VarDeclaration() )*
-    final NodeListOptional n6 = n.f6;
-    if (n6.present()) {
-      for (int i = 0; i < n6.size(); i++) {
-        final INode nloeai = n6.elementAt(i);
-        nloeai.accept(this, argu);
-      }
-    }
-    // f7 -> ( Statement() )*
-    final NodeListOptional n7 = n.f7;
-    if (n7.present()) {
-      for (int i = 0; i < n7.size(); i++) {
-        final INode nloeai = n7.elementAt(i);
-        nloeai.accept(this, argu);
-      }
-    }
-    // f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
-    final NodeOptional n8 = n.f8;
-    if (n8.present()) {
-      final NodeSequence seq = (NodeSequence) n8.node;
-      // #0 <RETURN>
-      final INode seq1 = seq.elementAt(0);
-      seq1.accept(this, argu);
-      // #1 Expression()
-      final INode seq2 = seq.elementAt(1);
-      seq2.accept(this, argu);
-      // #2 <SEMICOLON>
-      final INode seq3 = seq.elementAt(2);
-      seq3.accept(this, argu);
-    }
-    // f9 -> <BRACE_RIGHT>
-    final NodeToken n9 = n.f9;
-    n9.accept(this, argu);
-  }
-
-  /**
-   * Visits a {@link ParameterDeclarationList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 ParameterDeclaration()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final ParameterDeclarationList n, final A argu) {
-    // f0 -> ( #0 ParameterDeclaration()
+    // f4 -> ( #0 ParameterDeclaration()
     // .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?
-    final NodeOptional n0 = n.f0;
-    if (n0.present()) {
-      final NodeSequence seq = (NodeSequence) n0.node;
+    final NodeOptional n4 = n.f4;
+    if (n4.present()) {
+      final NodeSequence seq = (NodeSequence) n4.node;
       // #0 ParameterDeclaration()
       final INode seq1 = seq.elementAt(0);
       seq1.accept(this, argu);
@@ -411,6 +361,45 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
         }
       }
     }
+    // f5 -> <PARENTHESIS_RIGHT>
+    final NodeToken n5 = n.f5;
+    n5.accept(this, argu);
+    // f6 -> <BRACE_LEFT>
+    final NodeToken n6 = n.f6;
+    n6.accept(this, argu);
+    // f7 -> ( VarDeclaration() )*
+    final NodeListOptional n7 = n.f7;
+    if (n7.present()) {
+      for (int i = 0; i < n7.size(); i++) {
+        final INode nloeai = n7.elementAt(i);
+        nloeai.accept(this, argu);
+      }
+    }
+    // f8 -> ( Statement() )*
+    final NodeListOptional n8 = n.f8;
+    if (n8.present()) {
+      for (int i = 0; i < n8.size(); i++) {
+        final INode nloeai = n8.elementAt(i);
+        nloeai.accept(this, argu);
+      }
+    }
+    // f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?
+    final NodeOptional n9 = n.f9;
+    if (n9.present()) {
+      final NodeSequence seq6 = (NodeSequence) n9.node;
+      // #0 <RETURN>
+      final INode seq7 = seq6.elementAt(0);
+      seq7.accept(this, argu);
+      // #1 Expression()
+      final INode seq8 = seq6.elementAt(1);
+      seq8.accept(this, argu);
+      // #2 <SEMICOLON>
+      final INode seq9 = seq6.elementAt(2);
+      seq9.accept(this, argu);
+    }
+    // f10 -> <BRACE_RIGHT>
+    final NodeToken n10 = n.f10;
+    n10.accept(this, argu);
   }
 
   /**
@@ -498,58 +487,43 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   /**
    * Visits a {@link Statement} node, whose child is the following :
    * <p>
-   * f0 -> . %0 StatementList()<br>
-   * .. .. | %1 If()<br>
-   * .. .. | %2 WhileLoop()<br>
-   * .. .. | %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON><br>
-   * .. .. | %4 Assignment()<br>
+   * f0 -> . %0 BlockStatement()<br>
+   * .. .. | %1 IfStatement()<br>
+   * .. .. | %2 WhileStatement()<br>
+   * .. .. | %3 PrintStatement()<br>
+   * .. .. | %4 AssignmentStatement()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   @Override
   public void visit(final Statement n, final A argu) {
-    // f0 -> . %0 StatementList()
-    // .. .. | %1 If()
-    // .. .. | %2 WhileLoop()
-    // .. .. | %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON>
-    // .. .. | %4 Assignment()
+    // f0 -> . %0 BlockStatement()
+    // .. .. | %1 IfStatement()
+    // .. .. | %2 WhileStatement()
+    // .. .. | %3 PrintStatement()
+    // .. .. | %4 AssignmentStatement()
     final NodeChoice nch = n.f0;
     final INode ich = nch.choice;
     switch (nch.which) {
       case 0:
-        // %0 StatementList()
+        // %0 BlockStatement()
         ich.accept(this, argu);
         break;
       case 1:
-        // %1 If()
+        // %1 IfStatement()
         ich.accept(this, argu);
         break;
       case 2:
-        // %2 WhileLoop()
+        // %2 WhileStatement()
         ich.accept(this, argu);
         break;
       case 3:
-        // %3 #0 <PRINT_METHOD> #1 <PARENTHESIS_LEFT> #2 Expression() #3 <PARENTHESIS_RIGHT> #4 <SEMICOLON>
-        final NodeSequence seq = (NodeSequence) ich;
-        // #0 <PRINT_METHOD>
-        final INode seq1 = seq.elementAt(0);
-        seq1.accept(this, argu);
-        // #1 <PARENTHESIS_LEFT>
-        final INode seq2 = seq.elementAt(1);
-        seq2.accept(this, argu);
-        // #2 Expression()
-        final INode seq3 = seq.elementAt(2);
-        seq3.accept(this, argu);
-        // #3 <PARENTHESIS_RIGHT>
-        final INode seq4 = seq.elementAt(3);
-        seq4.accept(this, argu);
-        // #4 <SEMICOLON>
-        final INode seq5 = seq.elementAt(4);
-        seq5.accept(this, argu);
+        // %3 PrintStatement()
+        ich.accept(this, argu);
         break;
       case 4:
-        // %4 Assignment()
+        // %4 AssignmentStatement()
         ich.accept(this, argu);
         break;
       default:
@@ -559,107 +533,35 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   }
 
   /**
-   * Visits a {@link Assignment} node, whose children are the following :
+   * Visits a {@link BlockStatement} node, whose children are the following :
    * <p>
-   * f0 -> Assignee()<br>
-   * f1 -> <EQUALS_SIGN><br>
-   * f2 -> Expression()<br>
-   * f3 -> <SEMICOLON><br>
+   * f0 -> <BRACE_LEFT><br>
+   * f1 -> ( Statement() )*<br>
+   * f2 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   @Override
-  public void visit(final Assignment n, final A argu) {
-    // f0 -> Assignee()
-    final Assignee n0 = n.f0;
-    n0.accept(this, argu);
-    // f1 -> <EQUALS_SIGN>
-    final NodeToken n1 = n.f1;
-    n1.accept(this, argu);
-    // f2 -> Expression()
-    final Expression n2 = n.f2;
-    n2.accept(this, argu);
-    // f3 -> <SEMICOLON>
-    final NodeToken n3 = n.f3;
-    n3.accept(this, argu);
-  }
-
-  /**
-   * Visits a {@link Assignee} node, whose child is the following :
-   * <p>
-   * f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
-   * .. .. | %1 Identifier()<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final Assignee n, final A argu) {
-    // f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
-    // .. .. | %1 Identifier()
-    final NodeChoice nch = n.f0;
-    final INode ich = nch.choice;
-    switch (nch.which) {
-      case 0:
-        // %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
-        final NodeSequence seq = (NodeSequence) ich;
-        // #0 Identifier()
-        final INode seq1 = seq.elementAt(0);
-        seq1.accept(this, argu);
-        // #1 <BRACKET_LEFT>
-        final INode seq2 = seq.elementAt(1);
-        seq2.accept(this, argu);
-        // #2 Expression()
-        final INode seq3 = seq.elementAt(2);
-        seq3.accept(this, argu);
-        // #3 <BRACKET_RIGHT>
-        final INode seq4 = seq.elementAt(3);
-        seq4.accept(this, argu);
-        break;
-      case 1:
-        // %1 Identifier()
-        ich.accept(this, argu);
-        break;
-      default:
-        // should not occur !!!
-        break;
-    }
-  }
-
-  /**
-   * Visits a {@link WhileLoop} node, whose children are the following :
-   * <p>
-   * f0 -> <WHILE><br>
-   * f1 -> <PARENTHESIS_LEFT><br>
-   * f2 -> Expression()<br>
-   * f3 -> <PARENTHESIS_RIGHT><br>
-   * f4 -> Statement()<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final WhileLoop n, final A argu) {
-    // f0 -> <WHILE>
+  public void visit(final BlockStatement n, final A argu) {
+    // f0 -> <BRACE_LEFT>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
-    // f1 -> <PARENTHESIS_LEFT>
-    final NodeToken n1 = n.f1;
-    n1.accept(this, argu);
-    // f2 -> Expression()
-    final Expression n2 = n.f2;
+    // f1 -> ( Statement() )*
+    final NodeListOptional n1 = n.f1;
+    if (n1.present()) {
+      for (int i = 0; i < n1.size(); i++) {
+        final INode nloeai = n1.elementAt(i);
+        nloeai.accept(this, argu);
+      }
+    }
+    // f2 -> <BRACE_RIGHT>
+    final NodeToken n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> <PARENTHESIS_RIGHT>
-    final NodeToken n3 = n.f3;
-    n3.accept(this, argu);
-    // f4 -> Statement()
-    final Statement n4 = n.f4;
-    n4.accept(this, argu);
   }
 
   /**
-   * Visits a {@link If} node, whose children are the following :
+   * Visits a {@link IfStatement} node, whose children are the following :
    * <p>
    * f0 -> <IF><br>
    * f1 -> <PARENTHESIS_LEFT><br>
@@ -673,7 +575,7 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    * @param argu - the user argument
    */
   @Override
-  public void visit(final If n, final A argu) {
+  public void visit(final IfStatement n, final A argu) {
     // f0 -> <IF>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
@@ -698,29 +600,162 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   }
 
   /**
-   * Visits a {@link StatementList} node, whose children are the following :
+   * Visits a {@link WhileStatement} node, whose children are the following :
    * <p>
-   * f0 -> <BRACE_LEFT><br>
-   * f1 -> ( Statement() )*<br>
-   * f2 -> <BRACE_RIGHT><br>
+   * f0 -> <WHILE><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> Statement()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   @Override
-  public void visit(final StatementList n, final A argu) {
-    // f0 -> <BRACE_LEFT>
+  public void visit(final WhileStatement n, final A argu) {
+    // f0 -> <WHILE>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
-    // f1 -> ( Statement() )*
-    final NodeListOptional n1 = n.f1;
-    if (n1.present()) {
-      for (int i = 0; i < n1.size(); i++) {
-        final INode nloeai = n1.elementAt(i);
-        nloeai.accept(this, argu);
-      }
+    // f1 -> <PARENTHESIS_LEFT>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> Expression()
+    final Expression n2 = n.f2;
+    n2.accept(this, argu);
+    // f3 -> <PARENTHESIS_RIGHT>
+    final NodeToken n3 = n.f3;
+    n3.accept(this, argu);
+    // f4 -> Statement()
+    final Statement n4 = n.f4;
+    n4.accept(this, argu);
+  }
+
+  /**
+   * Visits a {@link PrintStatement} node, whose children are the following :
+   * <p>
+   * f0 -> <PRINT_METHOD><br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> Expression()<br>
+   * f3 -> <PARENTHESIS_RIGHT><br>
+   * f4 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final PrintStatement n, final A argu) {
+    // f0 -> <PRINT_METHOD>
+    final NodeToken n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> <PARENTHESIS_LEFT>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> Expression()
+    final Expression n2 = n.f2;
+    n2.accept(this, argu);
+    // f3 -> <PARENTHESIS_RIGHT>
+    final NodeToken n3 = n.f3;
+    n3.accept(this, argu);
+    // f4 -> <SEMICOLON>
+    final NodeToken n4 = n.f4;
+    n4.accept(this, argu);
+  }
+
+  /**
+   * Visits a {@link AssignmentStatement} node, whose children are the following :
+   * <p>
+   * f0 -> Assignee()<br>
+   * f1 -> <EQUALS_SIGN><br>
+   * f2 -> Expression()<br>
+   * f3 -> <SEMICOLON><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final AssignmentStatement n, final A argu) {
+    // f0 -> Assignee()
+    final Assignee n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> <EQUALS_SIGN>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> Expression()
+    final Expression n2 = n.f2;
+    n2.accept(this, argu);
+    // f3 -> <SEMICOLON>
+    final NodeToken n3 = n.f3;
+    n3.accept(this, argu);
+  }
+
+  /**
+   * Visits a {@link Assignee} node, whose child is the following :
+   * <p>
+   * f0 -> . %0 AssignableArrayAccess()<br>
+   * .. .. | %1 Identifier()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final Assignee n, final A argu) {
+    // f0 -> . %0 AssignableArrayAccess()
+    // .. .. | %1 Identifier()
+    final NodeChoice nch = n.f0;
+    final INode ich = nch.choice;
+    switch (nch.which) {
+      case 0:
+        // %0 AssignableArrayAccess()
+        ich.accept(this, argu);
+        break;
+      case 1:
+        // %1 Identifier()
+        ich.accept(this, argu);
+        break;
+      default:
+        // should not occur !!!
+        break;
     }
-    // f2 -> <BRACE_RIGHT>
+  }
+
+  /**
+   * Visits a {@link AssignableArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final AssignableArrayAccess n, final A argu) {
+    // f0 -> Identifier()
+    final Identifier n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> ArrayAccess()
+    final ArrayAccess n1 = n.f1;
+    n1.accept(this, argu);
+  }
+
+  /**
+   * Visits a {@link ArrayAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <BRACKET_LEFT><br>
+   * f1 -> Expression()<br>
+   * f2 -> <BRACKET_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final ArrayAccess n, final A argu) {
+    // f0 -> <BRACKET_LEFT>
+    final NodeToken n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> Expression()
+    final Expression n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> <BRACKET_RIGHT>
     final NodeToken n2 = n.f2;
     n2.accept(this, argu);
   }
@@ -728,7 +763,7 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   /**
    * Visits a {@link Expression} node, whose child is the following :
    * <p>
-   * f0 -> . %0 ObjectCreationExpression()<br>
+   * f0 -> . %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()<br>
    * .. .. | %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()<br>
    * .. .. | %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()<br>
    * .. .. | %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()<br>
@@ -742,7 +777,7 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    */
   @Override
   public void visit(final Expression n, final A argu) {
-    // f0 -> . %0 ObjectCreationExpression()
+    // f0 -> . %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()
     // .. .. | %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()
     // .. .. | %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()
     // .. .. | %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()
@@ -754,88 +789,94 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     final INode ich = nch.choice;
     switch (nch.which) {
       case 0:
-        // %0 ObjectCreationExpression()
-        ich.accept(this, argu);
+        // %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()
+        final NodeSequence seq = (NodeSequence) ich;
+        // #0 ObjectInstantiationExpression()
+        final INode seq1 = seq.elementAt(0);
+        seq1.accept(this, argu);
+        // #1 ExpressionPrime()
+        final INode seq2 = seq.elementAt(1);
+        seq2.accept(this, argu);
         break;
       case 1:
         // %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()
-        final NodeSequence seq = (NodeSequence) ich;
+        final NodeSequence seq3 = (NodeSequence) ich;
         // #0 UnaryOperator()
-        final INode seq1 = seq.elementAt(0);
-        seq1.accept(this, argu);
+        final INode seq4 = seq3.elementAt(0);
+        seq4.accept(this, argu);
         // #1 Expression()
-        final INode seq2 = seq.elementAt(1);
-        seq2.accept(this, argu);
+        final INode seq5 = seq3.elementAt(1);
+        seq5.accept(this, argu);
         // #2 ExpressionPrime()
-        final INode seq3 = seq.elementAt(2);
-        seq3.accept(this, argu);
+        final INode seq6 = seq3.elementAt(2);
+        seq6.accept(this, argu);
         break;
       case 2:
         // %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()
-        final NodeSequence seq4 = (NodeSequence) ich;
+        final NodeSequence seq7 = (NodeSequence) ich;
         // #0 <PARENTHESIS_LEFT>
-        final INode seq5 = seq4.elementAt(0);
-        seq5.accept(this, argu);
-        // #1 Expression()
-        final INode seq6 = seq4.elementAt(1);
-        seq6.accept(this, argu);
-        // #2 <PARENTHESIS_RIGHT>
-        final INode seq7 = seq4.elementAt(2);
-        seq7.accept(this, argu);
-        // #3 ExpressionPrime()
-        final INode seq8 = seq4.elementAt(3);
+        final INode seq8 = seq7.elementAt(0);
         seq8.accept(this, argu);
+        // #1 Expression()
+        final INode seq9 = seq7.elementAt(1);
+        seq9.accept(this, argu);
+        // #2 <PARENTHESIS_RIGHT>
+        final INode seq10 = seq7.elementAt(2);
+        seq10.accept(this, argu);
+        // #3 ExpressionPrime()
+        final INode seq11 = seq7.elementAt(3);
+        seq11.accept(this, argu);
         break;
       case 3:
         // %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()
-        final NodeSequence seq9 = (NodeSequence) ich;
-        // #0 <INTEGER_LITERAL>
-        final INode seq10 = seq9.elementAt(0);
-        seq10.accept(this, argu);
-        // #1 ExpressionPrime()
-        final INode seq11 = seq9.elementAt(1);
-        seq11.accept(this, argu);
-        break;
-      case 4:
-        // %4 #0 <TRUE> #1 ExpressionPrime()
         final NodeSequence seq12 = (NodeSequence) ich;
-        // #0 <TRUE>
+        // #0 <INTEGER_LITERAL>
         final INode seq13 = seq12.elementAt(0);
         seq13.accept(this, argu);
         // #1 ExpressionPrime()
         final INode seq14 = seq12.elementAt(1);
         seq14.accept(this, argu);
         break;
-      case 5:
-        // %5 #0 <FALSE> #1 ExpressionPrime()
+      case 4:
+        // %4 #0 <TRUE> #1 ExpressionPrime()
         final NodeSequence seq15 = (NodeSequence) ich;
-        // #0 <FALSE>
+        // #0 <TRUE>
         final INode seq16 = seq15.elementAt(0);
         seq16.accept(this, argu);
         // #1 ExpressionPrime()
         final INode seq17 = seq15.elementAt(1);
         seq17.accept(this, argu);
         break;
-      case 6:
-        // %6 #0 <THIS> #1 ExpressionPrime()
+      case 5:
+        // %5 #0 <FALSE> #1 ExpressionPrime()
         final NodeSequence seq18 = (NodeSequence) ich;
-        // #0 <THIS>
+        // #0 <FALSE>
         final INode seq19 = seq18.elementAt(0);
         seq19.accept(this, argu);
         // #1 ExpressionPrime()
         final INode seq20 = seq18.elementAt(1);
         seq20.accept(this, argu);
         break;
-      case 7:
-        // %7 #0 Identifier() #1 ExpressionPrime()
+      case 6:
+        // %6 #0 <THIS> #1 ExpressionPrime()
         final NodeSequence seq21 = (NodeSequence) ich;
-        // #0 Identifier()
+        // #0 <THIS>
         final INode seq22 = seq21.elementAt(0);
         seq22.accept(this, argu);
         // #1 ExpressionPrime()
         final INode seq23 = seq21.elementAt(1);
         seq23.accept(this, argu);
         break;
+      case 7:
+        // %7 #0 Identifier() #1 ExpressionPrime()
+        final NodeSequence seq24 = (NodeSequence) ich;
+        // #0 Identifier()
+        final INode seq25 = seq24.elementAt(0);
+        seq25.accept(this, argu);
+        // #1 ExpressionPrime()
+        final INode seq26 = seq24.elementAt(1);
+        seq26.accept(this, argu);
+        break;
       default:
         // should not occur !!!
         break;
@@ -843,72 +884,47 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   }
 
   /**
-   * Visits a {@link ObjectCreationExpression} node, whose children are the following :
+   * Visits a {@link ObjectInstantiationExpression} node, whose children are the following :
    * <p>
    * f0 -> <NEW><br>
    * f1 -> ConstructorCall()<br>
-   * f2 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   @Override
-  public void visit(final ObjectCreationExpression n, final A argu) {
+  public void visit(final ObjectInstantiationExpression n, final A argu) {
     // f0 -> <NEW>
     final NodeToken n0 = n.f0;
     n0.accept(this, argu);
     // f1 -> ConstructorCall()
     final ConstructorCall n1 = n.f1;
     n1.accept(this, argu);
-    // f2 -> ExpressionPrime()
-    final ExpressionPrime n2 = n.f2;
-    n2.accept(this, argu);
   }
 
   /**
    * Visits a {@link ConstructorCall} node, whose child is the following :
    * <p>
-   * f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT><br>
-   * .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+   * f0 -> . %0 ClassConstructorCall()<br>
+   * .. .. | %1 IntArrayConstructorCall()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
    */
   @Override
   public void visit(final ConstructorCall n, final A argu) {
-    // f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT>
-    // .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
+    // f0 -> . %0 ClassConstructorCall()
+    // .. .. | %1 IntArrayConstructorCall()
     final NodeChoice nch = n.f0;
     final INode ich = nch.choice;
     switch (nch.which) {
       case 0:
-        // %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT>
-        final NodeSequence seq = (NodeSequence) ich;
-        // #0 Identifier()
-        final INode seq1 = seq.elementAt(0);
-        seq1.accept(this, argu);
-        // #1 <PARENTHESIS_LEFT>
-        final INode seq2 = seq.elementAt(1);
-        seq2.accept(this, argu);
-        // #2 <PARENTHESIS_RIGHT>
-        final INode seq3 = seq.elementAt(2);
-        seq3.accept(this, argu);
+        // %0 ClassConstructorCall()
+        ich.accept(this, argu);
         break;
       case 1:
-        // %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT>
-        final NodeSequence seq4 = (NodeSequence) ich;
-        // #0 IntType()
-        final INode seq5 = seq4.elementAt(0);
-        seq5.accept(this, argu);
-        // #1 <BRACKET_LEFT>
-        final INode seq6 = seq4.elementAt(1);
-        seq6.accept(this, argu);
-        // #2 Expression()
-        final INode seq7 = seq4.elementAt(2);
-        seq7.accept(this, argu);
-        // #3 <BRACKET_RIGHT>
-        final INode seq8 = seq4.elementAt(3);
-        seq8.accept(this, argu);
+        // %1 IntArrayConstructorCall()
+        ich.accept(this, argu);
         break;
       default:
         // should not occur !!!
@@ -917,12 +933,54 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   }
 
   /**
+   * Visits a {@link ClassConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> Identifier()<br>
+   * f1 -> <PARENTHESIS_LEFT><br>
+   * f2 -> <PARENTHESIS_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final ClassConstructorCall n, final A argu) {
+    // f0 -> Identifier()
+    final Identifier n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> <PARENTHESIS_LEFT>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> <PARENTHESIS_RIGHT>
+    final NodeToken n2 = n.f2;
+    n2.accept(this, argu);
+  }
+
+  /**
+   * Visits a {@link IntArrayConstructorCall} node, whose children are the following :
+   * <p>
+   * f0 -> IntType()<br>
+   * f1 -> ArrayAccess()<br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final IntArrayConstructorCall n, final A argu) {
+    // f0 -> IntType()
+    final IntType n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> ArrayAccess()
+    final ArrayAccess n1 = n.f1;
+    n1.accept(this, argu);
+  }
+
+  /**
    * Visits a {@link ExpressionPrime} node, whose child is the following :
    * <p>
    * f0 -> . %0 #0 BinaryOperator() #1 Expression() #2 ExpressionPrime()<br>
-   * .. .. | %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()<br>
-   * .. .. | %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()<br>
-   * .. .. | %3 MethodCall()<br>
+   * .. .. | %1 #0 ArrayAccess() #1 ExpressionPrime()<br>
+   * .. .. | %2 #0 ArrayLengthAccess() #1 ExpressionPrime()<br>
+   * .. .. | %3 #0 MethodCall() #1 ExpressionPrime()<br>
    * .. .. | %4 Empty()<br>
    *
    * @param n - the node to visit
@@ -931,9 +989,9 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   @Override
   public void visit(final ExpressionPrime n, final A argu) {
     // f0 -> . %0 #0 BinaryOperator() #1 Expression() #2 ExpressionPrime()
-    // .. .. | %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()
-    // .. .. | %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()
-    // .. .. | %3 MethodCall()
+    // .. .. | %1 #0 ArrayAccess() #1 ExpressionPrime()
+    // .. .. | %2 #0 ArrayLengthAccess() #1 ExpressionPrime()
+    // .. .. | %3 #0 MethodCall() #1 ExpressionPrime()
     // .. .. | %4 Empty()
     final NodeChoice nch = n.f0;
     final INode ich = nch.choice;
@@ -952,37 +1010,34 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
         seq3.accept(this, argu);
         break;
       case 1:
-        // %1 #0 <BRACKET_LEFT> #1 Expression() #2 <BRACKET_RIGHT> #3 ExpressionPrime()
+        // %1 #0 ArrayAccess() #1 ExpressionPrime()
         final NodeSequence seq4 = (NodeSequence) ich;
-        // #0 <BRACKET_LEFT>
+        // #0 ArrayAccess()
         final INode seq5 = seq4.elementAt(0);
         seq5.accept(this, argu);
-        // #1 Expression()
+        // #1 ExpressionPrime()
         final INode seq6 = seq4.elementAt(1);
         seq6.accept(this, argu);
-        // #2 <BRACKET_RIGHT>
-        final INode seq7 = seq4.elementAt(2);
-        seq7.accept(this, argu);
-        // #3 ExpressionPrime()
-        final INode seq8 = seq4.elementAt(3);
-        seq8.accept(this, argu);
         break;
       case 2:
-        // %2 #0 <DOT> #1 <LENGTH_FIELD_NAME> #2 ExpressionPrime()
-        final NodeSequence seq9 = (NodeSequence) ich;
-        // #0 <DOT>
-        final INode seq10 = seq9.elementAt(0);
-        seq10.accept(this, argu);
-        // #1 <LENGTH_FIELD_NAME>
-        final INode seq11 = seq9.elementAt(1);
-        seq11.accept(this, argu);
-        // #2 ExpressionPrime()
-        final INode seq12 = seq9.elementAt(2);
-        seq12.accept(this, argu);
+        // %2 #0 ArrayLengthAccess() #1 ExpressionPrime()
+        final NodeSequence seq7 = (NodeSequence) ich;
+        // #0 ArrayLengthAccess()
+        final INode seq8 = seq7.elementAt(0);
+        seq8.accept(this, argu);
+        // #1 ExpressionPrime()
+        final INode seq9 = seq7.elementAt(1);
+        seq9.accept(this, argu);
         break;
       case 3:
-        // %3 MethodCall()
-        ich.accept(this, argu);
+        // %3 #0 MethodCall() #1 ExpressionPrime()
+        final NodeSequence seq10 = (NodeSequence) ich;
+        // #0 MethodCall()
+        final INode seq11 = seq10.elementAt(0);
+        seq11.accept(this, argu);
+        // #1 ExpressionPrime()
+        final INode seq12 = seq10.elementAt(1);
+        seq12.accept(this, argu);
         break;
       case 4:
         // %4 Empty()
@@ -995,14 +1050,33 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
   }
 
   /**
+   * Visits a {@link ArrayLengthAccess} node, whose children are the following :
+   * <p>
+   * f0 -> <DOT><br>
+   * f1 -> <LENGTH_FIELD_NAME><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final ArrayLengthAccess n, final A argu) {
+    // f0 -> <DOT>
+    final NodeToken n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> <LENGTH_FIELD_NAME>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+  }
+
+  /**
    * Visits a {@link MethodCall} node, whose children are the following :
    * <p>
    * f0 -> <DOT><br>
    * f1 -> Identifier()<br>
    * f2 -> <PARENTHESIS_LEFT><br>
-   * f3 -> ParameterList()<br>
+   * f3 -> ( #0 Parameter()<br>
+   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
    * f4 -> <PARENTHESIS_RIGHT><br>
-   * f5 -> ExpressionPrime()<br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -1018,33 +1092,11 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     // f2 -> <PARENTHESIS_LEFT>
     final NodeToken n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> ParameterList()
-    final ParameterList n3 = n.f3;
-    n3.accept(this, argu);
-    // f4 -> <PARENTHESIS_RIGHT>
-    final NodeToken n4 = n.f4;
-    n4.accept(this, argu);
-    // f5 -> ExpressionPrime()
-    final ExpressionPrime n5 = n.f5;
-    n5.accept(this, argu);
-  }
-
-  /**
-   * Visits a {@link ParameterList} node, whose child is the following :
-   * <p>
-   * f0 -> ( #0 Parameter()<br>
-   * .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?<br>
-   *
-   * @param n - the node to visit
-   * @param argu - the user argument
-   */
-  @Override
-  public void visit(final ParameterList n, final A argu) {
-    // f0 -> ( #0 Parameter()
+    // f3 -> ( #0 Parameter()
     // .. .. . #1 ( $0 <COMMA> $1 Parameter() )* )?
-    final NodeOptional n0 = n.f0;
-    if (n0.present()) {
-      final NodeSequence seq = (NodeSequence) n0.node;
+    final NodeOptional n3 = n.f3;
+    if (n3.present()) {
+      final NodeSequence seq = (NodeSequence) n3.node;
       // #0 Parameter()
       final INode seq1 = seq.elementAt(0);
       seq1.accept(this, argu);
@@ -1064,6 +1116,9 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
         }
       }
     }
+    // f4 -> <PARENTHESIS_RIGHT>
+    final NodeToken n4 = n.f4;
+    n4.accept(this, argu);
   }
 
   /**

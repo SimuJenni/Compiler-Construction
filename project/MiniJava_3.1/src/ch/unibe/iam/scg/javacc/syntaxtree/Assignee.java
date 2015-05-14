@@ -6,7 +6,7 @@ import ch.unibe.iam.scg.javacc.visitor.*;
 /**
  * JTB node class for the production Assignee:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 #0 Identifier() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+ * f0 -> . %0 AssignableArrayAccess()<br>
  * .. .. | %1 Identifier()<br>
  */
 public class Assignee implements INode {

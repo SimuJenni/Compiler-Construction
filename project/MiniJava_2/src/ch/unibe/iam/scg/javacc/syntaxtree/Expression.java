@@ -6,7 +6,7 @@ import ch.unibe.iam.scg.javacc.visitor.*;
 /**
  * JTB node class for the production Expression:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 ObjectCreationExpression()<br>
+ * f0 -> . %0 #0 ObjectInstantiationExpression() #1 ExpressionPrime()<br>
  * .. .. | %1 #0 UnaryOperator() #1 Expression() #2 ExpressionPrime()<br>
  * .. .. | %2 #0 <PARENTHESIS_LEFT> #1 Expression() #2 <PARENTHESIS_RIGHT> #3 ExpressionPrime()<br>
  * .. .. | %3 #0 <INTEGER_LITERAL> #1 ExpressionPrime()<br>
