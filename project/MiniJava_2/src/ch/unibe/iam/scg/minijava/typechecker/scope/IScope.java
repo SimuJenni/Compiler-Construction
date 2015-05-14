@@ -14,9 +14,11 @@ public interface IScope {
 
 	public IType getType(String name);
 
-	public void putType(String name, IType type);
+	public void putType(String name, IType type, IScope scope);
 
 	public IType lookupType(String name) throws LookupException;
+
+	public IScope lookupTypeScope(String name) throws LookupException;
 
 	public boolean hasVariable(String name);
 

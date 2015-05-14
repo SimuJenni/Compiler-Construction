@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.ArrayAccess;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
@@ -15,19 +17,17 @@ public class ArrayAccessToken extends AbstractFunctionToken<ArrayAccess> {
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length != 2) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 2);
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
+		IType indexType = stack.pop().evaluate(scope, stack);
+		IType objectType = stack.pop().evaluate(scope, stack);
+		if (!indexType.canBeAssignedTo(IntType.INSTANCE)) {
+			throw new IncompatibleTypesException(indexType, IntType.INSTANCE);
 		}
-		if (!(parameterTypes[0] instanceof ArrayType)) {
-			throw new IncompatibleTypesException(parameterTypes[0],
-					new ArrayType(ObjectType.INSTANCE));
+		if (!(objectType instanceof ArrayType)) {
+			throw new IncompatibleTypesException(objectType, new ArrayType(
+					ObjectType.INSTANCE));
 		}
-		if (!parameterTypes[1].canBeAssignedTo(IntType.INSTANCE)) {
-			throw new IncompatibleTypesException(parameterTypes[1],
-					IntType.INSTANCE);
-		}
-		return ((ArrayType) parameterTypes[0]).getElementType();
+		return ((ArrayType) objectType).getElementType();
 	}
 
 }

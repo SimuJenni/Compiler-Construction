@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.UnaryOperator;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
@@ -12,12 +14,10 @@ public class UnaryOperatorToken extends AbstractOperatorToken {
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length != 1) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 1);
-		}
-		if (!parameterTypes[0].canBeAssignedTo(this.returnType)) {
-			throw new IncompatibleTypesException(parameterTypes[0], this.returnType);
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
+		IType operandType = stack.pop().evaluate(scope, stack);
+		if (!operandType.canBeAssignedTo(this.returnType)) {
+			throw new IncompatibleTypesException(operandType, this.returnType);
 		}
 		return this.returnType;
 	}

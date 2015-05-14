@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.ArrayLengthAccess;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
@@ -15,13 +17,11 @@ public class ArrayLengthAccessToken extends AbstractFunctionToken<ArrayLengthAcc
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length != 1) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 1);
-		}
-		if (!(parameterTypes[0] instanceof ArrayType)) {
-			throw new IncompatibleTypesException(parameterTypes[0],
-					new ArrayType(ObjectType.INSTANCE));
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
+		IType objectType = stack.pop().evaluate(scope, stack);
+		if (!(objectType instanceof ArrayType)) {
+			throw new IncompatibleTypesException(objectType, new ArrayType(
+					ObjectType.INSTANCE));
 		}
 		return IntType.INSTANCE;
 	}

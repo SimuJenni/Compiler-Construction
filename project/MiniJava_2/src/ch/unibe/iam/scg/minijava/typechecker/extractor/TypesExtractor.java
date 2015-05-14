@@ -1,7 +1,6 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class TypesExtractor {
 
 	}
 
-	public Collection<IType> extract(INode node, IType implicitSuperType)
+	public List<IType> extract(INode node, IType implicitSuperType)
 			throws NameCollisionException, LookupException {
 		ClassDeclarationVisitor visitor = new ClassDeclarationVisitor(
 				implicitSuperType);
@@ -66,22 +65,25 @@ public class TypesExtractor {
 		Map<String, String> inheritances = visitor.getInheritances();
 		classNames = this.getTopologicallySortedClassNames(classNames,
 				inheritances);
-		Map<String, IType> types = new HashMap<String, IType>();
-		types.put(implicitSuperType.getName(), implicitSuperType);
+		Map<String, IType> map = new HashMap<String, IType>();
+		List<IType> types = new ArrayList<IType>();
+		map.put(implicitSuperType.getName(), implicitSuperType);
+		types.add(implicitSuperType);
 		for (String className : classNames) {
 			if (className.equals(implicitSuperType.getName())) {
 				continue;
 			}
 			String superClassName = inheritances.get(className);
-			if (!types.containsKey(superClassName)) {
+			if (!map.containsKey(superClassName)) {
 				throw new LookupException(superClassName);
 			}
-			IType superType = types.get(superClassName);
+			IType superType = map.get(superClassName);
 			IType thisType = new Type(className, superType);
-			types.put(thisType.getName(), thisType);
+			map.put(thisType.getName(), thisType);
+			types.add(thisType);
 		}
-		types.remove(implicitSuperType.getName());
-		return types.values();
+		types.remove(implicitSuperType);
+		return types;
 	}
 
 	/**

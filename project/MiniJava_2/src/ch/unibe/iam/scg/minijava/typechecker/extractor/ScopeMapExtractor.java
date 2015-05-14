@@ -34,7 +34,7 @@ public class ScopeMapExtractor {
 		public void visit(ClassDeclaration n, IScope parent) {
 			String className = n.f1.f0.tokenImage;
 			IType type = parent.lookupType(className);
-			IScope child = new Scope(parent);
+			IScope child = parent.lookupTypeScope(className);
 			Variable thisVariable = new Variable("this", type);
 			child.putVariable(thisVariable.getName(), thisVariable);
 			this.scopeMap.put(n, child);
@@ -64,9 +64,9 @@ public class ScopeMapExtractor {
 
 	public Map<INode, IScope> extract(INode node, IScope scope) {
 		DeclarationVisitor visitor = new DeclarationVisitor();
-		node.accept(visitor, scope);
 		Map<INode, IScope> scopeMap = visitor.getScopeMap();
 		scopeMap.put(node, scope);
+		node.accept(visitor, scope);
 		return scopeMap;
 	}
 

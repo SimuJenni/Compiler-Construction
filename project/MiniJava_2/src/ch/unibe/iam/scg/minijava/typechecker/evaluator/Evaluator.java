@@ -4,6 +4,8 @@ import java.util.Map;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ArrayAccess;
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
+import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
@@ -24,27 +26,32 @@ import ch.unibe.iam.scg.minijava.typechecker.type.VoidType;
 
 public class Evaluator {
 
-	protected static class MethodVisitor extends
+	protected static class EvaluatingVisitor extends
 			DepthFirstVoidArguVisitor<IScope> {
 
 		protected Map<INode, IScope> scopeMap;
 
-		public MethodVisitor(Map<INode, IScope> scopeMap) {
+		public EvaluatingVisitor(Map<INode, IScope> scopeMap) {
 			super();
 			this.scopeMap = scopeMap;
+		}
+		
+		@Override
+		public void visit(ClassDeclaration n, IScope parent) {
+			super.visit(n, this.scopeMap.get(parent));
 		}
 
 		@Override
 		public void visit(MethodDeclaration n, IScope parent) {
-			Method method = parent.lookupMethod(n.f2.f0.tokenImage);
+			IScope scope = this.scopeMap.get(n);
+			Method method = scope.lookupMethod(n.f2.f0.tokenImage);
 			IType returnType = method.getReturnType();
-			IScope child = this.scopeMap.get(n);
 			if (n.f9.present()) {
 				if (returnType == VoidType.INSTANCE) {
 					throw new ReturnValueFromVoidMethodException();
 				}
 				IType returnedType = (new ExpressionTypeExtractor()).extract(
-						n.f9, child);
+						n.f9, scope);
 				if (!returnedType.canBeAssignedTo(returnType)) {
 					throw new IncompatibleTypesException(returnedType,
 							returnType);
@@ -54,7 +61,7 @@ public class Evaluator {
 					throw new MissingReturnValueFromNonVoidMethodException();
 				}
 			}
-			super.visit(n, child);
+			n.f8.accept(this, scope);
 		}
 
 		@Override
@@ -65,7 +72,8 @@ public class Evaluator {
 				throw new IncompatibleTypesException(returnedType,
 						BooleanType.INSTANCE);
 			}
-			super.visit(n, scope);
+			n.f4.accept(this, scope);
+			n.f6.accept(this, scope);
 		}
 
 		@Override
@@ -76,7 +84,7 @@ public class Evaluator {
 				throw new IncompatibleTypesException(returnedType,
 						BooleanType.INSTANCE);
 			}
-			super.visit(n, scope);
+			n.f4.accept(this, scope);
 		}
 
 		@Override
@@ -87,7 +95,6 @@ public class Evaluator {
 				throw new IncompatibleTypesException(returnedType,
 						StringType.INSTANCE);
 			}
-			super.visit(n, scope);
 		}
 
 		@Override
@@ -96,14 +103,14 @@ public class Evaluator {
 					scope);
 			String name = (new IdentifierNameExtractor())
 					.extract(n.f0.f0.choice);
-			IType expectedType = scope.lookupType(name);
+			IType expectedType = scope.lookupVariable(name).getType();
 			if (n.f0.f0.which == 0) {
 				expectedType = ((ArrayType) expectedType).getElementType();
+				n.f0.f0.choice.accept(this, scope);
 			}
 			if (!actualType.canBeAssignedTo(expectedType)) {
 				throw new IncompatibleTypesException(actualType, expectedType);
 			}
-			super.visit(n, scope);
 		}
 
 		@Override
@@ -114,7 +121,11 @@ public class Evaluator {
 				throw new IncompatibleTypesException(actualType,
 						IntType.INSTANCE);
 			}
-			super.visit(n, scope);
+		}
+
+		@Override
+		public void visit(Expression n, IScope scope) {
+			(new ExpressionTypeExtractor()).extract(n, scope);
 		}
 
 	}
@@ -127,7 +138,7 @@ public class Evaluator {
 
 	public void evaluate(INode n) throws LookupException,
 			IncompatibleTypesException {
-		MethodVisitor visitor = new MethodVisitor(this.scopeMap);
+		EvaluatingVisitor visitor = new EvaluatingVisitor(this.scopeMap);
 		n.accept(visitor, this.scopeMap.get(n));
 	}
 

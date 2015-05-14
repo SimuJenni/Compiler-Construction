@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
@@ -11,10 +13,7 @@ public class MethodCallToken extends AbstractFunctionToken<MethodCall> {
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length == 0) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 1);
-		}
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
 		return null;
 		// TODO fix scope
 //		Method method = scope.getClassScope(parameterTypes[0]).lookupMethod(

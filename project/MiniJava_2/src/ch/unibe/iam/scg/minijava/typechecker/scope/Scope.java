@@ -11,12 +11,14 @@ public class Scope implements IScope {
 
 	protected IScope parent;
 	protected Map<String, IType> types;
+	protected Map<String, IScope> typeScopes;
 	protected Map<String, Method> methods;
 	protected Map<String, Variable> variables;
 
 	public Scope(IScope parent) {
 		this.parent = parent;
 		this.types = new HashMap<String, IType>();
+		this.typeScopes = new HashMap<String, IScope>();
 		this.methods = new HashMap<String, Method>();
 		this.variables = new HashMap<String, Variable>();
 	}
@@ -45,11 +47,20 @@ public class Scope implements IScope {
 	}
 
 	@Override
-	public void putType(String name, IType type) {
+	public void putType(String name, IType type, IScope scope) {
 		if (this.hasType(name)) {
 			throw new NameCollisionException(name);
 		}
 		this.types.put(name, type);
+		this.typeScopes.put(name, scope);
+	}
+
+	@Override
+	public IScope lookupTypeScope(String name) throws LookupException {
+		if (!this.hasType(name)) {
+			throw new LookupException(name);
+		}
+		return this.typeScopes.get(name);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.IntArrayConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.ObjectInstantiationExpression;
@@ -39,22 +41,17 @@ public class ObjectInstantiationToken extends
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
 		ObjectInstantiationVisitor visitor = new ObjectInstantiationVisitor();
 		this.node.accept(visitor);
 		IType type = scope.lookupType(visitor.getTypeName());
 		if (type instanceof ArrayType) {
-			if (parameterTypes.length != 1) {
-				throw new WrongNumberOfArgumentException(parameterTypes.length, 1);
-			}
-			if (!parameterTypes[0].canBeAssignedTo(IntType.INSTANCE)) {
-				throw new IncompatibleTypesException(parameterTypes[0],
+			IType indexType = stack.pop().evaluate(scope, stack);
+			if (!indexType.canBeAssignedTo(IntType.INSTANCE)) {
+				throw new IncompatibleTypesException(indexType,
 						IntType.INSTANCE);
 			}
 			return type;
-		}
-		if (parameterTypes.length != 0) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 0);
 		}
 		return type;
 	}

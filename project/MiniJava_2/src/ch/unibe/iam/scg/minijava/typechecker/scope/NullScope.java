@@ -29,8 +29,13 @@ public class NullScope implements IScope {
 	}
 
 	@Override
-	public void putType(String name, IType type) {
+	public void putType(String name, IType type, IScope scope) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IScope lookupTypeScope(String name) throws LookupException {
+		throw new LookupException(name);
 	}
 
 	@Override

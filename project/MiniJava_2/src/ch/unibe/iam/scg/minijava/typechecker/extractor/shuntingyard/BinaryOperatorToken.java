@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
 import ch.unibe.iam.scg.minijava.typechecker.evaluator.IncompatibleTypesException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
@@ -12,15 +14,14 @@ public class BinaryOperatorToken extends AbstractOperatorToken {
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length != 2) {
-			throw new WrongNumberOfArgumentException(parameterTypes.length, 2);
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
+		IType operandType1 = stack.pop().evaluate(scope, stack);
+		IType operandType2 = stack.pop().evaluate(scope, stack);
+		if (!operandType1.canBeAssignedTo(this.parameterType)) {
+			throw new IncompatibleTypesException(operandType1, this.parameterType);
 		}
-		if (!parameterTypes[0].canBeAssignedTo(this.returnType)) {
-			throw new IncompatibleTypesException(parameterTypes[0], this.returnType);
-		}
-		if (!parameterTypes[1].canBeAssignedTo(this.returnType)) {
-			throw new IncompatibleTypesException(parameterTypes[1], this.returnType);
+		if (!operandType2.canBeAssignedTo(this.parameterType)) {
+			throw new IncompatibleTypesException(operandType2, this.parameterType);
 		}
 		return this.returnType;
 	}

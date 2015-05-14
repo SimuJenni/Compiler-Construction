@@ -1,5 +1,7 @@
 package ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard;
 
+import java.util.Stack;
+
 import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 
@@ -12,10 +14,7 @@ public class LiteralToken implements IToken {
 	}
 
 	@Override
-	public IType evaluate(IScope scope, IType... parameterTypes) {
-		if (parameterTypes.length != 0) {
-			throw new IllegalArgumentException("parameters must be empty");
-		}
+	public IType evaluate(IScope scope, Stack<IToken> stack) {
 		return this.type;
 	}
 

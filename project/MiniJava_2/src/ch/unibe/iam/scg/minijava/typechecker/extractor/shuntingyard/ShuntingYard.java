@@ -85,7 +85,9 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final INode seq1 = seq.elementAt(0);
 			this.stack.push(new ObjectInstantiationToken(
 					(ObjectInstantiationExpression) seq1));
+			this.pushLeftParenthesis();
 			seq1.accept(this);
+			this.pushRightParenthesis();
 			// #1 ExpressionPrime()
 			final INode seq2 = seq.elementAt(1);
 			seq2.accept(this);
@@ -227,7 +229,9 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final INode seq8 = seq7.elementAt(0);
 			this.stack
 					.push(new ArrayLengthAccessToken((ArrayLengthAccess) seq8));
+			this.pushLeftParenthesis();
 			seq8.accept(this);
+			this.pushRightParenthesis();
 			// #1 ExpressionPrime()
 			final INode seq9 = seq7.elementAt(1);
 			seq9.accept(this);
@@ -238,7 +242,9 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			// #0 MethodCall()
 			final INode seq11 = seq10.elementAt(0);
 			this.stack.push(new MethodCallToken((MethodCall) seq11));
+			this.pushLeftParenthesis();
 			seq11.accept(this);
+			this.pushRightParenthesis();
 			// #1 ExpressionPrime()
 			final INode seq12 = seq10.elementAt(1);
 			seq12.accept(this);
@@ -309,14 +315,22 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 	}
 
 	protected void pushOperator(AbstractOperatorToken operator) {
-		IToken top = this.stack.peek();
-		while (top.isOperator()
-				&& (((operator.getAssociativity() == Associativity.LEFT && operator
-						.getPrecedence() <= ((AbstractOperatorToken) top)
-						.getPrecedence())) || (operator.getAssociativity() == Associativity.RIGHT && operator
-						.getPrecedence() < ((AbstractOperatorToken) top)
-						.getPrecedence()))) {
-			this.output.add(this.stack.pop());
+		if (!this.stack.isEmpty()) {
+			IToken top = this.stack.peek();
+			while (top.isOperator()
+					&& (((operator.getAssociativity() == Associativity.LEFT && operator
+							.getPrecedence() <= ((AbstractOperatorToken) top)
+							.getPrecedence())) || (operator.getAssociativity() == Associativity.RIGHT && operator
+							.getPrecedence() < ((AbstractOperatorToken) top)
+							.getPrecedence()))) {
+				this.output.add(top);
+				this.stack.pop();
+				if (!this.stack.isEmpty()) {
+					top = this.stack.peek();
+				} else {
+					break;
+				}
+			}
 		}
 		this.stack.push(operator);
 	}
@@ -333,7 +347,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			}
 		}
 		this.stack.pop();
-		if (this.stack.peek().isFunction()) {
+		if (!this.stack.isEmpty() && this.stack.peek().isFunction()) {
 			this.output.add(this.stack.pop());
 		}
 	}
