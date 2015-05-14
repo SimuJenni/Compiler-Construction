@@ -7,15 +7,17 @@ import ch.unibe.iam.scg.javacc.visitor.*;
  * JTB node class for the production MethodDeclaration:<br>
  * Corresponding grammar:<br>
  * f0 -> <PUBLIC_MODIFIER><br>
- * f1 -> TypedDeclaration()<br>
- * f2 -> <PARENTHESIS_LEFT><br>
- * f3 -> ParameterDeclarationList()<br>
- * f4 -> <PARENTHESIS_RIGHT><br>
- * f5 -> <BRACE_LEFT><br>
- * f6 -> ( VarDeclaration() )*<br>
- * f7 -> ( Statement() )*<br>
- * f8 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
- * f9 -> <BRACE_RIGHT><br>
+ * f1 -> Type()<br>
+ * f2 -> Identifier()<br>
+ * f3 -> <PARENTHESIS_LEFT><br>
+ * f4 -> ( #0 ParameterDeclaration()<br>
+ * .. .. . #1 ( $0 <COMMA> $1 ParameterDeclaration() )* )?<br>
+ * f5 -> <PARENTHESIS_RIGHT><br>
+ * f6 -> <BRACE_LEFT><br>
+ * f7 -> ( VarDeclaration() )*<br>
+ * f8 -> ( Statement() )*<br>
+ * f9 -> ( #0 <RETURN> #1 Expression() #2 <SEMICOLON> )?<br>
+ * f10 -> <BRACE_RIGHT><br>
  */
 public class MethodDeclaration implements INode {
 
@@ -23,31 +25,34 @@ public class MethodDeclaration implements INode {
   public NodeToken f0;
 
   /** Child node 2 */
-  public TypedDeclaration f1;
+  public Type f1;
 
   /** Child node 3 */
-  public NodeToken f2;
+  public Identifier f2;
 
   /** Child node 4 */
-  public ParameterDeclarationList f3;
+  public NodeToken f3;
 
   /** Child node 5 */
-  public NodeToken f4;
+  public NodeOptional f4;
 
   /** Child node 6 */
   public NodeToken f5;
 
   /** Child node 7 */
-  public NodeListOptional f6;
+  public NodeToken f6;
 
   /** Child node 8 */
   public NodeListOptional f7;
 
   /** Child node 9 */
-  public NodeOptional f8;
+  public NodeListOptional f8;
 
   /** Child node 10 */
-  public NodeToken f9;
+  public NodeOptional f9;
+
+  /** Child node 11 */
+  public NodeToken f10;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -65,8 +70,9 @@ public class MethodDeclaration implements INode {
    * @param n7 - next child node
    * @param n8 - next child node
    * @param n9 - next child node
+   * @param n10 - next child node
    */
-  public MethodDeclaration(final NodeToken n0, final TypedDeclaration n1, final NodeToken n2, final ParameterDeclarationList n3, final NodeToken n4, final NodeToken n5, final NodeListOptional n6, final NodeListOptional n7, final NodeOptional n8, final NodeToken n9) {
+  public MethodDeclaration(final NodeToken n0, final Type n1, final Identifier n2, final NodeToken n3, final NodeOptional n4, final NodeToken n5, final NodeToken n6, final NodeListOptional n7, final NodeListOptional n8, final NodeOptional n9, final NodeToken n10) {
     f0 = n0;
     f1 = n1;
     f2 = n2;
@@ -77,6 +83,7 @@ public class MethodDeclaration implements INode {
     f7 = n7;
     f8 = n8;
     f9 = n9;
+    f10 = n10;
   }
 
   /**

@@ -6,8 +6,8 @@ import ch.unibe.iam.scg.javacc.visitor.*;
 /**
  * JTB node class for the production ConstructorCall:<br>
  * Corresponding grammar:<br>
- * f0 -> . %0 #0 Identifier() #1 <PARENTHESIS_LEFT> #2 <PARENTHESIS_RIGHT><br>
- * .. .. | %1 #0 IntType() #1 <BRACKET_LEFT> #2 Expression() #3 <BRACKET_RIGHT><br>
+ * f0 -> . %0 ClassConstructorCall()<br>
+ * .. .. | %1 IntArrayConstructorCall()<br>
  */
 public class ConstructorCall implements INode {
 

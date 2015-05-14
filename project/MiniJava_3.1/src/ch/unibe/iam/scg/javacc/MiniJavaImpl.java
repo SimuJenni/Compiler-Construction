@@ -208,49 +208,92 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
-  TypedDeclaration n2 = null;
-  NodeToken n3 = null;
-  Token n4 = null;
-  ParameterDeclarationList n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
-  NodeToken n8 = null;
-  Token n9 = null;
-  NodeListOptional n10 = new NodeListOptional();
-  VarDeclaration n11 = null;
-  NodeListOptional n12 = new NodeListOptional();
-  Statement n13 = null;
-  NodeOptional n14 = new NodeOptional();
-  NodeSequence n15 = null;
+  Type n2 = null;
+  Identifier n3 = null;
+  NodeToken n4 = null;
+  Token n5 = null;
+  NodeOptional n6 = new NodeOptional();
+  NodeSequence n7 = null;
+  ParameterDeclaration n8 = null;
+  NodeListOptional n9 = null;
+  NodeSequence n10 = null;
+  NodeToken n11 = null;
+  Token n12 = null;
+  ParameterDeclaration n13 = null;
+  NodeToken n14 = null;
+  Token n15 = null;
   NodeToken n16 = null;
   Token n17 = null;
-  Expression n18 = null;
-  NodeToken n19 = null;
-  Token n20 = null;
-  NodeToken n21 = null;
-  Token n22 = null;
+  NodeListOptional n18 = new NodeListOptional();
+  VarDeclaration n19 = null;
+  NodeListOptional n20 = new NodeListOptional();
+  Statement n21 = null;
+  NodeOptional n22 = new NodeOptional();
+  NodeSequence n23 = null;
+  NodeToken n24 = null;
+  Token n25 = null;
+  Expression n26 = null;
+  NodeToken n27 = null;
+  Token n28 = null;
+  NodeToken n29 = null;
+  Token n30 = null;
     n1 = jj_consume_token(PUBLIC_MODIFIER);
     n0 = JTBToolkit.makeNodeToken(n1);
-    n2 = TypedDeclaration();
-    n4 = jj_consume_token(PARENTHESIS_LEFT);
-    n3 = JTBToolkit.makeNodeToken(n4);
-    n5 = ParameterDeclarationList();
-    n7 = jj_consume_token(PARENTHESIS_RIGHT);
-    n6 = JTBToolkit.makeNodeToken(n7);
-    n9 = jj_consume_token(BRACE_LEFT);
-    n8 = JTBToolkit.makeNodeToken(n9);
-    label_4:
+    n2 = Type();
+    n3 = Identifier();
+    n5 = jj_consume_token(PARENTHESIS_LEFT);
+    n4 = JTBToolkit.makeNodeToken(n5);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VOID_TYPE:
+    case INT_TYPE:
+    case BOOLEAN_TYPE:
+    case IDENTIFIER:
+      n9 = new NodeListOptional();
+      n7 = new NodeSequence(2);
+      n8 = ParameterDeclaration();
+      n7.addNode(n8);
+      label_4:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case COMMA:
+          ;
+          break;
+        default:
+          jj_la1[5] = jj_gen;
+          break label_4;
+        }
+        n10 = new NodeSequence(2);
+        n12 = jj_consume_token(COMMA);
+        n11 = JTBToolkit.makeNodeToken(n12);
+        n10.addNode(n11);
+        n13 = ParameterDeclaration();
+        n10.addNode(n13);
+        n9.addNode(n10);
+      }
+      n9.nodes.trimToSize();
+      n7.addNode(n9);
+      n6.addNode(n7);
+      break;
+    default:
+      jj_la1[6] = jj_gen;
+      ;
+    }
+    n15 = jj_consume_token(PARENTHESIS_RIGHT);
+    n14 = JTBToolkit.makeNodeToken(n15);
+    n17 = jj_consume_token(BRACE_LEFT);
+    n16 = JTBToolkit.makeNodeToken(n17);
+    label_5:
     while (true) {
       if (jj_2_1(2)) {
         ;
       } else {
-        break label_4;
+        break label_5;
       }
-      n11 = VarDeclaration();
-      n10.addNode(n11);
+      n19 = VarDeclaration();
+      n18.addNode(n19);
     }
-    n10.nodes.trimToSize();
-    label_5:
+    n18.nodes.trimToSize();
+    label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRINT_METHOD:
@@ -261,82 +304,33 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
         ;
         break;
       default:
-        jj_la1[5] = jj_gen;
-        break label_5;
+        jj_la1[7] = jj_gen;
+        break label_6;
       }
-      n13 = Statement();
-      n12.addNode(n13);
+      n21 = Statement();
+      n20.addNode(n21);
     }
-    n12.nodes.trimToSize();
+    n20.nodes.trimToSize();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RETURN:
-      n15 = new NodeSequence(3);
-      n17 = jj_consume_token(RETURN);
-      n16 = JTBToolkit.makeNodeToken(n17);
-      n15.addNode(n16);
-      n18 = Expression();
-      n15.addNode(n18);
-      n20 = jj_consume_token(SEMICOLON);
-      n19 = JTBToolkit.makeNodeToken(n20);
-      n15.addNode(n19);
-      n14.addNode(n15);
-      break;
-    default:
-      jj_la1[6] = jj_gen;
-      ;
-    }
-    n22 = jj_consume_token(BRACE_RIGHT);
-    n21 = JTBToolkit.makeNodeToken(n22);
-    {if (true) return new MethodDeclaration(n0, n2, n3, n5, n6, n8, n10, n12, n14, n21);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public ParameterDeclarationList ParameterDeclarationList() throws ParseException {
-  // --- JTB generated node declarations ---
-  NodeOptional n0 = new NodeOptional();
-  NodeSequence n1 = null;
-  ParameterDeclaration n2 = null;
-  NodeListOptional n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  ParameterDeclaration n7 = null;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case VOID_TYPE:
-    case INT_TYPE:
-    case BOOLEAN_TYPE:
-    case IDENTIFIER:
-      n3 = new NodeListOptional();
-      n1 = new NodeSequence(2);
-      n2 = ParameterDeclaration();
-      n1.addNode(n2);
-      label_6:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case COMMA:
-          ;
-          break;
-        default:
-          jj_la1[7] = jj_gen;
-          break label_6;
-        }
-        n4 = new NodeSequence(2);
-        n6 = jj_consume_token(COMMA);
-        n5 = JTBToolkit.makeNodeToken(n6);
-        n4.addNode(n5);
-        n7 = ParameterDeclaration();
-        n4.addNode(n7);
-        n3.addNode(n4);
-      }
-      n3.nodes.trimToSize();
-      n1.addNode(n3);
-      n0.addNode(n1);
+      n23 = new NodeSequence(3);
+      n25 = jj_consume_token(RETURN);
+      n24 = JTBToolkit.makeNodeToken(n25);
+      n23.addNode(n24);
+      n26 = Expression();
+      n23.addNode(n26);
+      n28 = jj_consume_token(SEMICOLON);
+      n27 = JTBToolkit.makeNodeToken(n28);
+      n23.addNode(n27);
+      n22.addNode(n23);
       break;
     default:
       jj_la1[8] = jj_gen;
       ;
     }
-    {if (true) return new ParameterDeclarationList(n0);}
+    n30 = jj_consume_token(BRACE_RIGHT);
+    n29 = JTBToolkit.makeNodeToken(n30);
+    {if (true) return new MethodDeclaration(n0, n2, n3, n4, n6, n14, n16, n18, n20, n22, n29);}
     throw new Error("Missing return statement in function");
   }
 
@@ -400,54 +394,31 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   final public Statement Statement() throws ParseException {
   // --- JTB generated node declarations ---
   NodeChoice n0 = null;
-  StatementList n1 = null;
-  If n2 = null;
-  WhileLoop n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  NodeToken n7 = null;
-  Token n8 = null;
-  Expression n9 = null;
-  NodeToken n10 = null;
-  Token n11 = null;
-  NodeToken n12 = null;
-  Token n13 = null;
-  Assignment n14 = null;
+  BlockStatement n1 = null;
+  IfStatement n2 = null;
+  WhileStatement n3 = null;
+  PrintStatement n4 = null;
+  AssignmentStatement n5 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BRACE_LEFT:
-      n1 = StatementList();
+      n1 = BlockStatement();
       n0 = new NodeChoice(n1, 0, 5);
       break;
     case IF:
-      n2 = If();
+      n2 = IfStatement();
       n0 = new NodeChoice(n2, 1, 5);
       break;
     case WHILE:
-      n3 = WhileLoop();
+      n3 = WhileStatement();
       n0 = new NodeChoice(n3, 2, 5);
       break;
     case PRINT_METHOD:
-      n4 = new NodeSequence(5);
-      n6 = jj_consume_token(PRINT_METHOD);
-      n5 = JTBToolkit.makeNodeToken(n6);
-      n4.addNode(n5);
-      n8 = jj_consume_token(PARENTHESIS_LEFT);
-      n7 = JTBToolkit.makeNodeToken(n8);
-      n4.addNode(n7);
-      n9 = Expression();
-      n4.addNode(n9);
-      n11 = jj_consume_token(PARENTHESIS_RIGHT);
-      n10 = JTBToolkit.makeNodeToken(n11);
-      n4.addNode(n10);
-      n13 = jj_consume_token(SEMICOLON);
-      n12 = JTBToolkit.makeNodeToken(n13);
-      n4.addNode(n12);
+      n4 = PrintStatement();
       n0 = new NodeChoice(n4, 3, 5);
       break;
     case IDENTIFIER:
-      n14 = Assignment();
-      n0 = new NodeChoice(n14, 4, 5);
+      n5 = AssignmentStatement();
+      n0 = new NodeChoice(n5, 4, 5);
       break;
     default:
       jj_la1[10] = jj_gen;
@@ -458,87 +429,41 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public Assignment Assignment() throws ParseException {
-  // --- JTB generated node declarations ---
-  Assignee n0 = null;
-  NodeToken n1 = null;
-  Token n2 = null;
-  Expression n3 = null;
-  NodeToken n4 = null;
-  Token n5 = null;
-    n0 = Assignee();
-    n2 = jj_consume_token(EQUALS_SIGN);
-    n1 = JTBToolkit.makeNodeToken(n2);
-    n3 = Expression();
-    n5 = jj_consume_token(SEMICOLON);
-    n4 = JTBToolkit.makeNodeToken(n5);
-    {if (true) return new Assignment(n0, n1, n3, n4);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public Assignee Assignee() throws ParseException {
-  // --- JTB generated node declarations ---
-  NodeChoice n0 = null;
-  NodeSequence n1 = null;
-  Identifier n2 = null;
-  NodeToken n3 = null;
-  Token n4 = null;
-  Expression n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
-  Identifier n8 = null;
-    if (jj_2_3(2)) {
-      n1 = new NodeSequence(4);
-      n2 = Identifier();
-      n1.addNode(n2);
-      n4 = jj_consume_token(BRACKET_LEFT);
-      n3 = JTBToolkit.makeNodeToken(n4);
-      n1.addNode(n3);
-      n5 = Expression();
-      n1.addNode(n5);
-      n7 = jj_consume_token(BRACKET_RIGHT);
-      n6 = JTBToolkit.makeNodeToken(n7);
-      n1.addNode(n6);
-      n0 = new NodeChoice(n1, 0, 2);
-    } else {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
-        n8 = Identifier();
-      n0 = new NodeChoice(n8, 1, 2);
-        break;
-      default:
-        jj_la1[11] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
-    {if (true) return new Assignee(n0);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public WhileLoop WhileLoop() throws ParseException {
+  final public BlockStatement BlockStatement() throws ParseException {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
-  NodeToken n2 = null;
-  Token n3 = null;
-  Expression n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  Statement n7 = null;
-    n1 = jj_consume_token(WHILE);
+  NodeListOptional n2 = new NodeListOptional();
+  Statement n3 = null;
+  NodeToken n4 = null;
+  Token n5 = null;
+    n1 = jj_consume_token(BRACE_LEFT);
     n0 = JTBToolkit.makeNodeToken(n1);
-    n3 = jj_consume_token(PARENTHESIS_LEFT);
-    n2 = JTBToolkit.makeNodeToken(n3);
-    n4 = Expression();
-    n6 = jj_consume_token(PARENTHESIS_RIGHT);
-    n5 = JTBToolkit.makeNodeToken(n6);
-    n7 = Statement();
-    {if (true) return new WhileLoop(n0, n2, n4, n5, n7);}
+    label_7:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case PRINT_METHOD:
+      case BRACE_LEFT:
+      case IF:
+      case WHILE:
+      case IDENTIFIER:
+        ;
+        break;
+      default:
+        jj_la1[11] = jj_gen;
+        break label_7;
+      }
+      n3 = Statement();
+      n2.addNode(n3);
+    }
+    n2.nodes.trimToSize();
+    n5 = jj_consume_token(BRACE_RIGHT);
+    n4 = JTBToolkit.makeNodeToken(n5);
+    {if (true) return new BlockStatement(n0, n2, n4);}
     throw new Error("Missing return statement in function");
   }
 
-  final public If If() throws ParseException {
+  final public IfStatement IfStatement() throws ParseException {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
@@ -562,150 +487,236 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     n9 = jj_consume_token(ELSE);
     n8 = JTBToolkit.makeNodeToken(n9);
     n10 = Statement();
-    {if (true) return new If(n0, n2, n4, n5, n7, n8, n10);}
+    {if (true) return new IfStatement(n0, n2, n4, n5, n7, n8, n10);}
     throw new Error("Missing return statement in function");
   }
 
-  final public StatementList StatementList() throws ParseException {
+  final public WhileStatement WhileStatement() throws ParseException {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
-  NodeListOptional n2 = new NodeListOptional();
-  Statement n3 = null;
+  NodeToken n2 = null;
+  Token n3 = null;
+  Expression n4 = null;
+  NodeToken n5 = null;
+  Token n6 = null;
+  Statement n7 = null;
+    n1 = jj_consume_token(WHILE);
+    n0 = JTBToolkit.makeNodeToken(n1);
+    n3 = jj_consume_token(PARENTHESIS_LEFT);
+    n2 = JTBToolkit.makeNodeToken(n3);
+    n4 = Expression();
+    n6 = jj_consume_token(PARENTHESIS_RIGHT);
+    n5 = JTBToolkit.makeNodeToken(n6);
+    n7 = Statement();
+    {if (true) return new WhileStatement(n0, n2, n4, n5, n7);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public PrintStatement PrintStatement() throws ParseException {
+  // --- JTB generated node declarations ---
+  NodeToken n0 = null;
+  Token n1 = null;
+  NodeToken n2 = null;
+  Token n3 = null;
+  Expression n4 = null;
+  NodeToken n5 = null;
+  Token n6 = null;
+  NodeToken n7 = null;
+  Token n8 = null;
+    n1 = jj_consume_token(PRINT_METHOD);
+    n0 = JTBToolkit.makeNodeToken(n1);
+    n3 = jj_consume_token(PARENTHESIS_LEFT);
+    n2 = JTBToolkit.makeNodeToken(n3);
+    n4 = Expression();
+    n6 = jj_consume_token(PARENTHESIS_RIGHT);
+    n5 = JTBToolkit.makeNodeToken(n6);
+    n8 = jj_consume_token(SEMICOLON);
+    n7 = JTBToolkit.makeNodeToken(n8);
+    {if (true) return new PrintStatement(n0, n2, n4, n5, n7);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public AssignmentStatement AssignmentStatement() throws ParseException {
+  // --- JTB generated node declarations ---
+  Assignee n0 = null;
+  NodeToken n1 = null;
+  Token n2 = null;
+  Expression n3 = null;
   NodeToken n4 = null;
   Token n5 = null;
-    n1 = jj_consume_token(BRACE_LEFT);
-    n0 = JTBToolkit.makeNodeToken(n1);
-    label_7:
-    while (true) {
+    n0 = Assignee();
+    n2 = jj_consume_token(EQUALS_SIGN);
+    n1 = JTBToolkit.makeNodeToken(n2);
+    n3 = Expression();
+    n5 = jj_consume_token(SEMICOLON);
+    n4 = JTBToolkit.makeNodeToken(n5);
+    {if (true) return new AssignmentStatement(n0, n1, n3, n4);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public Assignee Assignee() throws ParseException {
+  // --- JTB generated node declarations ---
+  NodeChoice n0 = null;
+  AssignableArrayAccess n1 = null;
+  Identifier n2 = null;
+    if (jj_2_3(2)) {
+      n1 = AssignableArrayAccess();
+      n0 = new NodeChoice(n1, 0, 2);
+    } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PRINT_METHOD:
-      case BRACE_LEFT:
-      case IF:
-      case WHILE:
       case IDENTIFIER:
-        ;
+        n2 = Identifier();
+      n0 = new NodeChoice(n2, 1, 2);
         break;
       default:
         jj_la1[12] = jj_gen;
-        break label_7;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-      n3 = Statement();
-      n2.addNode(n3);
     }
-    n2.nodes.trimToSize();
-    n5 = jj_consume_token(BRACE_RIGHT);
-    n4 = JTBToolkit.makeNodeToken(n5);
-    {if (true) return new StatementList(n0, n2, n4);}
+    {if (true) return new Assignee(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public AssignableArrayAccess AssignableArrayAccess() throws ParseException {
+  // --- JTB generated node declarations ---
+  Identifier n0 = null;
+  ArrayAccess n1 = null;
+    n0 = Identifier();
+    n1 = ArrayAccess();
+    {if (true) return new AssignableArrayAccess(n0, n1);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public ArrayAccess ArrayAccess() throws ParseException {
+  // --- JTB generated node declarations ---
+  NodeToken n0 = null;
+  Token n1 = null;
+  Expression n2 = null;
+  NodeToken n3 = null;
+  Token n4 = null;
+    n1 = jj_consume_token(BRACKET_LEFT);
+    n0 = JTBToolkit.makeNodeToken(n1);
+    n2 = Expression();
+    n4 = jj_consume_token(BRACKET_RIGHT);
+    n3 = JTBToolkit.makeNodeToken(n4);
+    {if (true) return new ArrayAccess(n0, n2, n3);}
     throw new Error("Missing return statement in function");
   }
 
   final public Expression Expression() throws ParseException {
   // --- JTB generated node declarations ---
   NodeChoice n0 = null;
-  ObjectCreationExpression n1 = null;
-  NodeSequence n2 = null;
-  UnaryOperator n3 = null;
-  Expression n4 = null;
-  ExpressionPrime n5 = null;
-  NodeSequence n6 = null;
-  NodeToken n7 = null;
-  Token n8 = null;
-  Expression n9 = null;
-  NodeToken n10 = null;
-  Token n11 = null;
-  ExpressionPrime n12 = null;
-  NodeSequence n13 = null;
-  NodeToken n14 = null;
-  Token n15 = null;
-  ExpressionPrime n16 = null;
-  NodeSequence n17 = null;
-  NodeToken n18 = null;
-  Token n19 = null;
-  ExpressionPrime n20 = null;
-  NodeSequence n21 = null;
-  NodeToken n22 = null;
-  Token n23 = null;
-  ExpressionPrime n24 = null;
-  NodeSequence n25 = null;
-  NodeToken n26 = null;
-  Token n27 = null;
-  ExpressionPrime n28 = null;
-  NodeSequence n29 = null;
-  Identifier n30 = null;
-  ExpressionPrime n31 = null;
+  NodeSequence n1 = null;
+  ObjectInstantiationExpression n2 = null;
+  ExpressionPrime n3 = null;
+  NodeSequence n4 = null;
+  UnaryOperator n5 = null;
+  Expression n6 = null;
+  ExpressionPrime n7 = null;
+  NodeSequence n8 = null;
+  NodeToken n9 = null;
+  Token n10 = null;
+  Expression n11 = null;
+  NodeToken n12 = null;
+  Token n13 = null;
+  ExpressionPrime n14 = null;
+  NodeSequence n15 = null;
+  NodeToken n16 = null;
+  Token n17 = null;
+  ExpressionPrime n18 = null;
+  NodeSequence n19 = null;
+  NodeToken n20 = null;
+  Token n21 = null;
+  ExpressionPrime n22 = null;
+  NodeSequence n23 = null;
+  NodeToken n24 = null;
+  Token n25 = null;
+  ExpressionPrime n26 = null;
+  NodeSequence n27 = null;
+  NodeToken n28 = null;
+  Token n29 = null;
+  ExpressionPrime n30 = null;
+  NodeSequence n31 = null;
+  Identifier n32 = null;
+  ExpressionPrime n33 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NEW:
-      n1 = ObjectCreationExpression();
+      n1 = new NodeSequence(2);
+      n2 = ObjectInstantiationExpression();
+      n1.addNode(n2);
+      n3 = ExpressionPrime();
+      n1.addNode(n3);
       n0 = new NodeChoice(n1, 0, 8);
       break;
     case UNARY_OPERATOR:
-      n2 = new NodeSequence(3);
-      n3 = UnaryOperator();
-      n2.addNode(n3);
-      n4 = Expression();
-      n2.addNode(n4);
-      n5 = ExpressionPrime();
-      n2.addNode(n5);
-      n0 = new NodeChoice(n2, 1, 8);
+      n4 = new NodeSequence(3);
+      n5 = UnaryOperator();
+      n4.addNode(n5);
+      n6 = Expression();
+      n4.addNode(n6);
+      n7 = ExpressionPrime();
+      n4.addNode(n7);
+      n0 = new NodeChoice(n4, 1, 8);
       break;
     case PARENTHESIS_LEFT:
-      n6 = new NodeSequence(4);
-      n8 = jj_consume_token(PARENTHESIS_LEFT);
-      n7 = JTBToolkit.makeNodeToken(n8);
-      n6.addNode(n7);
-      n9 = Expression();
-      n6.addNode(n9);
-      n11 = jj_consume_token(PARENTHESIS_RIGHT);
-      n10 = JTBToolkit.makeNodeToken(n11);
-      n6.addNode(n10);
-      n12 = ExpressionPrime();
-      n6.addNode(n12);
-      n0 = new NodeChoice(n6, 2, 8);
+      n8 = new NodeSequence(4);
+      n10 = jj_consume_token(PARENTHESIS_LEFT);
+      n9 = JTBToolkit.makeNodeToken(n10);
+      n8.addNode(n9);
+      n11 = Expression();
+      n8.addNode(n11);
+      n13 = jj_consume_token(PARENTHESIS_RIGHT);
+      n12 = JTBToolkit.makeNodeToken(n13);
+      n8.addNode(n12);
+      n14 = ExpressionPrime();
+      n8.addNode(n14);
+      n0 = new NodeChoice(n8, 2, 8);
       break;
     case INTEGER_LITERAL:
-      n13 = new NodeSequence(2);
-      n15 = jj_consume_token(INTEGER_LITERAL);
-      n14 = JTBToolkit.makeNodeToken(n15);
-      n13.addNode(n14);
-      n16 = ExpressionPrime();
-      n13.addNode(n16);
-      n0 = new NodeChoice(n13, 3, 8);
+      n15 = new NodeSequence(2);
+      n17 = jj_consume_token(INTEGER_LITERAL);
+      n16 = JTBToolkit.makeNodeToken(n17);
+      n15.addNode(n16);
+      n18 = ExpressionPrime();
+      n15.addNode(n18);
+      n0 = new NodeChoice(n15, 3, 8);
       break;
     case TRUE:
-      n17 = new NodeSequence(2);
-      n19 = jj_consume_token(TRUE);
-      n18 = JTBToolkit.makeNodeToken(n19);
-      n17.addNode(n18);
-      n20 = ExpressionPrime();
-      n17.addNode(n20);
-      n0 = new NodeChoice(n17, 4, 8);
+      n19 = new NodeSequence(2);
+      n21 = jj_consume_token(TRUE);
+      n20 = JTBToolkit.makeNodeToken(n21);
+      n19.addNode(n20);
+      n22 = ExpressionPrime();
+      n19.addNode(n22);
+      n0 = new NodeChoice(n19, 4, 8);
       break;
     case FALSE:
-      n21 = new NodeSequence(2);
-      n23 = jj_consume_token(FALSE);
-      n22 = JTBToolkit.makeNodeToken(n23);
-      n21.addNode(n22);
-      n24 = ExpressionPrime();
-      n21.addNode(n24);
-      n0 = new NodeChoice(n21, 5, 8);
+      n23 = new NodeSequence(2);
+      n25 = jj_consume_token(FALSE);
+      n24 = JTBToolkit.makeNodeToken(n25);
+      n23.addNode(n24);
+      n26 = ExpressionPrime();
+      n23.addNode(n26);
+      n0 = new NodeChoice(n23, 5, 8);
       break;
     case THIS:
-      n25 = new NodeSequence(2);
-      n27 = jj_consume_token(THIS);
-      n26 = JTBToolkit.makeNodeToken(n27);
-      n25.addNode(n26);
-      n28 = ExpressionPrime();
-      n25.addNode(n28);
-      n0 = new NodeChoice(n25, 6, 8);
+      n27 = new NodeSequence(2);
+      n29 = jj_consume_token(THIS);
+      n28 = JTBToolkit.makeNodeToken(n29);
+      n27.addNode(n28);
+      n30 = ExpressionPrime();
+      n27.addNode(n30);
+      n0 = new NodeChoice(n27, 6, 8);
       break;
     case IDENTIFIER:
-      n29 = new NodeSequence(2);
-      n30 = Identifier();
-      n29.addNode(n30);
-      n31 = ExpressionPrime();
-      n29.addNode(n31);
-      n0 = new NodeChoice(n29, 7, 8);
+      n31 = new NodeSequence(2);
+      n32 = Identifier();
+      n31.addNode(n32);
+      n33 = ExpressionPrime();
+      n31.addNode(n33);
+      n0 = new NodeChoice(n31, 7, 8);
       break;
     default:
       jj_la1[13] = jj_gen;
@@ -716,62 +727,31 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public ObjectCreationExpression ObjectCreationExpression() throws ParseException {
+  final public ObjectInstantiationExpression ObjectInstantiationExpression() throws ParseException {
   // --- JTB generated node declarations ---
   NodeToken n0 = null;
   Token n1 = null;
   ConstructorCall n2 = null;
-  ExpressionPrime n3 = null;
     n1 = jj_consume_token(NEW);
     n0 = JTBToolkit.makeNodeToken(n1);
     n2 = ConstructorCall();
-    n3 = ExpressionPrime();
-    {if (true) return new ObjectCreationExpression(n0, n2, n3);}
+    {if (true) return new ObjectInstantiationExpression(n0, n2);}
     throw new Error("Missing return statement in function");
   }
 
   final public ConstructorCall ConstructorCall() throws ParseException {
   // --- JTB generated node declarations ---
   NodeChoice n0 = null;
-  NodeSequence n1 = null;
-  Identifier n2 = null;
-  NodeToken n3 = null;
-  Token n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  NodeSequence n7 = null;
-  IntType n8 = null;
-  NodeToken n9 = null;
-  Token n10 = null;
-  Expression n11 = null;
-  NodeToken n12 = null;
-  Token n13 = null;
+  ClassConstructorCall n1 = null;
+  IntArrayConstructorCall n2 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
-      n1 = new NodeSequence(3);
-      n2 = Identifier();
-      n1.addNode(n2);
-      n4 = jj_consume_token(PARENTHESIS_LEFT);
-      n3 = JTBToolkit.makeNodeToken(n4);
-      n1.addNode(n3);
-      n6 = jj_consume_token(PARENTHESIS_RIGHT);
-      n5 = JTBToolkit.makeNodeToken(n6);
-      n1.addNode(n5);
+      n1 = ClassConstructorCall();
       n0 = new NodeChoice(n1, 0, 2);
       break;
     case INT_TYPE:
-      n7 = new NodeSequence(4);
-      n8 = IntType();
-      n7.addNode(n8);
-      n10 = jj_consume_token(BRACKET_LEFT);
-      n9 = JTBToolkit.makeNodeToken(n10);
-      n7.addNode(n9);
-      n11 = Expression();
-      n7.addNode(n11);
-      n13 = jj_consume_token(BRACKET_RIGHT);
-      n12 = JTBToolkit.makeNodeToken(n13);
-      n7.addNode(n12);
-      n0 = new NodeChoice(n7, 1, 2);
+      n2 = IntArrayConstructorCall();
+      n0 = new NodeChoice(n2, 1, 2);
       break;
     default:
       jj_la1[14] = jj_gen;
@@ -779,6 +759,32 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
       throw new ParseException();
     }
     {if (true) return new ConstructorCall(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public ClassConstructorCall ClassConstructorCall() throws ParseException {
+  // --- JTB generated node declarations ---
+  Identifier n0 = null;
+  NodeToken n1 = null;
+  Token n2 = null;
+  NodeToken n3 = null;
+  Token n4 = null;
+    n0 = Identifier();
+    n2 = jj_consume_token(PARENTHESIS_LEFT);
+    n1 = JTBToolkit.makeNodeToken(n2);
+    n4 = jj_consume_token(PARENTHESIS_RIGHT);
+    n3 = JTBToolkit.makeNodeToken(n4);
+    {if (true) return new ClassConstructorCall(n0, n1, n3);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public IntArrayConstructorCall IntArrayConstructorCall() throws ParseException {
+  // --- JTB generated node declarations ---
+  IntType n0 = null;
+  ArrayAccess n1 = null;
+    n0 = IntType();
+    n1 = ArrayAccess();
+    {if (true) return new IntArrayConstructorCall(n0, n1);}
     throw new Error("Missing return statement in function");
   }
 
@@ -790,20 +796,15 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   Expression n3 = null;
   ExpressionPrime n4 = null;
   NodeSequence n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
-  Expression n8 = null;
-  NodeToken n9 = null;
-  Token n10 = null;
-  ExpressionPrime n11 = null;
-  NodeSequence n12 = null;
-  NodeToken n13 = null;
-  Token n14 = null;
-  NodeToken n15 = null;
-  Token n16 = null;
-  ExpressionPrime n17 = null;
-  MethodCall n18 = null;
-  Empty n19 = null;
+  ArrayAccess n6 = null;
+  ExpressionPrime n7 = null;
+  NodeSequence n8 = null;
+  ArrayLengthAccess n9 = null;
+  ExpressionPrime n10 = null;
+  NodeSequence n11 = null;
+  MethodCall n12 = null;
+  ExpressionPrime n13 = null;
+  Empty n14 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BINARY_OPERATOR:
       n1 = new NodeSequence(3);
@@ -816,46 +817,54 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
       n0 = new NodeChoice(n1, 0, 5);
       break;
     case BRACKET_LEFT:
-      n5 = new NodeSequence(4);
-      n7 = jj_consume_token(BRACKET_LEFT);
-      n6 = JTBToolkit.makeNodeToken(n7);
+      n5 = new NodeSequence(2);
+      n6 = ArrayAccess();
       n5.addNode(n6);
-      n8 = Expression();
-      n5.addNode(n8);
-      n10 = jj_consume_token(BRACKET_RIGHT);
-      n9 = JTBToolkit.makeNodeToken(n10);
-      n5.addNode(n9);
-      n11 = ExpressionPrime();
-      n5.addNode(n11);
+      n7 = ExpressionPrime();
+      n5.addNode(n7);
       n0 = new NodeChoice(n5, 1, 5);
       break;
     default:
       jj_la1[15] = jj_gen;
       if (jj_2_4(2)) {
-      n12 = new NodeSequence(3);
-        n14 = jj_consume_token(DOT);
-      n13 = JTBToolkit.makeNodeToken(n14);
-      n12.addNode(n13);
-        n16 = jj_consume_token(LENGTH_FIELD_NAME);
-      n15 = JTBToolkit.makeNodeToken(n16);
-      n12.addNode(n15);
-        n17 = ExpressionPrime();
-      n12.addNode(n17);
-      n0 = new NodeChoice(n12, 2, 5);
+      n8 = new NodeSequence(2);
+        n9 = ArrayLengthAccess();
+      n8.addNode(n9);
+        n10 = ExpressionPrime();
+      n8.addNode(n10);
+      n0 = new NodeChoice(n8, 2, 5);
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case DOT:
-          n18 = MethodCall();
-      n0 = new NodeChoice(n18, 3, 5);
+      n11 = new NodeSequence(2);
+          n12 = MethodCall();
+      n11.addNode(n12);
+          n13 = ExpressionPrime();
+      n11.addNode(n13);
+      n0 = new NodeChoice(n11, 3, 5);
           break;
         default:
           jj_la1[16] = jj_gen;
-          n19 = Empty();
-      n0 = new NodeChoice(n19, 4, 5);
+          n14 = Empty();
+      n0 = new NodeChoice(n14, 4, 5);
         }
       }
     }
     {if (true) return new ExpressionPrime(n0);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public ArrayLengthAccess ArrayLengthAccess() throws ParseException {
+  // --- JTB generated node declarations ---
+  NodeToken n0 = null;
+  Token n1 = null;
+  NodeToken n2 = null;
+  Token n3 = null;
+    n1 = jj_consume_token(DOT);
+    n0 = JTBToolkit.makeNodeToken(n1);
+    n3 = jj_consume_token(LENGTH_FIELD_NAME);
+    n2 = JTBToolkit.makeNodeToken(n3);
+    {if (true) return new ArrayLengthAccess(n0, n2);}
     throw new Error("Missing return statement in function");
   }
 
@@ -866,33 +875,21 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   Identifier n2 = null;
   NodeToken n3 = null;
   Token n4 = null;
-  ParameterList n5 = null;
-  NodeToken n6 = null;
-  Token n7 = null;
-  ExpressionPrime n8 = null;
+  NodeOptional n5 = new NodeOptional();
+  NodeSequence n6 = null;
+  Parameter n7 = null;
+  NodeListOptional n8 = null;
+  NodeSequence n9 = null;
+  NodeToken n10 = null;
+  Token n11 = null;
+  Parameter n12 = null;
+  NodeToken n13 = null;
+  Token n14 = null;
     n1 = jj_consume_token(DOT);
     n0 = JTBToolkit.makeNodeToken(n1);
     n2 = Identifier();
     n4 = jj_consume_token(PARENTHESIS_LEFT);
     n3 = JTBToolkit.makeNodeToken(n4);
-    n5 = ParameterList();
-    n7 = jj_consume_token(PARENTHESIS_RIGHT);
-    n6 = JTBToolkit.makeNodeToken(n7);
-    n8 = ExpressionPrime();
-    {if (true) return new MethodCall(n0, n2, n3, n5, n6, n8);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public ParameterList ParameterList() throws ParseException {
-  // --- JTB generated node declarations ---
-  NodeOptional n0 = new NodeOptional();
-  NodeSequence n1 = null;
-  Parameter n2 = null;
-  NodeListOptional n3 = null;
-  NodeSequence n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  Parameter n7 = null;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case UNARY_OPERATOR:
     case PARENTHESIS_LEFT:
@@ -902,10 +899,10 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     case FALSE:
     case INTEGER_LITERAL:
     case IDENTIFIER:
-      n3 = new NodeListOptional();
-      n1 = new NodeSequence(2);
-      n2 = Parameter();
-      n1.addNode(n2);
+      n8 = new NodeListOptional();
+      n6 = new NodeSequence(2);
+      n7 = Parameter();
+      n6.addNode(n7);
       label_8:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -916,23 +913,25 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
           jj_la1[17] = jj_gen;
           break label_8;
         }
-        n4 = new NodeSequence(2);
-        n6 = jj_consume_token(COMMA);
-        n5 = JTBToolkit.makeNodeToken(n6);
-        n4.addNode(n5);
-        n7 = Parameter();
-        n4.addNode(n7);
-        n3.addNode(n4);
+        n9 = new NodeSequence(2);
+        n11 = jj_consume_token(COMMA);
+        n10 = JTBToolkit.makeNodeToken(n11);
+        n9.addNode(n10);
+        n12 = Parameter();
+        n9.addNode(n12);
+        n8.addNode(n9);
       }
-      n3.nodes.trimToSize();
-      n1.addNode(n3);
-      n0.addNode(n1);
+      n8.nodes.trimToSize();
+      n6.addNode(n8);
+      n5.addNode(n6);
       break;
     default:
       jj_la1[18] = jj_gen;
       ;
     }
-    {if (true) return new ParameterList(n0);}
+    n14 = jj_consume_token(PARENTHESIS_RIGHT);
+    n13 = JTBToolkit.makeNodeToken(n14);
+    {if (true) return new MethodCall(n0, n2, n3, n5, n13);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1056,84 +1055,43 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     finally { jj_save(3, xla); }
   }
 
-  private boolean jj_3R_20() {
-    if (jj_scan_token(VOID_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2() {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_11() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_13() {
+  private boolean jj_3R_16() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_2()) {
     jj_scanpos = xsp;
-    if (jj_3R_14()) {
+    if (jj_3R_17()) {
     jj_scanpos = xsp;
-    if (jj_3R_15()) {
+    if (jj_3R_18()) {
     jj_scanpos = xsp;
-    if (jj_3R_16()) {
+    if (jj_3R_19()) {
     jj_scanpos = xsp;
-    if (jj_3R_17()) return true;
+    if (jj_3R_20()) return true;
     }
     }
     }
     }
-    return false;
-  }
-
-  private boolean jj_3_1() {
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_9() {
-    if (jj_3R_12()) return true;
     return false;
   }
 
   private boolean jj_3_3() {
     if (jj_3R_11()) return true;
-    if (jj_scan_token(BRACKET_LEFT)) return true;
     return false;
   }
 
-  private boolean jj_3R_17() {
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18() {
-    if (jj_scan_token(INT_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_19() {
+  private boolean jj_3R_22() {
     if (jj_scan_token(BOOLEAN_TYPE)) return true;
     return false;
   }
 
-  private boolean jj_3R_16() {
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_15() {
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  private boolean jj_3_4() {
+  private boolean jj_3R_12() {
     if (jj_scan_token(DOT)) return true;
     if (jj_scan_token(LENGTH_FIELD_NAME)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    if (jj_3R_9()) return true;
     return false;
   }
 
@@ -1143,14 +1101,70 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     return false;
   }
 
-  private boolean jj_3R_14() {
-    if (jj_3R_18()) return true;
+  private boolean jj_3R_13() {
+    if (jj_3R_16()) return true;
+    if (jj_3R_14()) return true;
     return false;
   }
 
-  private boolean jj_3R_12() {
+  private boolean jj_3R_15() {
+    if (jj_scan_token(BRACKET_LEFT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_21() {
+    if (jj_scan_token(INT_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_20() {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_19() {
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_11() {
+    if (jj_3R_14()) return true;
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  private boolean jj_3_4() {
+    if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_9() {
     if (jj_3R_13()) return true;
-    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_18() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_17() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_23() {
+    if (jj_scan_token(VOID_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_14() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2() {
+    if (jj_3R_10()) return true;
     return false;
   }
 
@@ -1173,10 +1187,10 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x100000,0xa000480,0x800000,0xa0000000,0x200000,0xa000480,0x1000000,0x20000,0xa0000000,0xa0000000,0xa000480,0x0,0xa000480,0x10004100,0x80000000,0x1200,0x40000,0x20000,0x10004100,};
+      jj_la1_0 = new int[] {0x100000,0xa000480,0x800000,0xa0000000,0x200000,0x20000,0xa0000000,0xa000480,0x1000000,0xa0000000,0xa000480,0xa000480,0x0,0x10004100,0x80000000,0x1200,0x40000,0x20000,0x10004100,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x20,0x0,0x21,0x0,0x20,0x0,0x0,0x21,0x21,0x20,0x20,0x20,0x3e,0x20,0x0,0x0,0x0,0x3e,};
+      jj_la1_1 = new int[] {0x0,0x20,0x0,0x21,0x0,0x0,0x21,0x20,0x0,0x21,0x20,0x20,0x20,0x3e,0x20,0x0,0x0,0x0,0x3e,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[4];
   private boolean jj_rescan = false;
