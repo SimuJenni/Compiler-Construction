@@ -57,10 +57,10 @@ public class Scope implements IScope {
 
 	@Override
 	public IScope lookupTypeScope(String name) throws LookupException {
-		if (!this.hasType(name)) {
-			throw new LookupException(name);
+		if (this.hasType(name)) {
+			return this.typeScopes.get(name);
 		}
-		return this.typeScopes.get(name);
+		return this.parent.lookupTypeScope(name);
 	}
 
 	@Override
