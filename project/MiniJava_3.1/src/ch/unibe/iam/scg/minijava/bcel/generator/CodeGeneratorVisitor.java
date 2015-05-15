@@ -104,13 +104,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 	    MethodExtractor me = new MethodExtractor();
 	    currentScope = scopeMap.get(n);
 	    Method m = me.extract(n, currentScope);
-	    Type returnType = convertTypes(m.getReturnType().getName());
-	    mg = new MethodGen(Constants.ACC_PUBLIC, // access flags
-	    		returnType,               // return type
-                new Type[] { },
-                new String[] {}, // arg names
-                methodName, cg.getClassName(),    // method, class
-                il, cp);
+	    extractMG(methodName, m);
 	    // f7 -> ( VarDeclaration() )*
 	    n.f7.accept(this);
 	    // f8 -> ( Statement() )*
@@ -125,6 +119,31 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 		mg.setMaxLocals();
 
 	    bytecodeGenerator.addMethod(cg, mg);
+	}
+
+	private void extractMG(String methodName, Method m) {
+		List<Variable> params=m.getParameters();
+	    int numParam=params.size();
+	    Type[] pTypes=new Type[numParam];
+	    String[] pNames=new String[numParam];
+	    for(int i=0;i<numParam;i++){
+	    	Variable p=params.get(i);
+	    	pTypes[i]=convertTypes(p.getType().getName());
+	    	pNames[i]=p.getName();
+	    }
+	    Type returnType = convertTypes(m.getReturnType().getName());
+	    mg = new MethodGen(Constants.ACC_PUBLIC, // access flags
+	    		returnType,               // return type
+	    		pTypes,
+	    		pNames, // arg names
+                methodName, cg.getClassName(),    // method, class
+                il, cp);
+	    
+	    LocalVariableGen[] methodParams=mg.getLocalVariables();
+	    for(int i=0;i<methodParams.length;i++){
+	    	int in = methodParams[i].getIndex();
+		    registerMap.put(methodParams[i].getName(), in);
+	    }
 	}
 	
 	@Override
