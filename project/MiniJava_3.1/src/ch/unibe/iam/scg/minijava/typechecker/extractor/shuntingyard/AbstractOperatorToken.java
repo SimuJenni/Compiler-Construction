@@ -6,19 +6,19 @@ import ch.unibe.iam.scg.minijava.typechecker.type.IntType;
 
 public abstract class AbstractOperatorToken implements IToken {
 
-	protected static final String PRECEDENCE = "&&>+-*!";
+	protected static final String PRECEDENCE = "&&><==+-*!";
 
 	protected static IType getParameterType(String symbol) {
 		if ("&&!".contains(symbol)) {
 			return BooleanType.INSTANCE;
-		} else if (">+-*".contains(symbol)) {
+		} else if ("<>==+-*".contains(symbol)) {
 			return IntType.INSTANCE;
 		}
 		throw new IllegalArgumentException("'" + symbol + "' is unknown");
 	}
 
 	protected static IType getReturnType(String symbol) {
-		if ("&&>!".contains(symbol)) {
+		if ("&&<>==!".contains(symbol)) {
 			return BooleanType.INSTANCE;
 		} else if ("+-*".contains(symbol)) {
 			return IntType.INSTANCE;

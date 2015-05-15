@@ -37,3 +37,14 @@
 /VarDeclaration.java
 /VoidType.java
 /WhileLoop.java
+/ArrayAccess.java
+/ArrayLengthAccess.java
+/AssignableArrayAccess.java
+/AssignmentStatement.java
+/BlockStatement.java
+/ClassConstructorCall.java
+/IfStatement.java
+/IntArrayConstructorCall.java
+/ObjectInstantiationExpression.java
+/PrintStatement.java
+/WhileStatement.java

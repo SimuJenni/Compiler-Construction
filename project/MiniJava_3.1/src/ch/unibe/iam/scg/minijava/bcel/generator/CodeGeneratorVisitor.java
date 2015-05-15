@@ -9,6 +9,7 @@ import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ClassGen;
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.GOTO;
+import org.apache.bcel.generic.IFEQ;
 import org.apache.bcel.generic.IFGT;
 import org.apache.bcel.generic.IFNE;
 import org.apache.bcel.generic.InstructionFactory;
@@ -83,6 +84,23 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 			il.insert(isFalse, new IFGT(isTrue));
 			il.insert(isTrue, new GOTO(jump));
 		}		
+		if(o.getSymbol().equals("<")){
+			il.append(InstructionFactory.SWAP);
+			il.append(InstructionFactory.ISUB);
+			InstructionHandle isFalse = il.append(new PUSH(cp, false));
+			InstructionHandle isTrue = il.append(new PUSH(cp, true));
+			InstructionHandle jump = il.append(new NOP());
+			il.insert(isFalse, new IFGT(isTrue));
+			il.insert(isTrue, new GOTO(jump));
+		}	
+		if(o.getSymbol().equals("==")){
+			il.append(InstructionFactory.ISUB);
+			InstructionHandle isFalse = il.append(new PUSH(cp, false));
+			InstructionHandle isTrue = il.append(new PUSH(cp, true));
+			InstructionHandle jump = il.append(new NOP());
+			il.insert(isFalse, new IFEQ(isTrue));
+			il.insert(isTrue, new GOTO(jump));
+		}	
 	}
 
 	public void visit(LiteralToken t) {

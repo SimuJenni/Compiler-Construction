@@ -64,7 +64,7 @@ TOKEN :
 TOKEN :
 {
   < UNARY_OPERATOR : "!" >
-| < BINARY_OPERATOR : ( "&&"| ">"| "+"| "-"| "*" ) >
+| < BINARY_OPERATOR : ( "&&"| ">"| "+"| "-"| "*"| "<"| "==" ) >
 }
 
 // separatorsTOKEN :
