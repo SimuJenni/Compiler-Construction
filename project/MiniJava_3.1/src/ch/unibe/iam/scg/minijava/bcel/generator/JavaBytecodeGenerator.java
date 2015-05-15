@@ -1,9 +1,11 @@
 package ch.unibe.iam.scg.minijava.bcel.generator;
 
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.bcel.Constants;
+import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ClassGen;
 import org.apache.bcel.generic.InstructionFactory;
@@ -63,18 +65,20 @@ import ch.unibe.iam.scg.minijava.typechecker.scope.IScope;
         String className = "BcelGenerated";
         ClassGen cg = new ClassGen(className, "java.lang.Object", className, Constants.ACC_PUBLIC, new String[0]);
         cg.addEmptyConstructor(Constants.ACC_PUBLIC);
-    
         return cg;
     }
     
-
     public void generate(Object node)
     {
     	INode n=(INode) node;
-    	CodeGeneratorVisitor cgv = new CodeGeneratorVisitor(cg,mg,il,iFact);
+    	CodeGeneratorVisitor cgv = new CodeGeneratorVisitor(this,cg,mg,il,iFact);
     	TypeChecker tc = new TypeChecker();
     	tc.check(n);
     	Map<INode, IScope> scopeMap = tc.getScopeMap();
     	cgv.generate(n, scopeMap);
+    	this.cg=cgv.getCG();
+    	this.mg=cgv.getMG();
     }
+    
+
 }

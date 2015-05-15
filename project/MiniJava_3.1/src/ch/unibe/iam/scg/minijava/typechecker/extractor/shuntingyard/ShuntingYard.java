@@ -165,7 +165,7 @@ public class ShuntingYard extends DepthFirstVoidVisitor {
 			final NodeSequence seq24 = (NodeSequence) ich;
 			// #0 Identifier()
 			final INode seq25 = seq24.elementAt(0);
-			this.output.add(new LiteralToken(this.scope.lookupVariable(
+			this.output.add(new VariableToken(this.scope.lookupVariable(
 					((Identifier) seq25).f0.tokenImage).getType(), 
 					this.scope.lookupVariable(((Identifier) seq25).f0.tokenImage).getName()));
 			// #1 ExpressionPrime()
