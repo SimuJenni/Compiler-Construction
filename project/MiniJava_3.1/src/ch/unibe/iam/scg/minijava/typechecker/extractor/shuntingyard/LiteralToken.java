@@ -47,5 +47,10 @@ public class LiteralToken implements IToken {
 		vis.visit(this);		
 	}
 
+	@Override
+	public String toString() {
+		return "LiteralToken [type=" + type + ", value=" + value + "]";
+	}
+	
 
 }

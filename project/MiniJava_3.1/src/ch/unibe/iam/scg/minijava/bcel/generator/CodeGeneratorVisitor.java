@@ -10,6 +10,7 @@ import org.apache.bcel.Constants;
 import org.apache.bcel.generic.ALOAD;
 import org.apache.bcel.generic.ARRAYLENGTH;
 import org.apache.bcel.generic.ASTORE;
+import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ClassGen;
 import org.apache.bcel.generic.ConstantPoolGen;
@@ -28,8 +29,11 @@ import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.NEWARRAY;
 import org.apache.bcel.generic.NOP;
 import org.apache.bcel.generic.PUSH;
+import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
+import ch.unibe.iam.scg.javacc.syntaxtree.ArrayAccess;
+import ch.unibe.iam.scg.javacc.syntaxtree.AssignableArrayAccess;
 import ch.unibe.iam.scg.javacc.syntaxtree.Assignee;
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.BinaryOperator;
@@ -72,6 +76,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 	private Map<String,Integer> registerMap = new HashMap<String,Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
 	private boolean inAssignment=false;
+	private Expression expression;
 	
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator, ClassGen cg, MethodGen mg, InstructionList il, InstructionFactory iFact) {
 		super();
@@ -121,31 +126,6 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 	    bytecodeGenerator.addMethod(cg, mg);
 	}
 
-	private void extractMG(String methodName, Method m) {
-		List<Variable> params=m.getParameters();
-	    int numParam=params.size();
-	    Type[] pTypes=new Type[numParam];
-	    String[] pNames=new String[numParam];
-	    for(int i=0;i<numParam;i++){
-	    	Variable p=params.get(i);
-	    	pTypes[i]=convertTypes(p.getType().getName());
-	    	pNames[i]=p.getName();
-	    }
-	    Type returnType = convertTypes(m.getReturnType().getName());
-	    mg = new MethodGen(Constants.ACC_PUBLIC, // access flags
-	    		returnType,               // return type
-	    		pTypes,
-	    		pNames, // arg names
-                methodName, cg.getClassName(),    // method, class
-                il, cp);
-	    
-	    LocalVariableGen[] methodParams=mg.getLocalVariables();
-	    for(int i=0;i<methodParams.length;i++){
-	    	int in = methodParams[i].getIndex();
-		    registerMap.put(methodParams[i].getName(), in);
-	    }
-	}
-	
 	@Override
 	public void visit(final TypedDeclaration n) {
 		// f0 -> Type()
@@ -161,18 +141,34 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 	
 	public void visit(final AssignmentStatement n) {
 	    // f2 -> Expression()
-	    n.f2.accept(this);
+		expression = n.f2;
 	    inAssignment=true;
 	    // f0 -> Assignee()
 	    n.f0.accept(this);
+		inAssignment=false;
+	}
+	
+    public void visit(final AssignableArrayAccess n) {
+	    // f0 -> Identifier()
+	    int reg = registerMap.get(n.f0.f0.tokenImage);
+		il.append(new ALOAD(reg));
+	    // f1 -> ArrayAccess()
+		n.f1.accept(this);
+		expression.accept(this);
+		il.append(InstructionConstants.IASTORE);
 	}
 	
 	public void visit(final Identifier n) {
 		if(inAssignment){
+			expression.accept(this);
+			String name=n.f0.tokenImage;
+			String type=currentScope.getVariable(name).getType().getName();
 		    int reg = registerMap.get(n.f0.tokenImage);
-			il.append(new ISTORE(reg));
+			if(type.equals("int")||type.equals("boolean"))
+				il.append(new ISTORE(reg));
+			else
+				il.append(new ASTORE(reg));
 		}
-		inAssignment=false;
 	}
 
 	private Type convertTypes(String name) {
@@ -180,6 +176,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 			return Type.INT;
 		if(name.equals("boolean"))
 			return Type.BOOLEAN;
+		if(name.equals("int[]"))
+			return new ArrayType(Type.INT, 1) ;
 		else
 			return Type.UNKNOWN;
 	}
@@ -222,8 +220,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 
 	public void visit(LiteralToken t) {
 		if(t.type.getName().equals("int")){
-			int integer = Integer.valueOf(t.value);
-			il.append(new PUSH(cp, integer));
+			il.append(new PUSH(cp, Integer.valueOf(t.value)));
 		}
 		if(t.type.getName().equals("boolean")){
 			if(t.value.equals("true"))
@@ -245,7 +242,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 			
 	}
 
-	public void visit(ObjectInstantiationToken t) {
+	public void visit(ObjectInstantiationToken t){
 		il.append(new NEWARRAY(BasicType.INT));
 	}
 
@@ -276,6 +273,31 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor{
 	public ClassGen getCG() {
 		// TODO Auto-generated method stub
 		return cg;
+	}
+
+	private void extractMG(String methodName, Method m) {
+		List<Variable> params=m.getParameters();
+	    int numParam=params.size();
+	    Type[] pTypes=new Type[numParam];
+	    String[] pNames=new String[numParam];
+	    for(int i=0;i<numParam;i++){
+	    	Variable p=params.get(i);
+	    	pTypes[i]=convertTypes(p.getType().getName());
+	    	pNames[i]=p.getName();
+	    }
+	    Type returnType = convertTypes(m.getReturnType().getName());
+	    mg = new MethodGen(Constants.ACC_PUBLIC, // access flags
+	    		returnType,               // return type
+	    		pTypes,
+	    		pNames, // arg names
+	            methodName, cg.getClassName(),    // method, class
+	            il, cp);
+	    
+	    LocalVariableGen[] methodParams=mg.getLocalVariables();
+	    for(int i=0;i<methodParams.length;i++){
+	    	int in = methodParams[i].getIndex();
+		    registerMap.put(methodParams[i].getName(), in);
+	    }
 	}
 
 	public MethodGen getMG() {

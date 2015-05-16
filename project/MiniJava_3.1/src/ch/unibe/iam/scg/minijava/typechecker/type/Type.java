@@ -29,4 +29,9 @@ public class Type implements IType {
 		return this.parent.canBeAssignedTo(type);
 	}
 
+	@Override
+	public String toString() {
+		return "Type [name=" + name + "]";
+	}
+
 }

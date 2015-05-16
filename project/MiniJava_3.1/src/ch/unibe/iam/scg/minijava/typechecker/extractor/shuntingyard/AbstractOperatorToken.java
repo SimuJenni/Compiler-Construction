@@ -76,4 +76,9 @@ public abstract class AbstractOperatorToken implements IToken {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return "AbstractOperatorToken [symbol=" + symbol + "]";
+	}
+
 }
