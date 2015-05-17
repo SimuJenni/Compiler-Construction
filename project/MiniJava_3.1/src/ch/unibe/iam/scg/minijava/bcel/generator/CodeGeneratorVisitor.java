@@ -12,7 +12,6 @@ import org.apache.bcel.generic.ALOAD;
 import org.apache.bcel.generic.ARRAYLENGTH;
 import org.apache.bcel.generic.ASTORE;
 import org.apache.bcel.generic.ArrayType;
-import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ClassGen;
 import org.apache.bcel.generic.ConstantPoolGen;
 import org.apache.bcel.generic.FieldGen;
@@ -34,7 +33,6 @@ import org.apache.bcel.generic.NEWARRAY;
 import org.apache.bcel.generic.NOP;
 import org.apache.bcel.generic.PUSH;
 import org.apache.bcel.generic.PUTFIELD;
-import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
@@ -42,11 +40,9 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ClassConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
-import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
-import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
@@ -244,14 +240,19 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		} else {
+			String fieldType = "I";
+			if (currentScope.lookupVariable(name).getType() == currentScope
+					.lookupType("int[]")) {
+				fieldType="[I";
+			}
 			if (n.f0.f0.which == 1) {
 				il.append(new ALOAD(0));
 				n.f2.accept(this);
-				int i = cp.addFieldref(cg.getClassName(), name, "I");
+				int i = cp.addFieldref(cg.getClassName(), name, fieldType);
 				il.append(new PUTFIELD(i));
 			} else {
 				il.append(new ALOAD(0));
-				int i = cp.addFieldref(cg.getClassName(), name, "I");
+				int i = cp.addFieldref(cg.getClassName(), name, fieldType);
 				il.append(new GETFIELD(i));
 				n.f0.accept(this);
 				n.f2.accept(this);
@@ -383,7 +384,11 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new ALOAD(reg));
 			}
 		} else {
-			int i = cp.addFieldref(cg.getClassName(), variableToken.name, "I");
+			String fieldType = "I";
+			if (variableToken.type.getName().equals("int[]")){
+				fieldType="[I";
+			}
+			int i = cp.addFieldref(cg.getClassName(), variableToken.name, fieldType);
 			il.append(new ALOAD(0));
 			il.append(new GETFIELD(i));
 		}
