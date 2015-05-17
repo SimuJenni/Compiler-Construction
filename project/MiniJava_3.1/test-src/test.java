@@ -1,7 +1,10 @@
 
 
 public class test {
-              int bar;
-              public int bar() { bar = 321; return bar; }
-              public int baz() { int tmp; tmp = this.bar(); return bar; }
+    int[] numbers; 
+    public int Init() { 
+      numbers = new int[1]; 
+      numbers[0] = 2; 
+      return numbers[0]; 
+    }
 }

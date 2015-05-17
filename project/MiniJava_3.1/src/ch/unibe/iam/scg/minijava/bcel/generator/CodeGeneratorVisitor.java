@@ -43,12 +43,14 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
+import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
+import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
@@ -109,11 +111,13 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 	
 	  public void visit(final ClassDeclaration n) {
+		currentScope = scopeMap.get(n);
+
 		// f1 -> Identifier()
 		String className = n.f1.f0.tokenImage;
 		cg = new ClassGen(className, "java.lang.Object",
                 "<generated>", Constants.ACC_PUBLIC | Constants.ACC_SUPER,
-                null);
+                new String[] {  });
 		cg.addEmptyConstructor(Constants.ACC_PUBLIC);
 		cp = cg.getConstantPool(); // cg creates constant pool
 		iFact = new InstructionFactory(cg);
@@ -148,6 +152,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	public void visit(final MethodDeclaration n) {
 		// f2 -> Identifier()
+	    il = new InstructionList();
 		String methodName = n.f2.f0.tokenImage;
 		MethodExtractor me = new MethodExtractor();
 		currentScope = scopeMap.get(n);
@@ -203,7 +208,9 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		String varName = n.f1.f0.tokenImage;
 
 		if(isField){
-			FieldGen fg = new FieldGen(Constants.ACC_PUBLIC, Type.INT, varName, cp);
+			Variable v = currentScope.getVariable(varName);
+			FieldGen fg = new FieldGen(Constants.ACC_PUBLIC, convertTypes(v
+					.getType().getName()), varName, cp);
 			cg.addField(fg.getField());
 		} else {
 			Variable v = currentScope.getVariable(varName);
@@ -237,10 +244,19 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		} else {
-			il.append(new ALOAD(0));
-			n.f2.accept(this);
-			int i = cp.addFieldref(cg.getClassName(), name, "I");
-			il.append(new PUTFIELD(i));
+			if (n.f0.f0.which == 1) {
+				il.append(new ALOAD(0));
+				n.f2.accept(this);
+				int i = cp.addFieldref(cg.getClassName(), name, "I");
+				il.append(new PUTFIELD(i));
+			} else {
+				il.append(new ALOAD(0));
+				int i = cp.addFieldref(cg.getClassName(), name, "I");
+				il.append(new GETFIELD(i));
+				n.f0.accept(this);
+				n.f2.accept(this);
+				il.append(new IASTORE());
+			}
 		}
 	}
 
@@ -248,7 +264,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		if (name.equals("int")) {
 			return Type.INT;
 		} else if (name.equals("int[]")) {
-			return ArrayType.INT;
+			return new ArrayType(Constants.T_INT, 1);
 		} else if (name.equals("boolean")) {
 			return Type.BOOLEAN;
 		} else {
@@ -326,7 +342,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	        break;
 	      case 1:
 	        // %1 IntArrayConstructorCall()
-	  		il.append(new NEWARRAY(BasicType.INT));
+	  		il.append(new NEWARRAY(Type.INT));
 	        break;
 	      default:
 	        // should not occur !!!
@@ -372,6 +388,43 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			il.append(new GETFIELD(i));
 		}
 	}
+	
+	  /**
+	   * Visits a {@link IfStatement} node, whose children are the following :
+	   * <p>
+	   * f0 -> <IF><br>
+	   * f1 -> <PARENTHESIS_LEFT><br>
+	   * f2 -> Expression()<br>
+	   * f3 -> <PARENTHESIS_RIGHT><br>
+	   * f4 -> Statement()<br>
+	   * f5 -> <ELSE><br>
+	   * f6 -> Statement()<br>
+	   *
+	   * @param n - the node to visit
+	   */
+	  @Override
+	  public void visit(final IfStatement n) {
+	    // f0 -> <IF>
+	    final NodeToken n0 = n.f0;
+	    n0.accept(this);
+	    // f2 -> Expression()
+	    final Expression n2 = n.f2;
+	    n2.accept(this);
+		InstructionHandle ifStart = il.getEnd();
+	    // f4 -> Statement()
+	    final Statement n4 = n.f4;
+	    n4.accept(this);
+		InstructionHandle ifEnd = il.getEnd();
+	    // f5 -> <ELSE>
+	    final NodeToken n5 = n.f5;
+	    n5.accept(this);
+	    // f6 -> Statement()
+	    final Statement n6 = n.f6;
+	    n6.accept(this);
+		InstructionHandle elseEnd = il.append(iFact.NOP);
+		il.append(ifStart, new IFEQ(ifEnd.getNext()));
+		il.append(ifEnd, new GOTO(elseEnd));
+	  }
 	
 	public void visit(MethodCallToken methodCallToken) {
 		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
