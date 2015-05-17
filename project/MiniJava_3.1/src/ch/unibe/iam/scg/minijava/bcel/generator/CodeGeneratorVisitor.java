@@ -15,6 +15,8 @@ import org.apache.bcel.generic.ArrayType;
 import org.apache.bcel.generic.BasicType;
 import org.apache.bcel.generic.ClassGen;
 import org.apache.bcel.generic.ConstantPoolGen;
+import org.apache.bcel.generic.FieldGen;
+import org.apache.bcel.generic.GETFIELD;
 import org.apache.bcel.generic.GOTO;
 import org.apache.bcel.generic.IASTORE;
 import org.apache.bcel.generic.IFEQ;
@@ -31,6 +33,7 @@ import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.NEWARRAY;
 import org.apache.bcel.generic.NOP;
 import org.apache.bcel.generic.PUSH;
+import org.apache.bcel.generic.PUTFIELD;
 import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
@@ -76,6 +79,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private IScope currentScope;
 	private Map<String, Integer> registerMap = new HashMap<String, Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
+	private boolean isField = false;
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -124,20 +128,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	      final INode seq2 = seq.elementAt(1);
 	    }
 	    // f4 -> ( VarDeclaration() )*
-	    final NodeListOptional n4 = n.f4;
-	    if (n4.present()) {
-	      for (int i = 0; i < n4.size(); i++) {
-	        final INode nloeai = n4.elementAt(i);
-	      }
-	    }
+	    isField = true;
+	    n.f4.accept(this);
+	    isField = false;
+
 	    // f5 -> ( MethodDeclaration() )*
-	    final NodeListOptional n5 = n.f5;
-	    if (n5.present()) {
-	      for (int i = 0; i < n5.size(); i++) {
-	        final INode nloeai = n5.elementAt(i);
-	        nloeai.accept(this);
-	      }
-	    }
+	    n.f5.accept(this);
 	    
 	    JavaClass jclass = cg.getJavaClass();	
 
@@ -205,33 +201,46 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		// f0 -> Type()
 		// f1 -> Identifier()
 		String varName = n.f1.f0.tokenImage;
-		Variable v = currentScope.getVariable(varName);
-		LocalVariableGen lg = mg.addLocalVariable(varName, convertTypes(v
-				.getType().getName()), null, null);
-		int in = lg.getIndex();
-		registerMap.put(varName, in);
-		il.append(InstructionConstants.ACONST_NULL);
-		lg.setStart(il.append(new ASTORE(in))); // "i" valid from here
+
+		if(isField){
+			FieldGen fg = new FieldGen(Constants.ACC_PUBLIC, Type.INT, varName, cp);
+			cg.addField(fg.getField());
+		} else {
+			Variable v = currentScope.getVariable(varName);
+			LocalVariableGen lg = mg.addLocalVariable(varName, convertTypes(v
+					.getType().getName()), null, null);
+			int in = lg.getIndex();
+			registerMap.put(varName, in);
+			il.append(InstructionConstants.ACONST_NULL);
+			lg.setStart(il.append(new ASTORE(in))); // "i" valid from here
+		}
 	}
 
 	public void visit(final AssignmentStatement n) {
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
-		int reg = registerMap.get(name);
-		if (n.f0.f0.which == 1) {
-			// f2 -> Expression()
-			n.f2.accept(this);
-			// f0 -> Assignee()
-			if (currentScope.lookupVariable(name).getType() == currentScope
-					.lookupType("int[]")) {
-				il.append(new ASTORE(reg));
+		if(registerMap.containsKey(name)){
+			int reg = registerMap.get(name);
+			if (n.f0.f0.which == 1) {
+				// f2 -> Expression()
+				n.f2.accept(this);
+				// f0 -> Assignee()
+				if (currentScope.lookupVariable(name).getType() == currentScope
+						.lookupType("int[]")) {
+					il.append(new ASTORE(reg));
+				} else {
+					il.append(new ISTORE(reg));
+				}
 			} else {
-				il.append(new ISTORE(reg));
+				il.append(new ALOAD(reg));
+				n.f0.accept(this);
+				n.f2.accept(this);
+				il.append(new IASTORE());
 			}
 		} else {
-			il.append(new ALOAD(reg));
-			n.f0.accept(this);
+			il.append(new ALOAD(0));
 			n.f2.accept(this);
-			il.append(new IASTORE());
+			int i = cp.addFieldref(cg.getClassName(), name, "I");
+			il.append(new PUTFIELD(i));
 		}
 	}
 
@@ -343,17 +352,24 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(VariableToken variableToken) {
-		int reg = registerMap.get(variableToken.name);
-
-		if (variableToken.type.getName().equals("int")) {
-			il.append(new ILOAD(reg));
-			return;
-		}
-		if (variableToken.type.getName().equals("boolean")) {
-			il.append(new ILOAD(reg));
-			return;
+		
+		if(registerMap.containsKey(variableToken.name)){
+			int reg = registerMap.get(variableToken.name);
+	
+			if (variableToken.type.getName().equals("int")) {
+				il.append(new ILOAD(reg));
+				return;
+			}
+			if (variableToken.type.getName().equals("boolean")) {
+				il.append(new ILOAD(reg));
+				return;
+			} else {
+				il.append(new ALOAD(reg));
+			}
 		} else {
-			il.append(new ALOAD(reg));
+			int i = cp.addFieldref(cg.getClassName(), variableToken.name, "I");
+			il.append(new ALOAD(0));
+			il.append(new GETFIELD(i));
 		}
 	}
 	
