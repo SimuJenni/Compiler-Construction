@@ -70,8 +70,7 @@ public class MethodCallToken extends AbstractFunctionToken<MethodCall> {
 
 	@Override
 	public void accept(CodeGeneratorVisitor vis) {
-		// TODO Auto-generated method stub
-		
+		vis.visit(this);
 	}
 
 

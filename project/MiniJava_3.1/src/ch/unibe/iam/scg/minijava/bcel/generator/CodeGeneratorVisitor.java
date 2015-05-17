@@ -55,6 +55,7 @@ import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ArrayLengthA
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.BinaryOperatorToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.IToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.LiteralToken;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.MethodCallToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ObjectInstantiationToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ShuntingYard;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.UnaryOperatorToken;
@@ -71,6 +72,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private MethodGen mg;
 	private InstructionFactory iFact;
 	private Map<INode, IScope> scopeMap;
+	private Map<String, MethodGen> methodMap = new HashMap<String, MethodGen>();
 	private IScope currentScope;
 	private Map<String, Integer> registerMap = new HashMap<String, Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
@@ -154,6 +156,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		MethodExtractor me = new MethodExtractor();
 		currentScope = scopeMap.get(n);
 		Method m = me.extract(n, currentScope);
+		registerMap.put("this", 0);
 		extractMG(methodName, m);
 		// f7 -> ( VarDeclaration() )*
 		n.f7.accept(this);
@@ -167,6 +170,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		}
 		mg.setMaxStack();
 		mg.setMaxLocals();
+		methodMap.put(methodName, (MethodGen) mg.clone());
 
 		bytecodeGenerator.addMethod(cg, mg);
 		il.dispose();
@@ -290,6 +294,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			else
 				il.append(new PUSH(cp, false));
 		}
+		if (t.value.equals("this"))
+			il.append(new ALOAD(0));
 	}
 
 	public void visit(UnaryOperatorToken u) {
@@ -349,6 +355,15 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		} else {
 			il.append(new ALOAD(reg));
 		}
+	}
+	
+	public void visit(MethodCallToken methodCallToken) {
+		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
+		MethodGen method = this.methodMap.get(methodName);
+		String className = method.getClassName();
+		il.append(iFact.createInvoke(className, methodName,
+                method.getReturnType(), method.getArgumentTypes(),
+                Constants.INVOKEVIRTUAL));
 	}
 
 	public ClassGen getCG() {
