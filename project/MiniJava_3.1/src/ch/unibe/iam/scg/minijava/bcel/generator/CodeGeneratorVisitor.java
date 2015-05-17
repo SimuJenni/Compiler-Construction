@@ -35,11 +35,13 @@ import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
+import ch.unibe.iam.scg.javacc.syntaxtree.ClassConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
@@ -108,6 +110,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
                 null);
 		cg.addEmptyConstructor(Constants.ACC_PUBLIC);
 		cp = cg.getConstantPool(); // cg creates constant pool
+		iFact = new InstructionFactory(cg);
 
 	    // f2 -> ( #0 <EXTENDS> #1 Identifier() )?
 	    final NodeOptional n2 = n.f2;
@@ -166,6 +169,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		mg.setMaxLocals();
 
 		bytecodeGenerator.addMethod(cg, mg);
+		il.dispose();
 	}
 
 	private void extractMG(String methodName, Method m) {
@@ -299,7 +303,29 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(ObjectInstantiationToken t){
-		il.append(new NEWARRAY(BasicType.INT));
+		NodeChoice nch = t.getNode().f1.f0;
+	    switch (nch.which) {
+	      case 0:
+	        // %0 ClassConstructorCall()
+	    	nch.choice.accept(this);
+	        break;
+	      case 1:
+	        // %1 IntArrayConstructorCall()
+	  		il.append(new NEWARRAY(BasicType.INT));
+	        break;
+	      default:
+	        // should not occur !!!
+	        break;
+	    }
+	}
+	
+	public void visit(final ClassConstructorCall n) {
+		String className = n.f0.f0.tokenImage;
+		il.append(iFact.createNew(className));
+		il.append(InstructionConstants.DUP); // Use predefined constant
+		il.append(iFact.createInvoke(className, "<init>",
+                Type.VOID, new Type[] { },
+                Constants.INVOKESPECIAL));
 	}
 
 	public void visit(ArrayLengthAccessToken t) {
