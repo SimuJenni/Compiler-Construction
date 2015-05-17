@@ -1,11 +1,13 @@
 package ch.unibe.iam.scg.minijava.bcel.generator;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.bcel.Constants;
+import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.generic.ALOAD;
 import org.apache.bcel.generic.ARRAYLENGTH;
 import org.apache.bcel.generic.ASTORE;
@@ -33,10 +35,15 @@ import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
+import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
@@ -92,6 +99,51 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			next.accept(this);
 		}
 	}
+	
+	  public void visit(final ClassDeclaration n) {
+		// f1 -> Identifier()
+		String className = n.f1.f0.tokenImage;
+		cg = new ClassGen(className, "java.lang.Object",
+                "<generated>", Constants.ACC_PUBLIC | Constants.ACC_SUPER,
+                null);
+		cg.addEmptyConstructor(Constants.ACC_PUBLIC);
+		cp = cg.getConstantPool(); // cg creates constant pool
+
+	    // f2 -> ( #0 <EXTENDS> #1 Identifier() )?
+	    final NodeOptional n2 = n.f2;
+	    if (n2.present()) {
+	      final NodeSequence seq = (NodeSequence) n2.node;
+	      // #0 <EXTENDS>
+	      final INode seq1 = seq.elementAt(0);
+	      // #1 Identifier()
+	      final INode seq2 = seq.elementAt(1);
+	    }
+	    // f4 -> ( VarDeclaration() )*
+	    final NodeListOptional n4 = n.f4;
+	    if (n4.present()) {
+	      for (int i = 0; i < n4.size(); i++) {
+	        final INode nloeai = n4.elementAt(i);
+	      }
+	    }
+	    // f5 -> ( MethodDeclaration() )*
+	    final NodeListOptional n5 = n.f5;
+	    if (n5.present()) {
+	      for (int i = 0; i < n5.size(); i++) {
+	        final INode nloeai = n5.elementAt(i);
+	        nloeai.accept(this);
+	      }
+	    }
+	    
+	    JavaClass jclass = cg.getJavaClass();	
+
+		try {
+			jclass.dump("bin/" + cg.getClassName().replaceAll("\\.", "/")
+					+ ".class");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	  }
+
 
 	public void visit(final MethodDeclaration n) {
 		// f2 -> Identifier()
