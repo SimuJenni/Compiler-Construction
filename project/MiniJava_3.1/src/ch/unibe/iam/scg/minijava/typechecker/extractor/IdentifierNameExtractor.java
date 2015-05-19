@@ -16,9 +16,11 @@ public class IdentifierNameExtractor {
 
 		@Override
 		public void visit(Identifier n) {
-			this.identifierName = n.f0.tokenImage;
+			if (this.identifierName == null) {
+				this.identifierName = n.f0.tokenImage;
+			}
 		}
-		
+
 	}
 
 	public String extract(INode node) {
