@@ -1,11 +1,18 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-public class BooleanType extends Type {
+import org.apache.bcel.generic.Type;
+
+public class BooleanType extends AbstractPrimitiveType {
 
 	public static final BooleanType INSTANCE = new BooleanType();
 
 	public BooleanType() {
-		super("boolean", NullType.INSTANCE);
+		super("boolean");
+	}
+
+	@Override
+	public Type toBcelType() {
+		return Type.BOOLEAN;
 	}
 
 }

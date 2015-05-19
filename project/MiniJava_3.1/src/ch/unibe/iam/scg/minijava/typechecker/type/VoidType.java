@@ -1,11 +1,18 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
-public class VoidType extends Type {
+import org.apache.bcel.generic.Type;
+
+public class VoidType extends AbstractPrimitiveType {
 
 	public static final VoidType INSTANCE = new VoidType();
 
 	public VoidType() {
-		super("void", NullType.INSTANCE);
+		super("void");
+	}
+
+	@Override
+	public Type toBcelType() {
+		return Type.VOID;
 	}
 
 }

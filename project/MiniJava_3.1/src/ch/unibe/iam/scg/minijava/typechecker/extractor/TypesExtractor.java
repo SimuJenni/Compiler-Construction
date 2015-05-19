@@ -10,8 +10,8 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
+import ch.unibe.iam.scg.minijava.typechecker.type.CustomType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
-import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
 public class TypesExtractor {
 
@@ -78,7 +78,7 @@ public class TypesExtractor {
 				throw new LookupException(superClassName);
 			}
 			IType superType = map.get(superClassName);
-			IType thisType = new Type(className, superType);
+			IType thisType = new CustomType(className, superType);
 			map.put(thisType.getName(), thisType);
 			types.add(thisType);
 		}

@@ -1,12 +1,12 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
 
-public class Type implements IType {
+public abstract class AbstractType implements IType {
 
 	protected String name;
 	protected IType parent;
 
-	public Type(String name, IType parent) {
+	public AbstractType(String name, IType parent) {
 		this.name = name;
 		this.parent = parent;
 	}
