@@ -48,6 +48,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
 import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
+import ch.unibe.iam.scg.javacc.syntaxtree.WhileStatement;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.MethodExtractor;
@@ -394,21 +395,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		}
 	}
 	
-	  /**
-	   * Visits a {@link IfStatement} node, whose children are the following :
-	   * <p>
-	   * f0 -> <IF><br>
-	   * f1 -> <PARENTHESIS_LEFT><br>
-	   * f2 -> Expression()<br>
-	   * f3 -> <PARENTHESIS_RIGHT><br>
-	   * f4 -> Statement()<br>
-	   * f5 -> <ELSE><br>
-	   * f6 -> Statement()<br>
-	   *
-	   * @param n - the node to visit
-	   */
-	  @Override
-	  public void visit(final IfStatement n) {
+	public void visit(final IfStatement n) {
 	    // f0 -> <IF>
 	    final NodeToken n0 = n.f0;
 	    n0.accept(this);
@@ -429,6 +416,36 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		InstructionHandle elseEnd = il.append(iFact.NOP);
 		il.append(ifStart, new IFEQ(ifEnd.getNext()));
 		il.append(ifEnd, new GOTO(elseEnd));
+	}
+	
+	  /**
+	   * Visits a {@link WhileStatement} node, whose children are the following :
+	   * <p>
+	   * f0 -> <WHILE><br>
+	   * f1 -> <PARENTHESIS_LEFT><br>
+	   * f2 -> Expression()<br>
+	   * f3 -> <PARENTHESIS_RIGHT><br>
+	   * f4 -> Statement()<br>
+	   *
+	   * @param n - the node to visit
+	   */
+	  @Override
+	  public void visit(final WhileStatement n) {
+	    // f0 -> <WHILE>
+	    final NodeToken n0 = n.f0;
+	    n0.accept(this);
+	    // f1 -> <PARENTHESIS_LEFT>
+	    final NodeToken n1 = n.f1;
+	    n1.accept(this);
+	    // f2 -> Expression()
+	    final Expression n2 = n.f2;
+	    n2.accept(this);
+	    // f3 -> <PARENTHESIS_RIGHT>
+	    final NodeToken n3 = n.f3;
+	    n3.accept(this);
+	    // f4 -> Statement()
+	    final Statement n4 = n.f4;
+	    n4.accept(this);
 	  }
 	
 	public void visit(MethodCallToken methodCallToken) {
