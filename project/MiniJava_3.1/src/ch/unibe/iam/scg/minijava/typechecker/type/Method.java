@@ -2,6 +2,8 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 
 import java.util.List;
 
+import org.apache.bcel.generic.Type;
+
 public class Method {
 
 	protected String name;
@@ -24,6 +26,14 @@ public class Method {
 
 	public List<Variable> getParameters() {
 		return this.parameters;
+	}
+
+	public Type[] getParametersBCEL() {
+		Type[] args=new Type[parameters.size()];
+		for(int i=0;i<parameters.size(); i++){
+			args[i]=parameters.get(i).getType().toBcelType();
+		}
+		return args;
 	}
 
 }

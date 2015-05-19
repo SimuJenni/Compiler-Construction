@@ -452,10 +452,17 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	public void visit(MethodCallToken methodCallToken) {
 		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
 		MethodGen method = this.methodMap.get(methodName);
-		String className = method.getClassName();
-		il.append(iFact.createInvoke(className, methodName,
-				method.getReturnType(), method.getArgumentTypes(),
-				Constants.INVOKEVIRTUAL));
+		try{
+			String className = method.getClassName();
+			il.append(iFact.createInvoke(className, methodName,
+					method.getReturnType(), method.getArgumentTypes(),
+					Constants.INVOKEVIRTUAL));
+		} catch(NullPointerException e){
+			Method m=currentScope.getParent().getMethod(methodName);
+			il.append(iFact.createInvoke(cg.getClassName(), m.getName(),
+					m.getReturnType().toBcelType(), m.getParametersBCEL(),
+					Constants.INVOKEVIRTUAL));
+		}
 	}
 
 	public ClassGen getCG() {
