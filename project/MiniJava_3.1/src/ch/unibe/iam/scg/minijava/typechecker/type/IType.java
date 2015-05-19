@@ -12,6 +12,8 @@ public interface IType {
 
 	public Type toBcelType();
 	
+	public boolean isVoid();
+	
 	public boolean isPrimitive();
 	
 	public boolean isArray();

@@ -14,6 +14,11 @@ public class ObjectType extends AbstractType {
 	public Type toBcelType() {
 		return Type.OBJECT;
 	}
+	
+	@Override
+	public boolean isVoid() {
+		return false;
+	}
 
 	@Override
 	public boolean isPrimitive() {

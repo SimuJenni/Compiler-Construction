@@ -20,6 +20,11 @@ public class ArrayType extends AbstractType {
 		return new org.apache.bcel.generic.ArrayType(
 				this.elementType.toBcelType(), 1);
 	}
+	
+	@Override
+	public boolean isVoid() {
+		return false;
+	}
 
 	@Override
 	public boolean isPrimitive() {

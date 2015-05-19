@@ -12,6 +12,11 @@ public class CustomType extends AbstractType {
 	public Type toBcelType() {
 		return new org.apache.bcel.generic.ObjectType(this.getName());
 	}
+	
+	@Override
+	public boolean isVoid() {
+		return false;
+	}
 
 	@Override
 	public boolean isPrimitive() {

@@ -14,6 +14,11 @@ public class StringType extends AbstractType {
 	public Type toBcelType() {
 		return Type.STRING;
 	}
+	
+	@Override
+	public boolean isVoid() {
+		return false;
+	}
 
 	@Override
 	public boolean isPrimitive() {

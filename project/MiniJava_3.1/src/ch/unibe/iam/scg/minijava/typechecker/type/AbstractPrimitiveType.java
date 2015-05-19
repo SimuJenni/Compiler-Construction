@@ -7,6 +7,11 @@ public abstract class AbstractPrimitiveType extends AbstractType {
 	}
 
 	@Override
+	public boolean isVoid() {
+		return false;
+	}
+
+	@Override
 	public boolean isPrimitive() {
 		return true;
 	}

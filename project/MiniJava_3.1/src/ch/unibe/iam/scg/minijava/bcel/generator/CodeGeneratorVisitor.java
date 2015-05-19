@@ -30,6 +30,7 @@ import org.apache.bcel.generic.LocalVariableGen;
 import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.NEWARRAY;
 import org.apache.bcel.generic.NOP;
+import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.PUSH;
 import org.apache.bcel.generic.PUTFIELD;
 import org.apache.bcel.generic.Type;
@@ -42,12 +43,14 @@ import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainMethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
+import ch.unibe.iam.scg.javacc.syntaxtree.PrintStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.Statement;
 import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.WhileStatement;
@@ -100,20 +103,20 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		this.scopeMap = scopeMap;
 		node.accept(this);
 	}
-	
+
 	@Override
 	public void visit(Goal n) {
-	    // f1 -> ( ClassDeclaration() )*
-	    final NodeListOptional n1 = n.f1;
-	    if (n1.present()) {
-	      for (int i = 0; i < n1.size(); i++) {
-	        final INode nloeai = n1.elementAt(i);
-	        nloeai.accept(this);
-	      }
-	    }
-	    // f0 -> MainClass()
-	    final MainClass n0 = n.f0;
-	    n0.accept(this);
+		// f1 -> ( ClassDeclaration() )*
+		final NodeListOptional n1 = n.f1;
+		if (n1.present()) {
+			for (int i = 0; i < n1.size(); i++) {
+				final INode nloeai = n1.elementAt(i);
+				nloeai.accept(this);
+			}
+		}
+		// f0 -> MainClass()
+		final MainClass n0 = n.f0;
+		n0.accept(this);
 	}
 
 	public void visit(final Expression n) {
@@ -124,6 +127,57 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			IToken next = it.next();
 			next.accept(this);
 		}
+	}
+
+	@Override
+	public void visit(MainClass n) {
+		currentScope = scopeMap.get(n);
+
+		// f1 -> Identifier()
+		String className = n.f1.f0.tokenImage;
+		IType classType = currentScope.lookupType(className);
+		cg = new ClassGen(className, classType.getParent().toBcelType()
+				.toString(), "<generated>", Constants.ACC_PUBLIC
+				| Constants.ACC_SUPER, new String[] {});
+		cg.addEmptyConstructor(Constants.ACC_PUBLIC);
+		cp = cg.getConstantPool(); // cg creates constant pool
+		iFact = new InstructionFactory(cg);
+
+		// f3 -> MainMethodDeclaration()
+		final MainMethodDeclaration n3 = n.f3;
+		n3.accept(this);
+
+		JavaClass jclass = cg.getJavaClass();
+
+		try {
+			jclass.dump("bin/" + cg.getClassName().replaceAll("\\.", "/")
+					+ ".class");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void visit(MainMethodDeclaration n) {
+		il = new InstructionList();
+		String methodName = "main";
+		currentScope = scopeMap.get(n);
+		Method m = currentScope.lookupMethod(methodName);
+		extractMG(Constants.ACC_PUBLIC | Constants.ACC_STATIC, methodName, m);
+
+		// f11 -> ( Statement() )?
+		final NodeOptional n11 = n.f11;
+		if (n11.present()) {
+			n11.accept(this);
+		}
+		this.il.append(InstructionFactory.RETURN);
+
+		mg.setMaxStack();
+		mg.setMaxLocals();
+		methodMap.put(methodName, (MethodGen) mg.clone());
+
+		bytecodeGenerator.addMethod(cg, mg);
+		il.dispose();
 	}
 
 	public void visit(final ClassDeclaration n) {
@@ -173,7 +227,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		currentScope = scopeMap.get(n);
 		Method m = currentScope.lookupMethod(methodName);
 		registerMap.put("this", 0);
-		extractMG(methodName, m);
+		extractMG(Constants.ACC_PUBLIC, methodName, m);
 		// f7 -> ( VarDeclaration() )*
 		n.f7.accept(this);
 		// f8 -> ( Statement() )*
@@ -183,7 +237,9 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		if (n9.present()) {
 			n9.accept(this);
 			IType returnType = m.getReturnType();
-			if (returnType.isPrimitive()) {
+			if (returnType.isVoid()) {
+				this.il.append(InstructionFactory.RETURN);
+			} else if (returnType.isPrimitive()) {
 				this.il.append(InstructionFactory.IRETURN);
 			} else {
 				this.il.append(InstructionFactory.ARETURN);
@@ -197,7 +253,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		il.dispose();
 	}
 
-	private void extractMG(String methodName, Method m) {
+	private void extractMG(int accessFlags, String methodName, Method m) {
 		List<Variable> params = m.getParameters();
 		int numParam = params.size();
 		Type[] pTypes = new Type[numParam];
@@ -208,7 +264,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			pNames[i] = p.getName();
 		}
 		Type returnType = m.getReturnType().toBcelType();
-		mg = new MethodGen(Constants.ACC_PUBLIC, // access flags
+		mg = new MethodGen(accessFlags, // access flags
 				returnType, // return type
 				pTypes, pNames, // arg names
 				methodName, cg.getClassName(), // method, class
@@ -288,20 +344,6 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				new Type[] {}, Constants.INVOKESPECIAL));
 	}
 
-	/**
-	 * Visits a {@link IfStatement} node, whose children are the following :
-	 * <p>
-	 * f0 -> <IF><br>
-	 * f1 -> <PARENTHESIS_LEFT><br>
-	 * f2 -> Expression()<br>
-	 * f3 -> <PARENTHESIS_RIGHT><br>
-	 * f4 -> Statement()<br>
-	 * f5 -> <ELSE><br>
-	 * f6 -> Statement()<br>
-	 *
-	 * @param n
-	 *            - the node to visit
-	 */
 	@Override
 	public void visit(final IfStatement n) {
 		// f0 -> <IF>
@@ -325,6 +367,31 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		il.append(ifStart, new IFEQ(ifEnd.getNext()));
 		il.append(ifEnd, new GOTO(elseEnd));
 	}
+
+	public void visit(final WhileStatement n) {
+		InstructionHandle startExpression = il.getEnd();
+
+		// f2 -> Expression()
+		n.f2.accept(this);
+
+		startExpression = startExpression.getNext();
+		InstructionHandle endExpression = il.getEnd();
+
+		// f4 -> Statement()
+		n.f4.accept(this);
+
+		il.append(new GOTO(startExpression));
+		InstructionHandle endWhile = il.append(InstructionFactory.NOP);
+
+		il.append(endExpression, new IFEQ(endWhile));
+	}
+
+	public void visit(PrintStatement n) {
+	    il.append(iFact.createFieldAccess("java.lang.System", "out", new ObjectType("java.io.PrintStream"), Constants.GETSTATIC));
+		super.visit(n);
+		il.append(iFact.createInvoke("java.io.PrintStream", "println",
+				Type.VOID, new Type[] { Type.INT }, Constants.INVOKEVIRTUAL));
+	};
 
 	public void visit(BinaryOperatorToken o) {
 		if (o.getSymbol().equals("+"))
@@ -430,37 +497,18 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		}
 	}
 
-
-	public void visit(final WhileStatement n) {
-		InstructionHandle startExpression = il.getEnd();
-  
-	    // f2 -> Expression()
-	    n.f2.accept(this);
-	    
-		startExpression = startExpression.getNext();
-		InstructionHandle endExpression = il.getEnd();
-
-	    // f4 -> Statement()
-	    n.f4.accept(this);
-	    
-	    il.append(new GOTO(startExpression));
-		InstructionHandle endWhile = il.append(InstructionFactory.NOP);
-
-		il.append(endExpression, new IFEQ(endWhile));
-	}
-	
 	public void visit(MethodCallToken methodCallToken) {
 		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
 		MethodGen method = this.methodMap.get(methodName);
-		try{
+		try {
 			String className = method.getClassName();
 			il.append(iFact.createInvoke(className, methodName,
 					method.getReturnType(), method.getArgumentTypes(),
 					Constants.INVOKEVIRTUAL));
-		} catch(NullPointerException e){
-			Method m=currentScope.getParent().getMethod(methodName);
-			il.append(iFact.createInvoke(cg.getClassName(), m.getName(),
-					m.getReturnType().toBcelType(), m.getParametersBCEL(),
+		} catch (NullPointerException e) {
+			Method m = currentScope.getParent().getMethod(methodName);
+			il.append(iFact.createInvoke(cg.getClassName(), m.getName(), m
+					.getReturnType().toBcelType(), m.getParametersBCEL(),
 					Constants.INVOKEVIRTUAL));
 		}
 	}

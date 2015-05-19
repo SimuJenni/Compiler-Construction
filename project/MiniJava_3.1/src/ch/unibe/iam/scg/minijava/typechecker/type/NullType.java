@@ -26,6 +26,11 @@ public class NullType implements IType {
 	public Type toBcelType() {
 		throw new UnsupportedOperationException();
 	}
+	
+	@Override
+	public boolean isVoid() {
+		return false;
+	}
 
 	@Override
 	public boolean isPrimitive() {
