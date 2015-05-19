@@ -91,25 +91,35 @@ public interface IRetVisitor<R> {
    * f0 -> <CLASS><br>
    * f1 -> Identifier()<br>
    * f2 -> <BRACE_LEFT><br>
-   * f3 -> <PUBLIC_MODIFIER><br>
-   * f4 -> <STATIC_MODIFIER><br>
-   * f5 -> <VOID_TYPE><br>
-   * f6 -> <MAIN_METHOD_NAME><br>
-   * f7 -> <PARENTHESIS_LEFT><br>
-   * f8 -> <STRING_TYPE><br>
-   * f9 -> <BRACKET_LEFT><br>
-   * f10 -> <BRACKET_RIGHT><br>
-   * f11 -> Identifier()<br>
-   * f12 -> <PARENTHESIS_RIGHT><br>
-   * f13 -> <BRACE_LEFT><br>
-   * f14 -> ( Statement() )?<br>
-   * f15 -> <BRACE_RIGHT><br>
-   * f16 -> <BRACE_RIGHT><br>
+   * f3 -> MainMethodDeclaration()<br>
+   * f4 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @return the user return information
    */
   public R visit(final MainClass n);
+
+  /**
+   * Visits a {@link MainMethodDeclaration} node, whose children are the following :
+   * <p>
+   * f0 -> <PUBLIC_MODIFIER><br>
+   * f1 -> <STATIC_MODIFIER><br>
+   * f2 -> <VOID_TYPE><br>
+   * f3 -> <MAIN_METHOD_NAME><br>
+   * f4 -> <PARENTHESIS_LEFT><br>
+   * f5 -> <STRING_TYPE><br>
+   * f6 -> <BRACKET_LEFT><br>
+   * f7 -> <BRACKET_RIGHT><br>
+   * f8 -> Identifier()<br>
+   * f9 -> <PARENTHESIS_RIGHT><br>
+   * f10 -> <BRACE_LEFT><br>
+   * f11 -> ( Statement() )?<br>
+   * f12 -> <BRACE_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  public R visit(final MainMethodDeclaration n);
 
   /**
    * Visits a {@link ClassDeclaration} node, whose children are the following :

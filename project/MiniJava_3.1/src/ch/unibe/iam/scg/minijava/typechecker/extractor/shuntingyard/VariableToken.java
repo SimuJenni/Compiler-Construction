@@ -8,12 +8,20 @@ import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 
 public class VariableToken implements IToken {
 
-	public IType type;
-	public String name;
+	protected IType type;
+	protected String name;
 
 	public VariableToken(IType type, String name) {
 		this.type = type;
 		this.name = name;
+	}
+
+	public IType getType() {
+		return type;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -43,7 +51,7 @@ public class VariableToken implements IToken {
 
 	@Override
 	public void accept(CodeGeneratorVisitor vis) {
-		vis.visit(this);		
+		vis.visit(this);
 	}
 
 }

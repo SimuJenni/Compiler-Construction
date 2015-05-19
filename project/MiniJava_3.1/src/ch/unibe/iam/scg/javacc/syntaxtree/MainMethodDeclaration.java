@@ -4,30 +4,62 @@ package ch.unibe.iam.scg.javacc.syntaxtree;
 import ch.unibe.iam.scg.javacc.visitor.*;
 
 /**
- * JTB node class for the production MainClass:<br>
+ * JTB node class for the production MainMethodDeclaration:<br>
  * Corresponding grammar:<br>
- * f0 -> <CLASS><br>
- * f1 -> Identifier()<br>
- * f2 -> <BRACE_LEFT><br>
- * f3 -> MainMethodDeclaration()<br>
- * f4 -> <BRACE_RIGHT><br>
+ * f0 -> <PUBLIC_MODIFIER><br>
+ * f1 -> <STATIC_MODIFIER><br>
+ * f2 -> <VOID_TYPE><br>
+ * f3 -> <MAIN_METHOD_NAME><br>
+ * f4 -> <PARENTHESIS_LEFT><br>
+ * f5 -> <STRING_TYPE><br>
+ * f6 -> <BRACKET_LEFT><br>
+ * f7 -> <BRACKET_RIGHT><br>
+ * f8 -> Identifier()<br>
+ * f9 -> <PARENTHESIS_RIGHT><br>
+ * f10 -> <BRACE_LEFT><br>
+ * f11 -> ( Statement() )?<br>
+ * f12 -> <BRACE_RIGHT><br>
  */
-public class MainClass implements INode {
+public class MainMethodDeclaration implements INode {
 
   /** Child node 1 */
   public NodeToken f0;
 
   /** Child node 2 */
-  public Identifier f1;
+  public NodeToken f1;
 
   /** Child node 3 */
   public NodeToken f2;
 
   /** Child node 4 */
-  public MainMethodDeclaration f3;
+  public NodeToken f3;
 
   /** Child node 5 */
   public NodeToken f4;
+
+  /** Child node 6 */
+  public NodeToken f5;
+
+  /** Child node 7 */
+  public NodeToken f6;
+
+  /** Child node 8 */
+  public NodeToken f7;
+
+  /** Child node 9 */
+  public Identifier f8;
+
+  /** Child node 10 */
+  public NodeToken f9;
+
+  /** Child node 11 */
+  public NodeToken f10;
+
+  /** Child node 12 */
+  public NodeOptional f11;
+
+  /** Child node 13 */
+  public NodeToken f12;
 
   /** The serial version UID */
   private static final long serialVersionUID = 149L;
@@ -40,13 +72,29 @@ public class MainClass implements INode {
    * @param n2 - next child node
    * @param n3 - next child node
    * @param n4 - next child node
+   * @param n5 - next child node
+   * @param n6 - next child node
+   * @param n7 - next child node
+   * @param n8 - next child node
+   * @param n9 - next child node
+   * @param n10 - next child node
+   * @param n11 - next child node
+   * @param n12 - next child node
    */
-  public MainClass(final NodeToken n0, final Identifier n1, final NodeToken n2, final MainMethodDeclaration n3, final NodeToken n4) {
+  public MainMethodDeclaration(final NodeToken n0, final NodeToken n1, final NodeToken n2, final NodeToken n3, final NodeToken n4, final NodeToken n5, final NodeToken n6, final NodeToken n7, final Identifier n8, final NodeToken n9, final NodeToken n10, final NodeOptional n11, final NodeToken n12) {
     f0 = n0;
     f1 = n1;
     f2 = n2;
     f3 = n3;
     f4 = n4;
+    f5 = n5;
+    f6 = n6;
+    f7 = n7;
+    f8 = n8;
+    f9 = n9;
+    f10 = n10;
+    f11 = n11;
+    f12 = n12;
   }
 
   /**

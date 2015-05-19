@@ -2,17 +2,15 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 
 import org.apache.bcel.generic.Type;
 
-public class ObjectType extends AbstractType {
+public class CustomType extends AbstractType {
 
-	public static final ObjectType INSTANCE = new ObjectType();
-
-	public ObjectType() {
-		super("Object", NullType.INSTANCE);
+	public CustomType(String name, IType parent) {
+		super(name, parent);
 	}
 
 	@Override
 	public Type toBcelType() {
-		return Type.OBJECT;
+		return new org.apache.bcel.generic.ObjectType(this.getName());
 	}
 
 	@Override

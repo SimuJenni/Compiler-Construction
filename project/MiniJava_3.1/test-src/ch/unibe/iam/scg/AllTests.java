@@ -9,7 +9,7 @@ import ch.unibe.iam.scg.minijava.bcel.generator.JavaBytecodeGeneratorTest;
 import ch.unibe.iam.scg.minijava.bcel.generator.SanityTest;
 import ch.unibe.iam.scg.minijava.bcel.generator.optimization.BytecodesSizeTest;
 import ch.unibe.iam.scg.minijava.prettyprint.PrettyPrintTest;
-import ch.unibe.iam.scg.typechecker.minijava.TypeCheckerTest;
+import ch.unibe.iam.scg.minijava.typechecker.TypeCheckerTest;
 
 @RunWith(Suite.class)
 @SuiteClasses(

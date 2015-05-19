@@ -7,11 +7,12 @@ import java.util.Map;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
+import ch.unibe.iam.scg.minijava.typechecker.type.CustomType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
-import ch.unibe.iam.scg.minijava.typechecker.type.Type;
 
 public class TypesExtractor {
 
@@ -38,12 +39,23 @@ public class TypesExtractor {
 		}
 
 		@Override
+		public void visit(MainClass n) {
+			String className = n.f1.f0.tokenImage;
+			String superClassName = implicitSuperType.getName();
+			this.register(className, superClassName);
+		}
+
+		@Override
 		public void visit(ClassDeclaration n) {
 			String className = n.f1.f0.tokenImage;
 			String superClassName = implicitSuperType.getName();
 			if (n.f2.present()) {
 				superClassName = (new IdentifierNameExtractor()).extract(n.f2);
 			}
+			this.register(className, superClassName);
+		}
+
+		protected void register(String className, String superClassName) {
 			if (this.classNames.contains(className)) {
 				throw new NameCollisionException(className);
 			}
@@ -78,7 +90,7 @@ public class TypesExtractor {
 				throw new LookupException(superClassName);
 			}
 			IType superType = map.get(superClassName);
-			IType thisType = new Type(className, superType);
+			IType thisType = new CustomType(className, superType);
 			map.put(thisType.getName(), thisType);
 			types.add(thisType);
 		}
