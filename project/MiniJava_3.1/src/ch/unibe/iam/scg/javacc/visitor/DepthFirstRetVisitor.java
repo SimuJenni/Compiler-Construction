@@ -170,20 +170,8 @@ public class DepthFirstRetVisitor<R> implements IRetVisitor<R> {
    * f0 -> <CLASS><br>
    * f1 -> Identifier()<br>
    * f2 -> <BRACE_LEFT><br>
-   * f3 -> <PUBLIC_MODIFIER><br>
-   * f4 -> <STATIC_MODIFIER><br>
-   * f5 -> <VOID_TYPE><br>
-   * f6 -> <MAIN_METHOD_NAME><br>
-   * f7 -> <PARENTHESIS_LEFT><br>
-   * f8 -> <STRING_TYPE><br>
-   * f9 -> <BRACKET_LEFT><br>
-   * f10 -> <BRACKET_RIGHT><br>
-   * f11 -> Identifier()<br>
-   * f12 -> <PARENTHESIS_RIGHT><br>
-   * f13 -> <BRACE_LEFT><br>
-   * f14 -> ( Statement() )?<br>
-   * f15 -> <BRACE_RIGHT><br>
-   * f16 -> <BRACE_RIGHT><br>
+   * f3 -> MainMethodDeclaration()<br>
+   * f4 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @return the user return information
@@ -200,50 +188,79 @@ public class DepthFirstRetVisitor<R> implements IRetVisitor<R> {
     // f2 -> <BRACE_LEFT>
     final NodeToken n2 = n.f2;
     nRes = n2.accept(this);
-    // f3 -> <PUBLIC_MODIFIER>
-    final NodeToken n3 = n.f3;
+    // f3 -> MainMethodDeclaration()
+    final MainMethodDeclaration n3 = n.f3;
     nRes = n3.accept(this);
-    // f4 -> <STATIC_MODIFIER>
+    // f4 -> <BRACE_RIGHT>
     final NodeToken n4 = n.f4;
     nRes = n4.accept(this);
-    // f5 -> <VOID_TYPE>
+    return nRes;
+  }
+
+  /**
+   * Visits a {@link MainMethodDeclaration} node, whose children are the following :
+   * <p>
+   * f0 -> <PUBLIC_MODIFIER><br>
+   * f1 -> <STATIC_MODIFIER><br>
+   * f2 -> <VOID_TYPE><br>
+   * f3 -> <MAIN_METHOD_NAME><br>
+   * f4 -> <PARENTHESIS_LEFT><br>
+   * f5 -> <STRING_TYPE><br>
+   * f6 -> <BRACKET_LEFT><br>
+   * f7 -> <BRACKET_RIGHT><br>
+   * f8 -> Identifier()<br>
+   * f9 -> <PARENTHESIS_RIGHT><br>
+   * f10 -> <BRACE_LEFT><br>
+   * f11 -> ( Statement() )?<br>
+   * f12 -> <BRACE_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @return the user return information
+   */
+  @Override
+  public R visit(final MainMethodDeclaration n) {
+    R nRes = null;
+    // f0 -> <PUBLIC_MODIFIER>
+    final NodeToken n0 = n.f0;
+    nRes = n0.accept(this);
+    // f1 -> <STATIC_MODIFIER>
+    final NodeToken n1 = n.f1;
+    nRes = n1.accept(this);
+    // f2 -> <VOID_TYPE>
+    final NodeToken n2 = n.f2;
+    nRes = n2.accept(this);
+    // f3 -> <MAIN_METHOD_NAME>
+    final NodeToken n3 = n.f3;
+    nRes = n3.accept(this);
+    // f4 -> <PARENTHESIS_LEFT>
+    final NodeToken n4 = n.f4;
+    nRes = n4.accept(this);
+    // f5 -> <STRING_TYPE>
     final NodeToken n5 = n.f5;
     nRes = n5.accept(this);
-    // f6 -> <MAIN_METHOD_NAME>
+    // f6 -> <BRACKET_LEFT>
     final NodeToken n6 = n.f6;
     nRes = n6.accept(this);
-    // f7 -> <PARENTHESIS_LEFT>
+    // f7 -> <BRACKET_RIGHT>
     final NodeToken n7 = n.f7;
     nRes = n7.accept(this);
-    // f8 -> <STRING_TYPE>
-    final NodeToken n8 = n.f8;
+    // f8 -> Identifier()
+    final Identifier n8 = n.f8;
     nRes = n8.accept(this);
-    // f9 -> <BRACKET_LEFT>
+    // f9 -> <PARENTHESIS_RIGHT>
     final NodeToken n9 = n.f9;
     nRes = n9.accept(this);
-    // f10 -> <BRACKET_RIGHT>
+    // f10 -> <BRACE_LEFT>
     final NodeToken n10 = n.f10;
     nRes = n10.accept(this);
-    // f11 -> Identifier()
-    final Identifier n11 = n.f11;
-    nRes = n11.accept(this);
-    // f12 -> <PARENTHESIS_RIGHT>
+    // f11 -> ( Statement() )?
+    final NodeOptional n11 = n.f11;
+    if (n11.present()) {
+      nRes = n11.accept(this);
+    }
+    // f12 -> <BRACE_RIGHT>
     final NodeToken n12 = n.f12;
     nRes = n12.accept(this);
-    // f13 -> <BRACE_LEFT>
-    final NodeToken n13 = n.f13;
-    nRes = n13.accept(this);
-    // f14 -> ( Statement() )?
-    final NodeOptional n14 = n.f14;
-    if (n14.present()) {
-      nRes = n14.accept(this);
-    }
-    // f15 -> <BRACE_RIGHT>
-    final NodeToken n15 = n.f15;
-    nRes = n15.accept(this);
-    // f16 -> <BRACE_RIGHT>
-    final NodeToken n16 = n.f16;
-    nRes = n16.accept(this);
     return nRes;
   }
 

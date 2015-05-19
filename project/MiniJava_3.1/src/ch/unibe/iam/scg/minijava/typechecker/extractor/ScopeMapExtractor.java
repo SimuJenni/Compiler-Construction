@@ -5,6 +5,8 @@ import java.util.Map;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainMethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.VarDeclaration;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidArguVisitor;
@@ -28,6 +30,26 @@ public class ScopeMapExtractor {
 
 		public Map<INode, IScope> getScopeMap() {
 			return this.scopeMap;
+		}
+		
+		@Override
+		public void visit(MainClass n, IScope parent) {
+			String className = n.f1.f0.tokenImage;
+			IScope child = parent.lookupTypeScope(className);
+			this.scopeMap.put(n, child);
+			super.visit(n, child);
+		}
+		
+		@Override
+		public void visit(MainMethodDeclaration n, IScope parent) {
+			Method method = (new MainMethodExtractor()).extract(n, parent);
+			parent.putMethod(method.getName(), method);
+			IScope child = new Scope(parent);
+			for (Variable parameter : method.getParameters()) {
+				child.putVariable(parameter.getName(), parameter);
+			}
+			this.scopeMap.put(n, child);
+			super.visit(n, child);
 		}
 
 		@Override

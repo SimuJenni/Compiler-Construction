@@ -159,33 +159,9 @@ MainClass MainClass() :
   Identifier n2 = null;
   NodeToken n3 = null;
   Token n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  NodeToken n7 = null;
-  Token n8 = null;
-  NodeToken n9 = null;
-  Token n10 = null;
-  NodeToken n11 = null;
-  Token n12 = null;
-  NodeToken n13 = null;
-  Token n14 = null;
-  NodeToken n15 = null;
-  Token n16 = null;
-  NodeToken n17 = null;
-  Token n18 = null;
-  NodeToken n19 = null;
-  Token n20 = null;
-  Identifier n21 = null;
-  NodeToken n22 = null;
-  Token n23 = null;
-  NodeToken n24 = null;
-  Token n25 = null;
-  NodeOptional n26 = new NodeOptional();
-  Statement n27 = null;
-  NodeToken n28 = null;
-  Token n29 = null;
-  NodeToken n30 = null;
-  Token n31 = null;
+  MainMethodDeclaration n5 = null;
+  NodeToken n6 = null;
+  Token n7 = null;
 }
 {
   n1 = < CLASS >
@@ -193,36 +169,70 @@ MainClass MainClass() :
   n2 = Identifier()
   n4 = < BRACE_LEFT >
   { n3 = JTBToolkit.makeNodeToken(n4); }
-  n6 = < PUBLIC_MODIFIER >
-  { n5 = JTBToolkit.makeNodeToken(n6); }
-  n8 = < STATIC_MODIFIER >
-  { n7 = JTBToolkit.makeNodeToken(n8); }
-  n10 = < VOID_TYPE >
-  { n9 = JTBToolkit.makeNodeToken(n10); }
-  n12 = < MAIN_METHOD_NAME >
-  { n11 = JTBToolkit.makeNodeToken(n12); }
-  n14 = < PARENTHESIS_LEFT >
-  { n13 = JTBToolkit.makeNodeToken(n14); }
-  n16 = < STRING_TYPE >
-  { n15 = JTBToolkit.makeNodeToken(n16); }
-  n18 = < BRACKET_LEFT >
+  n5 = MainMethodDeclaration()
+  n7 = < BRACE_RIGHT >
+  { n6 = JTBToolkit.makeNodeToken(n7); }
+  { return new MainClass(n0, n2, n3, n5, n6); }
+}
+
+MainMethodDeclaration MainMethodDeclaration() :
+{
+  // --- JTB generated node declarations ---
+  NodeToken n0 = null;
+  Token n1 = null;
+  NodeToken n2 = null;
+  Token n3 = null;
+  NodeToken n4 = null;
+  Token n5 = null;
+  NodeToken n6 = null;
+  Token n7 = null;
+  NodeToken n8 = null;
+  Token n9 = null;
+  NodeToken n10 = null;
+  Token n11 = null;
+  NodeToken n12 = null;
+  Token n13 = null;
+  NodeToken n14 = null;
+  Token n15 = null;
+  Identifier n16 = null;
+  NodeToken n17 = null;
+  Token n18 = null;
+  NodeToken n19 = null;
+  Token n20 = null;
+  NodeOptional n21 = new NodeOptional();
+  Statement n22 = null;
+  NodeToken n23 = null;
+  Token n24 = null;
+}
+{
+  n1 = < PUBLIC_MODIFIER >
+  { n0 = JTBToolkit.makeNodeToken(n1); }
+  n3 = < STATIC_MODIFIER >
+  { n2 = JTBToolkit.makeNodeToken(n3); }
+  n5 = < VOID_TYPE >
+  { n4 = JTBToolkit.makeNodeToken(n5); }
+  n7 = < MAIN_METHOD_NAME >
+  { n6 = JTBToolkit.makeNodeToken(n7); }
+  n9 = < PARENTHESIS_LEFT >
+  { n8 = JTBToolkit.makeNodeToken(n9); }
+  n11 = < STRING_TYPE >
+  { n10 = JTBToolkit.makeNodeToken(n11); }
+  n13 = < BRACKET_LEFT >
+  { n12 = JTBToolkit.makeNodeToken(n13); }
+  n15 = < BRACKET_RIGHT >
+  { n14 = JTBToolkit.makeNodeToken(n15); }
+  n16 = Identifier()
+  n18 = < PARENTHESIS_RIGHT >
   { n17 = JTBToolkit.makeNodeToken(n18); }
-  n20 = < BRACKET_RIGHT >
+  n20 = < BRACE_LEFT >
   { n19 = JTBToolkit.makeNodeToken(n20); }
-  n21 = Identifier()
-  n23 = < PARENTHESIS_RIGHT >
-  { n22 = JTBToolkit.makeNodeToken(n23); }
-  n25 = < BRACE_LEFT >
-  { n24 = JTBToolkit.makeNodeToken(n25); }
   (
-    n27 = Statement()
-    { n26.addNode(n27); }
+    n22 = Statement()
+    { n21.addNode(n22); }
   )?
-  n29 = < BRACE_RIGHT >
-  { n28 = JTBToolkit.makeNodeToken(n29); }
-  n31 = < BRACE_RIGHT >
-  { n30 = JTBToolkit.makeNodeToken(n31); }
-  { return new MainClass(n0, n2, n3, n5, n7, n9, n11, n13, n15, n17, n19, n21, n22, n24, n26, n28, n30); }
+  n24 = < BRACE_RIGHT >
+  { n23 = JTBToolkit.makeNodeToken(n24); }
+  { return new MainMethodDeclaration(n0, n2, n4, n6, n8, n10, n12, n14, n16, n17, n19, n21, n23); }
 }
 
 ClassDeclaration ClassDeclaration() :

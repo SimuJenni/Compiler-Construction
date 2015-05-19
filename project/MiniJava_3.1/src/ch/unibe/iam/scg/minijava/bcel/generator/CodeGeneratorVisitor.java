@@ -38,10 +38,13 @@ import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassConstructorCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
+import ch.unibe.iam.scg.javacc.syntaxtree.Goal;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeChoice;
+import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeOptional;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeSequence;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeToken;
@@ -95,6 +98,21 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	public void generate(INode node, Map<INode, IScope> scopeMap) {
 		this.scopeMap = scopeMap;
 		node.accept(this);
+	}
+	
+	@Override
+	public void visit(Goal n) {
+	    // f1 -> ( ClassDeclaration() )*
+	    final NodeListOptional n1 = n.f1;
+	    if (n1.present()) {
+	      for (int i = 0; i < n1.size(); i++) {
+	        final INode nloeai = n1.elementAt(i);
+	        nloeai.accept(this);
+	      }
+	    }
+	    // f0 -> MainClass()
+	    final MainClass n0 = n.f0;
+	    n0.accept(this);
 	}
 
 	public void visit(final Expression n) {

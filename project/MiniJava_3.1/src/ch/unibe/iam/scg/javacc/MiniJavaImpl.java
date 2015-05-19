@@ -44,77 +44,85 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   Identifier n2 = null;
   NodeToken n3 = null;
   Token n4 = null;
-  NodeToken n5 = null;
-  Token n6 = null;
-  NodeToken n7 = null;
-  Token n8 = null;
-  NodeToken n9 = null;
-  Token n10 = null;
-  NodeToken n11 = null;
-  Token n12 = null;
-  NodeToken n13 = null;
-  Token n14 = null;
-  NodeToken n15 = null;
-  Token n16 = null;
-  NodeToken n17 = null;
-  Token n18 = null;
-  NodeToken n19 = null;
-  Token n20 = null;
-  Identifier n21 = null;
-  NodeToken n22 = null;
-  Token n23 = null;
-  NodeToken n24 = null;
-  Token n25 = null;
-  NodeOptional n26 = new NodeOptional();
-  Statement n27 = null;
-  NodeToken n28 = null;
-  Token n29 = null;
-  NodeToken n30 = null;
-  Token n31 = null;
+  MainMethodDeclaration n5 = null;
+  NodeToken n6 = null;
+  Token n7 = null;
     n1 = jj_consume_token(CLASS);
     n0 = JTBToolkit.makeNodeToken(n1);
     n2 = Identifier();
     n4 = jj_consume_token(BRACE_LEFT);
     n3 = JTBToolkit.makeNodeToken(n4);
-    n6 = jj_consume_token(PUBLIC_MODIFIER);
-    n5 = JTBToolkit.makeNodeToken(n6);
-    n8 = jj_consume_token(STATIC_MODIFIER);
-    n7 = JTBToolkit.makeNodeToken(n8);
-    n10 = jj_consume_token(VOID_TYPE);
-    n9 = JTBToolkit.makeNodeToken(n10);
-    n12 = jj_consume_token(MAIN_METHOD_NAME);
-    n11 = JTBToolkit.makeNodeToken(n12);
-    n14 = jj_consume_token(PARENTHESIS_LEFT);
-    n13 = JTBToolkit.makeNodeToken(n14);
-    n16 = jj_consume_token(STRING_TYPE);
-    n15 = JTBToolkit.makeNodeToken(n16);
-    n18 = jj_consume_token(BRACKET_LEFT);
+    n5 = MainMethodDeclaration();
+    n7 = jj_consume_token(BRACE_RIGHT);
+    n6 = JTBToolkit.makeNodeToken(n7);
+    {if (true) return new MainClass(n0, n2, n3, n5, n6);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public MainMethodDeclaration MainMethodDeclaration() throws ParseException {
+  // --- JTB generated node declarations ---
+  NodeToken n0 = null;
+  Token n1 = null;
+  NodeToken n2 = null;
+  Token n3 = null;
+  NodeToken n4 = null;
+  Token n5 = null;
+  NodeToken n6 = null;
+  Token n7 = null;
+  NodeToken n8 = null;
+  Token n9 = null;
+  NodeToken n10 = null;
+  Token n11 = null;
+  NodeToken n12 = null;
+  Token n13 = null;
+  NodeToken n14 = null;
+  Token n15 = null;
+  Identifier n16 = null;
+  NodeToken n17 = null;
+  Token n18 = null;
+  NodeToken n19 = null;
+  Token n20 = null;
+  NodeOptional n21 = new NodeOptional();
+  Statement n22 = null;
+  NodeToken n23 = null;
+  Token n24 = null;
+    n1 = jj_consume_token(PUBLIC_MODIFIER);
+    n0 = JTBToolkit.makeNodeToken(n1);
+    n3 = jj_consume_token(STATIC_MODIFIER);
+    n2 = JTBToolkit.makeNodeToken(n3);
+    n5 = jj_consume_token(VOID_TYPE);
+    n4 = JTBToolkit.makeNodeToken(n5);
+    n7 = jj_consume_token(MAIN_METHOD_NAME);
+    n6 = JTBToolkit.makeNodeToken(n7);
+    n9 = jj_consume_token(PARENTHESIS_LEFT);
+    n8 = JTBToolkit.makeNodeToken(n9);
+    n11 = jj_consume_token(STRING_TYPE);
+    n10 = JTBToolkit.makeNodeToken(n11);
+    n13 = jj_consume_token(BRACKET_LEFT);
+    n12 = JTBToolkit.makeNodeToken(n13);
+    n15 = jj_consume_token(BRACKET_RIGHT);
+    n14 = JTBToolkit.makeNodeToken(n15);
+    n16 = Identifier();
+    n18 = jj_consume_token(PARENTHESIS_RIGHT);
     n17 = JTBToolkit.makeNodeToken(n18);
-    n20 = jj_consume_token(BRACKET_RIGHT);
+    n20 = jj_consume_token(BRACE_LEFT);
     n19 = JTBToolkit.makeNodeToken(n20);
-    n21 = Identifier();
-    n23 = jj_consume_token(PARENTHESIS_RIGHT);
-    n22 = JTBToolkit.makeNodeToken(n23);
-    n25 = jj_consume_token(BRACE_LEFT);
-    n24 = JTBToolkit.makeNodeToken(n25);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PRINT_METHOD:
     case BRACE_LEFT:
     case IF:
     case WHILE:
     case IDENTIFIER:
-      n27 = Statement();
-      n26.addNode(n27);
+      n22 = Statement();
+      n21.addNode(n22);
       break;
     default:
       jj_la1[1] = jj_gen;
       ;
     }
-    n29 = jj_consume_token(BRACE_RIGHT);
-    n28 = JTBToolkit.makeNodeToken(n29);
-    n31 = jj_consume_token(BRACE_RIGHT);
-    n30 = JTBToolkit.makeNodeToken(n31);
-    {if (true) return new MainClass(n0, n2, n3, n5, n7, n9, n11, n13, n15, n17, n19, n21, n22, n24, n26, n28, n30);}
+    n24 = jj_consume_token(BRACE_RIGHT);
+    n23 = JTBToolkit.makeNodeToken(n24);
+    {if (true) return new MainMethodDeclaration(n0, n2, n4, n6, n8, n10, n12, n14, n16, n17, n19, n21, n23);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1055,41 +1063,6 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
     finally { jj_save(3, xla); }
   }
 
-  private boolean jj_3R_16() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3R_17()) {
-    jj_scanpos = xsp;
-    if (jj_3R_18()) {
-    jj_scanpos = xsp;
-    if (jj_3R_19()) {
-    jj_scanpos = xsp;
-    if (jj_3R_20()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3_3() {
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_22() {
-    if (jj_scan_token(BOOLEAN_TYPE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_12() {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_scan_token(LENGTH_FIELD_NAME)) return true;
-    return false;
-  }
-
   private boolean jj_3_1() {
     if (jj_3R_9()) return true;
     return false;
@@ -1165,6 +1138,41 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
 
   private boolean jj_3_2() {
     if (jj_3R_10()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_16() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3R_17()) {
+    jj_scanpos = xsp;
+    if (jj_3R_18()) {
+    jj_scanpos = xsp;
+    if (jj_3R_19()) {
+    jj_scanpos = xsp;
+    if (jj_3R_20()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3_3() {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_22() {
+    if (jj_scan_token(BOOLEAN_TYPE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_12() {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(LENGTH_FIELD_NAME)) return true;
     return false;
   }
 

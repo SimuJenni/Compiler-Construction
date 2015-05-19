@@ -8,8 +8,9 @@ import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.Expression;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainMethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
-import ch.unibe.iam.scg.javacc.syntaxtree.PrintStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.WhileStatement;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidArguVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.ExpressionTypeExtractor;
@@ -21,7 +22,6 @@ import ch.unibe.iam.scg.minijava.typechecker.type.BooleanType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IType;
 import ch.unibe.iam.scg.minijava.typechecker.type.IntType;
 import ch.unibe.iam.scg.minijava.typechecker.type.Method;
-import ch.unibe.iam.scg.minijava.typechecker.type.StringType;
 import ch.unibe.iam.scg.minijava.typechecker.type.VoidType;
 
 public class Evaluator {
@@ -35,10 +35,20 @@ public class Evaluator {
 			super();
 			this.scopeMap = scopeMap;
 		}
-		
+
+		@Override
+		public void visit(MainClass n, IScope parent) {
+			super.visit(n, this.scopeMap.get(n));
+		}
+
+		@Override
+		public void visit(MainMethodDeclaration n, IScope parent) {
+			super.visit(n, this.scopeMap.get(n));
+		}
+
 		@Override
 		public void visit(ClassDeclaration n, IScope parent) {
-			super.visit(n, this.scopeMap.get(parent));
+			super.visit(n, this.scopeMap.get(n));
 		}
 
 		@Override
@@ -85,16 +95,6 @@ public class Evaluator {
 						BooleanType.INSTANCE);
 			}
 			n.f4.accept(this, scope);
-		}
-
-		@Override
-		public void visit(PrintStatement n, IScope scope) {
-			IType returnedType = (new ExpressionTypeExtractor()).extract(n.f2,
-					scope);
-			if (!returnedType.canBeAssignedTo(StringType.INSTANCE)) {
-				throw new IncompatibleTypesException(returnedType,
-						StringType.INSTANCE);
-			}
 		}
 
 		@Override

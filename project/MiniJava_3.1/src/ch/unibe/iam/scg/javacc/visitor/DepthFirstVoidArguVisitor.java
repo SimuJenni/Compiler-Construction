@@ -153,20 +153,8 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
    * f0 -> <CLASS><br>
    * f1 -> Identifier()<br>
    * f2 -> <BRACE_LEFT><br>
-   * f3 -> <PUBLIC_MODIFIER><br>
-   * f4 -> <STATIC_MODIFIER><br>
-   * f5 -> <VOID_TYPE><br>
-   * f6 -> <MAIN_METHOD_NAME><br>
-   * f7 -> <PARENTHESIS_LEFT><br>
-   * f8 -> <STRING_TYPE><br>
-   * f9 -> <BRACKET_LEFT><br>
-   * f10 -> <BRACKET_RIGHT><br>
-   * f11 -> Identifier()<br>
-   * f12 -> <PARENTHESIS_RIGHT><br>
-   * f13 -> <BRACE_LEFT><br>
-   * f14 -> ( Statement() )?<br>
-   * f15 -> <BRACE_RIGHT><br>
-   * f16 -> <BRACE_RIGHT><br>
+   * f3 -> MainMethodDeclaration()<br>
+   * f4 -> <BRACE_RIGHT><br>
    *
    * @param n - the node to visit
    * @param argu - the user argument
@@ -182,50 +170,77 @@ public class DepthFirstVoidArguVisitor<A> implements IVoidArguVisitor<A> {
     // f2 -> <BRACE_LEFT>
     final NodeToken n2 = n.f2;
     n2.accept(this, argu);
-    // f3 -> <PUBLIC_MODIFIER>
-    final NodeToken n3 = n.f3;
+    // f3 -> MainMethodDeclaration()
+    final MainMethodDeclaration n3 = n.f3;
     n3.accept(this, argu);
-    // f4 -> <STATIC_MODIFIER>
+    // f4 -> <BRACE_RIGHT>
     final NodeToken n4 = n.f4;
     n4.accept(this, argu);
-    // f5 -> <VOID_TYPE>
+  }
+
+  /**
+   * Visits a {@link MainMethodDeclaration} node, whose children are the following :
+   * <p>
+   * f0 -> <PUBLIC_MODIFIER><br>
+   * f1 -> <STATIC_MODIFIER><br>
+   * f2 -> <VOID_TYPE><br>
+   * f3 -> <MAIN_METHOD_NAME><br>
+   * f4 -> <PARENTHESIS_LEFT><br>
+   * f5 -> <STRING_TYPE><br>
+   * f6 -> <BRACKET_LEFT><br>
+   * f7 -> <BRACKET_RIGHT><br>
+   * f8 -> Identifier()<br>
+   * f9 -> <PARENTHESIS_RIGHT><br>
+   * f10 -> <BRACE_LEFT><br>
+   * f11 -> ( Statement() )?<br>
+   * f12 -> <BRACE_RIGHT><br>
+   *
+   * @param n - the node to visit
+   * @param argu - the user argument
+   */
+  @Override
+  public void visit(final MainMethodDeclaration n, final A argu) {
+    // f0 -> <PUBLIC_MODIFIER>
+    final NodeToken n0 = n.f0;
+    n0.accept(this, argu);
+    // f1 -> <STATIC_MODIFIER>
+    final NodeToken n1 = n.f1;
+    n1.accept(this, argu);
+    // f2 -> <VOID_TYPE>
+    final NodeToken n2 = n.f2;
+    n2.accept(this, argu);
+    // f3 -> <MAIN_METHOD_NAME>
+    final NodeToken n3 = n.f3;
+    n3.accept(this, argu);
+    // f4 -> <PARENTHESIS_LEFT>
+    final NodeToken n4 = n.f4;
+    n4.accept(this, argu);
+    // f5 -> <STRING_TYPE>
     final NodeToken n5 = n.f5;
     n5.accept(this, argu);
-    // f6 -> <MAIN_METHOD_NAME>
+    // f6 -> <BRACKET_LEFT>
     final NodeToken n6 = n.f6;
     n6.accept(this, argu);
-    // f7 -> <PARENTHESIS_LEFT>
+    // f7 -> <BRACKET_RIGHT>
     final NodeToken n7 = n.f7;
     n7.accept(this, argu);
-    // f8 -> <STRING_TYPE>
-    final NodeToken n8 = n.f8;
+    // f8 -> Identifier()
+    final Identifier n8 = n.f8;
     n8.accept(this, argu);
-    // f9 -> <BRACKET_LEFT>
+    // f9 -> <PARENTHESIS_RIGHT>
     final NodeToken n9 = n.f9;
     n9.accept(this, argu);
-    // f10 -> <BRACKET_RIGHT>
+    // f10 -> <BRACE_LEFT>
     final NodeToken n10 = n.f10;
     n10.accept(this, argu);
-    // f11 -> Identifier()
-    final Identifier n11 = n.f11;
-    n11.accept(this, argu);
-    // f12 -> <PARENTHESIS_RIGHT>
+    // f11 -> ( Statement() )?
+    final NodeOptional n11 = n.f11;
+    if (n11.present()) {
+      n11.accept(this, argu);
+    }
+    // f12 -> <BRACE_RIGHT>
     final NodeToken n12 = n.f12;
     n12.accept(this, argu);
-    // f13 -> <BRACE_LEFT>
-    final NodeToken n13 = n.f13;
-    n13.accept(this, argu);
-    // f14 -> ( Statement() )?
-    final NodeOptional n14 = n.f14;
-    if (n14.present()) {
-      n14.accept(this, argu);
-    }
-    // f15 -> <BRACE_RIGHT>
-    final NodeToken n15 = n.f15;
-    n15.accept(this, argu);
-    // f16 -> <BRACE_RIGHT>
-    final NodeToken n16 = n.f16;
-    n16.accept(this, argu);
   }
 
   /**

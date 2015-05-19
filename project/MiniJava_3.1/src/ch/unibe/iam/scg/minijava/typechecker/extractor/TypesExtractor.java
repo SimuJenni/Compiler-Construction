@@ -7,6 +7,7 @@ import java.util.Map;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.ClassDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.INode;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.scope.LookupException;
 import ch.unibe.iam.scg.minijava.typechecker.scope.NameCollisionException;
@@ -38,12 +39,23 @@ public class TypesExtractor {
 		}
 
 		@Override
+		public void visit(MainClass n) {
+			String className = n.f1.f0.tokenImage;
+			String superClassName = implicitSuperType.getName();
+			this.register(className, superClassName);
+		}
+
+		@Override
 		public void visit(ClassDeclaration n) {
 			String className = n.f1.f0.tokenImage;
 			String superClassName = implicitSuperType.getName();
 			if (n.f2.present()) {
 				superClassName = (new IdentifierNameExtractor()).extract(n.f2);
 			}
+			this.register(className, superClassName);
+		}
+
+		protected void register(String className, String superClassName) {
 			if (this.classNames.contains(className)) {
 				throw new NameCollisionException(className);
 			}

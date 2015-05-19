@@ -13,6 +13,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.INode;
 import ch.unibe.iam.scg.javacc.syntaxtree.Identifier;
 import ch.unibe.iam.scg.javacc.syntaxtree.IfStatement;
 import ch.unibe.iam.scg.javacc.syntaxtree.MainClass;
+import ch.unibe.iam.scg.javacc.syntaxtree.MainMethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodCall;
 import ch.unibe.iam.scg.javacc.syntaxtree.MethodDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.NodeListOptional;
@@ -391,62 +392,69 @@ public class PrettyPrinter extends DepthFirstVoidVisitor {
 		makeNewLine(0);
 		indentCount++;
 		makeNewLine(indentCount);
-		// f3 -> <PUBLIC_MODIFIER>
-		final NodeToken n3 = n.f3;
+		// f3 -> MainMethodDeclaration()
+		final MainMethodDeclaration n3 = n.f3;
 		n3.accept(this);
-		makeSpace();
-		// f4 -> <STATIC_MODIFIER>
-		final NodeToken n4 = n.f4;
-		n4.accept(this);
-		makeSpace();
-		// f5 -> <VOID_TYPE>
-		final NodeToken n5 = n.f5;
-		n5.accept(this);
-		makeSpace();
-		// f6 -> <MAIN_METHOD_NAME>
-		final NodeToken n6 = n.f6;
-		n6.accept(this);
-		// f7 -> <PARENTHESIS_LEFT>
-		final NodeToken n7 = n.f7;
-		n7.accept(this);
-		// f8 -> <STRING_TYPE>
-		final NodeToken n8 = n.f8;
-		n8.accept(this);
-		// f9 -> <BRACKET_LEFT>
-		final NodeToken n9 = n.f9;
-		n9.accept(this);
-		// f10 -> <BRACKET_RIGHT>
-		final NodeToken n10 = n.f10;
-		n10.accept(this);
-		makeSpace();
-		// f11 -> Identifier()
-		final Identifier n11 = n.f11;
-		n11.accept(this);
-		// f12 -> <PARENTHESIS_RIGHT>
-		final NodeToken n12 = n.f12;
-		n12.accept(this);
-		makeSpace();
-		// f13 -> <BRACE_LEFT>
-		final NodeToken n13 = n.f13;
-		n13.accept(this);
-		indentCount++;
-		makeNewLine(indentCount);
-		// f14 -> ( Statement() )?
-		final NodeOptional n14 = n.f14;
-		if (n14.present()) {
-			n14.accept(this);
-		}
-		indentCount--;
-		makeNewLine(indentCount);
-		// f15 -> <BRACE_RIGHT>
-		final NodeToken n15 = n.f15;
-		n15.accept(this);
 		makeNewLine(0);
 		indentCount--;
 		makeNewLine(indentCount);
-		// f16 -> <BRACE_RIGHT>
-		final NodeToken n16 = n.f16;
-		n16.accept(this);
+		// f4 -> <BRACE_RIGHT>
+		final NodeToken n4 = n.f4;
+		n4.accept(this);
+	}
+
+	@Override
+	public void visit(final MainMethodDeclaration n) {
+		// f0 -> <PUBLIC_MODIFIER>
+		final NodeToken n0 = n.f0;
+		n0.accept(this);
+		makeSpace();
+		// f1 -> <STATIC_MODIFIER>
+		final NodeToken n1 = n.f1;
+		n1.accept(this);
+		makeSpace();
+		// f2 -> <VOID_TYPE>
+		final NodeToken n2 = n.f2;
+		n2.accept(this);
+		makeSpace();
+		// f3 -> <MAIN_METHOD_NAME>
+		final NodeToken n3 = n.f3;
+		n3.accept(this);
+		// f4 -> <PARENTHESIS_LEFT>
+		final NodeToken n4 = n.f4;
+		n4.accept(this);
+		// f5 -> <STRING_TYPE>
+		final NodeToken n5 = n.f5;
+		n5.accept(this);
+		// f6 -> <BRACKET_LEFT>
+		final NodeToken n6 = n.f6;
+		n6.accept(this);
+		// f7 -> <BRACKET_RIGHT>
+		final NodeToken n7 = n.f7;
+		n7.accept(this);
+		makeSpace();
+		// f8 -> Identifier()
+		final Identifier n8 = n.f8;
+		n8.accept(this);
+		// f9 -> <PARENTHESIS_RIGHT>
+		final NodeToken n9 = n.f9;
+		n9.accept(this);
+		makeSpace();
+		// f10 -> <BRACE_LEFT>
+		final NodeToken n10 = n.f10;
+		n10.accept(this);
+		indentCount++;
+		makeNewLine(indentCount);
+		// f11 -> ( Statement() )?
+		final NodeOptional n11 = n.f11;
+		if (n11.present()) {
+			n11.accept(this);
+		}
+		indentCount--;
+		makeNewLine(indentCount);
+		// f12 -> <BRACE_RIGHT>
+		final NodeToken n12 = n.f12;
+		n12.accept(this);
 	}
 
 	@Override
