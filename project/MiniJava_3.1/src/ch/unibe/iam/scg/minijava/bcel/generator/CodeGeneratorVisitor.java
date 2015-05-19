@@ -163,7 +163,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		final NodeOptional n9 = n.f9;
 		if (n9.present()) {
 			n9.accept(this);
-			this.il.append(InstructionFactory.IRETURN);
+			IType returnType = m.getReturnType();
+			if (returnType.isPrimitive()) {
+				this.il.append(InstructionFactory.IRETURN);
+			} else {
+				this.il.append(InstructionFactory.ARETURN);
+			}
 		}
 		mg.setMaxStack();
 		mg.setMaxLocals();
