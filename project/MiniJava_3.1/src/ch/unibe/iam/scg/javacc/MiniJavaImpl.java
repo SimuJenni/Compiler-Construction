@@ -1195,10 +1195,10 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x100000,0xa000480,0x800000,0xa0000000,0x200000,0x20000,0xa0000000,0xa000480,0x1000000,0xa0000000,0xa000480,0xa000480,0x0,0x10004100,0x80000000,0x1200,0x40000,0x20000,0x10004100,};
+      jj_la1_0 = new int[] {0x200000,0x14000900,0x1000000,0x40000000,0x400000,0x40000,0x40000000,0x14000900,0x2000000,0x40000000,0x14000900,0x14000900,0x0,0x20008200,0x0,0x2400,0x80000,0x40000,0x20008200,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x20,0x0,0x21,0x0,0x0,0x21,0x20,0x0,0x21,0x20,0x20,0x20,0x3e,0x20,0x0,0x0,0x0,0x3e,};
+      jj_la1_1 = new int[] {0x0,0x40,0x0,0x43,0x0,0x0,0x43,0x40,0x0,0x43,0x40,0x40,0x40,0x7c,0x41,0x0,0x0,0x0,0x7c,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[4];
   private boolean jj_rescan = false;
@@ -1384,7 +1384,7 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[41];
+    boolean[] la1tokens = new boolean[42];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -1401,7 +1401,7 @@ public class MiniJavaImpl implements MiniJava, MiniJavaImplConstants {
         }
       }
     }
-    for (int i = 0; i < 41; i++) {
+    for (int i = 0; i < 42; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
