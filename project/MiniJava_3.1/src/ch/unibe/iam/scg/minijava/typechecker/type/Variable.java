@@ -2,8 +2,9 @@ package ch.unibe.iam.scg.minijava.typechecker.type;
 
 public class Variable {
 
-	protected String name;
+	protected String name, value;
 	protected IType type;
+	protected boolean isConstant;
 	protected int assignementCount = 0;
 
 	public Variable(String name, IType type) {
@@ -27,6 +28,21 @@ public class Variable {
 	public void increaseCount() {
 		assignementCount++;		
 	}
+
+	public void setValue(String value) {
+		this.value=value;		
+		this.isConstant=true;
+	}
+
+	public boolean isConstant() {
+		return this.isConstant;
+	}
+
+	public String getValue() {
+		return this.value;
+	}
+
+
 
 
 }

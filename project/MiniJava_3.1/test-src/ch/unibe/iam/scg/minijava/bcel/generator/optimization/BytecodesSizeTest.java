@@ -38,6 +38,7 @@ public class BytecodesSizeTest {
 	@Test
 	public void testFactorial() {
 		size = getSize(PATH + "Factorial.minijava");
+		System.out.println("Size: "+size);
 		assertTrue(size <= 33);
 	}
 

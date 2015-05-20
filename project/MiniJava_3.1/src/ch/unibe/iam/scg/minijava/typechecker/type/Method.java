@@ -6,7 +6,7 @@ import org.apache.bcel.generic.Type;
 
 public class Method {
 
-	protected String name;
+	protected String name, className;
 	protected IType returnType;
 	protected List<Variable> parameters;
 
@@ -31,9 +31,17 @@ public class Method {
 	public Type[] getParametersBCEL() {
 		Type[] args=new Type[parameters.size()];
 		for(int i=0;i<parameters.size(); i++){
-			args[i]=parameters.get(i).getType().toBcelType();
+			args[parameters.size()-i-1]=parameters.get(i).getType().toBcelType();
 		}
 		return args;
+	}
+
+	public void setClassName(String className) {
+		this.className=className;
+	}
+
+	public String getClassName() {
+		return className;
 	}
 
 }

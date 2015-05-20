@@ -1,10 +1,12 @@
 package ch.unibe.iam.scg.minijava.bcel.generator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.apache.bcel.Constants;
 import org.apache.bcel.classfile.JavaClass;
@@ -81,11 +83,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private MethodGen mg;
 	private InstructionFactory iFact;
 	private Map<INode, IScope> scopeMap;
-	private Map<String, MethodGen> methodMap = new HashMap<String, MethodGen>();
+	private Map<String, Method> methodMap = new HashMap<String, Method>();
 	private IScope currentScope;
 	private Map<String, Integer> registerMap = new HashMap<String, Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
 	private boolean isField = false, inIf = false, inWhile = false;;
+	private Stack<IToken> tokenStack;
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -120,6 +123,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(final Expression n) {
+		tokenStack = new Stack<IToken>();
 		ShuntingYard sy = new ShuntingYard(currentScope);
 		List<IToken> tokenList = sy.extract(n);
 		Iterator<IToken> it = tokenList.iterator();
@@ -174,7 +178,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 		mg.setMaxStack();
 		mg.setMaxLocals();
-		methodMap.put(methodName, (MethodGen) mg.clone());
+		methodMap.put(methodName, m);
 
 		bytecodeGenerator.addMethod(cg, mg);
 		il.dispose();
@@ -226,6 +230,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		String methodName = n.f2.f0.tokenImage;
 		currentScope = scopeMap.get(n);
 		Method m = currentScope.lookupMethod(methodName);
+		m.setClassName(cg.getClassName());
 		registerMap.put("this", 0);
 		extractMG(Constants.ACC_PUBLIC, methodName, m);
 		// f7 -> ( VarDeclaration() )*
@@ -248,7 +253,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		mg.removeNOPs();
 		mg.setMaxStack();
 		mg.setMaxLocals();
-		methodMap.put(methodName, (MethodGen) mg.clone());
+		methodMap.put(methodName, m);
 
 		bytecodeGenerator.addMethod(cg, mg);
 		il.dispose();
@@ -449,6 +454,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(LiteralToken t) {
+		tokenStack.push(t);
 		String value = t.getValue();
 		IType type = t.getType();
 		if (type == IntType.INSTANCE) {
@@ -498,6 +504,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(VariableToken variableToken) {
+		tokenStack.push(variableToken);
 		String name = variableToken.getName();
 		IType type = variableToken.getType();
 
@@ -518,17 +525,31 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	public void visit(MethodCallToken methodCallToken) {
 		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
-		MethodGen method = this.methodMap.get(methodName);
-		try {
-			String className = method.getClassName();
-			il.append(iFact.createInvoke(className, methodName,
-					method.getReturnType(), method.getArgumentTypes(),
-					Constants.INVOKEVIRTUAL));
-		} catch (NullPointerException e) {
-			Method m = currentScope.getParent().getMethod(methodName);
-			il.append(iFact.createInvoke(cg.getClassName(), m.getName(), m
-					.getReturnType().toBcelType(), m.getParametersBCEL(),
-					Constants.INVOKEVIRTUAL));
+		Method m = this.methodMap.get(methodName);
+		if(m==null)
+			m = this.currentScope.lookupMethod(methodName);
+		List<Variable> methodParam = new ArrayList<Variable>();
+		String className = m.getClassName();
+		if(className==null)
+			className = cg.getClassName();
+		il.append(iFact.createInvoke(className, m.getName(), m
+				.getReturnType().toBcelType(), m.getParametersBCEL(),
+				Constants.INVOKEVIRTUAL));
+		if(m.getParameters()!=null){
+			methodParam = m.getParameters();
+			Iterator<Variable> it = methodParam.iterator();
+			while(it.hasNext()){
+				Variable param = it.next();
+				IToken token = tokenStack.pop();
+				if(token instanceof LiteralToken)
+					param.setValue(((LiteralToken) token).getValue());
+				if(token instanceof VariableToken){
+					Variable v = currentScope.lookupVariable(((VariableToken) token).getName());
+					if(v.isConstant())
+						param.setValue(v.getValue());
+				}
+
+			}
 		}
 	}
 
