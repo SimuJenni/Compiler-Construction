@@ -85,7 +85,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private IScope currentScope;
 	private Map<String, Integer> registerMap = new HashMap<String, Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
-	private boolean isField = false;
+	private boolean isField = false, inIf = false, inWhile = false;;
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -289,7 +289,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 					.toBcelType(), varName, cp);
 			cg.addField(fg.getField());
 		} else {
-			LocalVariableGen lg = mg.addLocalVariable(varName, v.getType()
+			LocalVariableGen lg = mg.addLocalVariable(varName+"_0", v.getType()
 					.toBcelType(), null, null);
 			int in = lg.getIndex();
 			registerMap.put(varName, in);
@@ -301,17 +301,19 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	public void visit(final AssignmentStatement n) {
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
 		if (registerMap.containsKey(name)) {
-			int reg = registerMap.get(name);
 			if (n.f0.f0.which == 1) {
 				// f2 -> Expression()
 				n.f2.accept(this);
 				// f0 -> Assignee()
+				createNewVariable(name); // For SSA
+				int reg = registerMap.get(name);
 				if (currentScope.lookupVariable(name).getType().isPrimitive()) {
 					il.append(new ISTORE(reg));
 				} else {
 					il.append(new ASTORE(reg));
 				}
 			} else {
+				int reg = registerMap.get(name);
 				il.append(new ALOAD(reg));
 				n.f0.accept(this);
 				n.f2.accept(this);
@@ -336,6 +338,18 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		}
 	}
 
+	private void createNewVariable(String name) {
+		Variable v = currentScope.getVariable(name);
+		int count = v.getAssignmentCount();
+		if(count>0&&!inIf&&!inWhile&&currentScope.lookupVariable(name).getType().isPrimitive()){
+			LocalVariableGen lg = mg.addLocalVariable(name+"_"+count, v.getType()
+					.toBcelType(), null, null);
+			int in = lg.getIndex();
+			registerMap.put(name, in);
+		}
+		v.increaseCount();
+	}
+
 	public void visit(final ClassConstructorCall n) {
 		String className = n.f0.f0.tokenImage;
 		il.append(iFact.createNew(className));
@@ -354,6 +368,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		n2.accept(this);
 		InstructionHandle ifStart = il.getEnd();
 		// f4 -> Statement()
+		inIf = true;
 		final Statement n4 = n.f4;
 		n4.accept(this);
 		InstructionHandle ifEnd = il.getEnd();
@@ -366,6 +381,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		InstructionHandle elseEnd = il.append(iFact.NOP);
 		il.append(ifStart, new IFEQ(ifEnd.getNext()));
 		il.append(ifEnd, new GOTO(elseEnd));
+		inIf = false;
 	}
 
 	public void visit(final WhileStatement n) {
@@ -376,6 +392,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 		startExpression = startExpression.getNext();
 		InstructionHandle endExpression = il.getEnd();
+		
+		inWhile = true;
 
 		// f4 -> Statement()
 		n.f4.accept(this);
@@ -384,6 +402,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		InstructionHandle endWhile = il.append(InstructionFactory.NOP);
 
 		il.append(endExpression, new IFEQ(endWhile));
+		
+		inWhile = false;
 	}
 
 	public void visit(PrintStatement n) {

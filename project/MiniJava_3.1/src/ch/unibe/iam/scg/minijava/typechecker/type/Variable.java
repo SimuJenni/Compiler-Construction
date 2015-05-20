@@ -4,6 +4,7 @@ public class Variable {
 
 	protected String name;
 	protected IType type;
+	protected int assignementCount = 0;
 
 	public Variable(String name, IType type) {
 		this.name = name;
@@ -16,6 +17,15 @@ public class Variable {
 
 	public IType getType() {
 		return type;
+	}
+
+	public int getAssignmentCount() {
+		// TODO Auto-generated method stub
+		return assignementCount;
+	}
+
+	public void increaseCount() {
+		assignementCount++;		
 	}
 
 
