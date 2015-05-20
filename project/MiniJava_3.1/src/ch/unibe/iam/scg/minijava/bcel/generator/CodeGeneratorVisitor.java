@@ -245,6 +245,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				this.il.append(InstructionFactory.ARETURN);
 			}
 		}
+		mg.removeNOPs();
 		mg.setMaxStack();
 		mg.setMaxLocals();
 		methodMap.put(methodName, (MethodGen) mg.clone());
@@ -293,8 +294,6 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 					.toBcelType(), null, null);
 			int in = lg.getIndex();
 			registerMap.put(varName, in);
-			il.append(InstructionConstants.ACONST_NULL);
-			lg.setStart(il.append(new ASTORE(in))); // "i" valid from here
 		}
 	}
 
