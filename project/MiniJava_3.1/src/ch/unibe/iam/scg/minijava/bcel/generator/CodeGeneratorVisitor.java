@@ -143,10 +143,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private void evaluateStack(InstructionHandle startExpression) {
 		Stack<Object> stack = new Stack<Object>();
 		Stack<IToken> tmp = new Stack<IToken>();
-		while(!tokenStack.isEmpty())
-			tmp.push(tokenStack.pop());
 		
+		// Stack in reversed order...
+		while(!tokenStack.isEmpty())
+			tmp.push(tokenStack.pop());	
 		tokenStack = tmp;
+		
 		while(!tokenStack.isEmpty()){
 			IToken t = tokenStack.pop();
 			if(t.isVariable()){
@@ -209,9 +211,10 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new PUSH(cp,(int) result));
 			if(result instanceof Boolean)
 				il.append(new PUSH(cp,(boolean) result));
-			if(inAssignment){
-				assignee.setValue(result.toString());
-			}
+			// This is not working because of function calls...
+//			if(inAssignment){
+//				assignee.setValue(result.toString());
+//			}
 		}
 	}
 
@@ -386,12 +389,13 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	public void visit(final AssignmentStatement n) {
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
-		inAssignment = true;
 		assignee = currentScope.lookupVariable(name);
 		if (registerMap.containsKey(name)) {
 			if (n.f0.f0.which == 1) {
 				// f2 -> Expression()
+				inAssignment = true;
 				n.f2.accept(this);
+				inAssignment = false;
 				// f0 -> Assignee()
 				createNewVariable(name); // For SSA
 				int reg = registerMap.get(name);
@@ -424,7 +428,6 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		}
-		inAssignment = false;
 	}
 
 	private void createNewVariable(String name) {
