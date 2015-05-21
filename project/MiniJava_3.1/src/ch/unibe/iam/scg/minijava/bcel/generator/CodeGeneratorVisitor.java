@@ -172,49 +172,66 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			if(t.isOperator()){
 				if(((AbstractOperatorToken) t).getSymbol().equals("+")){
 					stack.push((int) stack.pop() + (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("-")){
 					stack.push(- (int) stack.pop() + (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("*")){
 					stack.push((int) stack.pop() * (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("<")){
 					stack.push((int) stack.pop() > (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals(">")){
 					stack.push((int) stack.pop() < (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("&&")){
 					stack.push((boolean) stack.pop() && (boolean) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("==")){
 					stack.push((int) stack.pop() == (int) stack.pop());
+					continue;
 				}
 				if(((AbstractOperatorToken) t).getSymbol().equals("!")){
 					stack.push(!(boolean) stack.pop());
+					continue;
 				}
-				continue;
+				if(inAssignment)
+					assignee.setUnknown();
+				return;
 			}
+			if(t.isFunction()&&inAssignment){
+				if(inAssignment)
+					assignee.setUnknown();
+				return;
+			}
+
 			return;
 		}
 		Object result;
 		if(!stack.isEmpty()){
+			result = stack.pop();
+			if(!stack.isEmpty())
+				return;
 			try {
 				il.delete(startExpression, il.getEnd());
 			} catch (TargetLostException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			};
-			result = stack.pop();
 			if(result instanceof Integer)
 				il.append(new PUSH(cp,(int) result));
 			if(result instanceof Boolean)
 				il.append(new PUSH(cp,(boolean) result));
 			// This is not working because of function calls...
-//			if(inAssignment){
-//				assignee.setValue(result.toString());
-//			}
+			if(inAssignment&&!inIf&&!inWhile){
+				assignee.setValue(result.toString());
+			}
 		}
 	}
 
@@ -416,7 +433,9 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 					.toBcelType().getSignature();
 			if (n.f0.f0.which == 1) {
 				il.append(new ALOAD(0));
+				inAssignment = true;
 				n.f2.accept(this);
+				inAssignment = false;
 				int i = cp.addFieldref(cg.getClassName(), name, fieldType);
 				il.append(new PUTFIELD(i));
 			} else {
@@ -424,7 +443,9 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				int i = cp.addFieldref(cg.getClassName(), name, fieldType);
 				il.append(new GETFIELD(i));
 				n.f0.accept(this);
+				inAssignment = true;
 				n.f2.accept(this);
+				inAssignment = false;
 				il.append(new IASTORE());
 			}
 		}
@@ -452,6 +473,15 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	@Override
 	public void visit(final IfStatement n) {
+		List<Variable> assignees = new AssigneeExtractor(currentScope).extract(n.f4);
+		Iterator<Variable> it = assignees.iterator();
+		while(it.hasNext())
+			it.next().setUnknown();
+		assignees = new AssigneeExtractor(currentScope).extract(n.f6);
+		it = assignees.iterator();
+		while(it.hasNext())
+			it.next().setUnknown();
+		
 		// f0 -> <IF>
 		final NodeToken n0 = n.f0;
 		n0.accept(this);
@@ -477,8 +507,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(final WhileStatement n) {
+		List<Variable> assignees = new AssigneeExtractor(currentScope).extract(n.f4);
+		Iterator<Variable> it = assignees.iterator();
+		while(it.hasNext())
+			it.next().setUnknown();
+		
 		InstructionHandle startExpression = il.getEnd();
-
 		// f2 -> Expression()
 		n.f2.accept(this);
 
@@ -630,23 +664,6 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		il.append(iFact.createInvoke(className, m.getName(), m
 				.getReturnType().toBcelType(), m.getParametersBCEL(),
 				Constants.INVOKEVIRTUAL));
-//		if(m.getParameters()!=null){
-//			methodParam = m.getParameters();
-//			Iterator<Variable> it = methodParam.iterator();
-//			while(it.hasNext()){
-//				Variable param = it.next();
-//				IToken token = tokenStack.pop();
-//				if(token instanceof LiteralToken)
-//					param.setValue(((LiteralToken) token).getValue());
-//				else if(token instanceof VariableToken){
-//					Variable v = currentScope.lookupVariable(((VariableToken) token).getName());
-//					if(v.isConstant())
-//						param.setValue(v.getValue());
-//				} 
-//				else
-//					break;
-//			}
-//		}
 	}
 
 	public ClassGen getCG() {

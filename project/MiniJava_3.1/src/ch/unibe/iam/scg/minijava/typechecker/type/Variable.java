@@ -42,7 +42,8 @@ public class Variable {
 		return this.value;
 	}
 
-
-
+	public void setUnknown() {
+		isConstant=false;
+	}
 
 }
