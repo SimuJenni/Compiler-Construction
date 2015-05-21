@@ -1,11 +1,18 @@
 package ch.unibe.iam.scg.minijava.typechecker.type;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.bcel.generic.InstructionHandle;
+
 public class Variable {
 
 	protected String name, value;
 	protected IType type;
 	protected boolean isConstant;
-	protected int assignementCount = 0;
+	protected int assignementCount = 0, useCount = 0;
+	private InstructionHandle initStart, initEnd;
+	private List<InstructionHandle> assignments = new ArrayList<InstructionHandle>();
 
 	public Variable(String name, IType type) {
 		this.name = name;
@@ -44,6 +51,38 @@ public class Variable {
 
 	public void setUnknown() {
 		isConstant=false;
+	}
+
+	public void increaseUseCount() {
+		useCount++;
+	}
+	
+	public int getUseCount() {
+		return useCount;
+	}
+
+	public void setInitInstructions(InstructionHandle start,
+			InstructionHandle end) {
+		initStart = start;
+		initEnd = end;
+	}
+
+	public void setAssignInstructions(InstructionHandle l1,
+			InstructionHandle l2) {
+		this.assignments.add(l1);		
+		this.assignments.add(l2);		
+	}
+
+	public List<InstructionHandle> getAssignments() {
+		return assignments;
+	}
+
+	public InstructionHandle getInitStart() {
+		return initStart;
+	}
+
+	public InstructionHandle getInitEnd() {
+		return initEnd;
 	}
 
 }
