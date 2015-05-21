@@ -80,5 +80,10 @@ public abstract class AbstractOperatorToken implements IToken {
 	public String toString() {
 		return "AbstractOperatorToken [symbol=" + symbol + "]";
 	}
+	
+	@Override
+	public boolean isVariable() {
+		return false;
+	}
 
 }

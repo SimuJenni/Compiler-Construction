@@ -21,4 +21,6 @@ public interface IToken {
 	
 	public void accept(final CodeGeneratorVisitor vis);
 
+	public boolean isVariable();
+
 }

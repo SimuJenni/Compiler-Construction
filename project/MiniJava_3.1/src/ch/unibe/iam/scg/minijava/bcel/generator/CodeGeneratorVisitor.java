@@ -24,6 +24,7 @@ import org.apache.bcel.generic.IFGT;
 import org.apache.bcel.generic.IFNE;
 import org.apache.bcel.generic.ILOAD;
 import org.apache.bcel.generic.ISTORE;
+import org.apache.bcel.generic.Instruction;
 import org.apache.bcel.generic.InstructionConstants;
 import org.apache.bcel.generic.InstructionFactory;
 import org.apache.bcel.generic.InstructionHandle;
@@ -35,6 +36,7 @@ import org.apache.bcel.generic.NOP;
 import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.PUSH;
 import org.apache.bcel.generic.PUTFIELD;
+import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Type;
 
 import ch.unibe.iam.scg.javacc.syntaxtree.AssignmentStatement;
@@ -58,6 +60,7 @@ import ch.unibe.iam.scg.javacc.syntaxtree.TypedDeclaration;
 import ch.unibe.iam.scg.javacc.syntaxtree.WhileStatement;
 import ch.unibe.iam.scg.javacc.visitor.DepthFirstVoidVisitor;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.IdentifierNameExtractor;
+import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.AbstractOperatorToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ArrayAccessToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.ArrayLengthAccessToken;
 import ch.unibe.iam.scg.minijava.typechecker.extractor.shuntingyard.BinaryOperatorToken;
@@ -127,10 +130,86 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		ShuntingYard sy = new ShuntingYard(currentScope);
 		List<IToken> tokenList = sy.extract(n);
 		Iterator<IToken> it = tokenList.iterator();
+		InstructionHandle startExpression = il.append(iFact.NOP);
 		while (it.hasNext()) {
 			IToken next = it.next();
 			next.accept(this);
 		}
+		evaluateStack(startExpression);
+		
+	}
+
+	private void evaluateStack(InstructionHandle startExpression) {
+		Stack<Object> stack = new Stack<Object>();
+		Stack<IToken> tmp = new Stack<IToken>();
+		while(!tokenStack.isEmpty())
+			tmp.push(tokenStack.pop());
+		
+		tokenStack = tmp;
+		while(!tokenStack.isEmpty()){
+			IToken t = tokenStack.pop();
+			if(t.isVariable()){
+				Variable v = currentScope.lookupVariable(((VariableToken) t).getName());
+				if(v.isConstant()){
+					if(v.getType().getName().equals("int"))
+						stack.push(Integer.parseInt(v.getValue()));
+					if(v.getType().getName().equals("boolean"))
+						stack.push(Boolean.parseBoolean(v.getValue()));
+				} else
+					return;
+				continue;
+			}
+			if(t.isLiteral()){
+				if(((LiteralToken) t).getType().getName().equals("int"))
+					stack.push(Integer.parseInt(((LiteralToken) t).getValue()));
+				if(((LiteralToken) t).getType().getName().equals("boolean"))
+					stack.push(Boolean.parseBoolean(((LiteralToken) t).getValue()));
+				continue;
+			}
+			if(t.isOperator()){
+				if(((AbstractOperatorToken) t).getSymbol().equals("+")){
+					stack.push((int) stack.pop() + (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("-")){
+					stack.push(- (int) stack.pop() + (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("*")){
+					stack.push((int) stack.pop() * (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("<")){
+					stack.push((int) stack.pop() > (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals(">")){
+					stack.push((int) stack.pop() < (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("&&")){
+					stack.push((boolean) stack.pop() && (boolean) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("==")){
+					stack.push((int) stack.pop() == (int) stack.pop());
+				}
+				if(((AbstractOperatorToken) t).getSymbol().equals("!")){
+					stack.push(!(boolean) stack.pop());
+				}
+				continue;
+			}
+			return;
+		}
+		Object result;
+		if(!stack.isEmpty()){
+			try {
+				il.delete(startExpression, il.getEnd());
+			} catch (TargetLostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
+			result = stack.pop();
+			if(result instanceof Integer)
+				il.append(new PUSH(cp,(int) result));
+			if(result instanceof Boolean)
+				il.append(new PUSH(cp,(boolean) result));
+		}
+
 	}
 
 	@Override
@@ -418,6 +497,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	};
 
 	public void visit(BinaryOperatorToken o) {
+		tokenStack.push(o);
 		if (o.getSymbol().equals("+"))
 			il.append(InstructionFactory.IADD);
 		if (o.getSymbol().equals("-"))
@@ -469,6 +549,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(UnaryOperatorToken u) {
+		tokenStack.push(u);
 		if (u.getSymbol().equals("!")) {
 			InstructionHandle ifNe = il.append(new PUSH(cp, true));
 			InstructionHandle ifNotNe = il.append(new PUSH(cp, false));
@@ -479,6 +560,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(ObjectInstantiationToken t) {
+		tokenStack.push(t);
 		NodeChoice nch = t.getNode().f1.f0;
 		switch (nch.which) {
 		case 0:
@@ -496,10 +578,12 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(ArrayLengthAccessToken t) {
+		tokenStack.push(t);
 		il.append(new ARRAYLENGTH());
 	}
 
 	public void visit(ArrayAccessToken arrayAccessToken) {
+		tokenStack.push(arrayAccessToken);
 		il.append(InstructionFactory.IALOAD);
 	}
 
@@ -507,6 +591,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		tokenStack.push(variableToken);
 		String name = variableToken.getName();
 		IType type = variableToken.getType();
+		Variable v = this.currentScope.lookupVariable(name);
 
 		if (registerMap.containsKey(name)) {
 			int reg = registerMap.get(name);
@@ -524,6 +609,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(MethodCallToken methodCallToken) {
+		tokenStack.push(methodCallToken);
 		String methodName = methodCallToken.getNode().f1.f0.tokenImage;
 		Method m = this.methodMap.get(methodName);
 		if(m==null)
@@ -535,22 +621,23 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		il.append(iFact.createInvoke(className, m.getName(), m
 				.getReturnType().toBcelType(), m.getParametersBCEL(),
 				Constants.INVOKEVIRTUAL));
-		if(m.getParameters()!=null){
-			methodParam = m.getParameters();
-			Iterator<Variable> it = methodParam.iterator();
-			while(it.hasNext()){
-				Variable param = it.next();
-				IToken token = tokenStack.pop();
-				if(token instanceof LiteralToken)
-					param.setValue(((LiteralToken) token).getValue());
-				if(token instanceof VariableToken){
-					Variable v = currentScope.lookupVariable(((VariableToken) token).getName());
-					if(v.isConstant())
-						param.setValue(v.getValue());
-				}
-
-			}
-		}
+//		if(m.getParameters()!=null){
+//			methodParam = m.getParameters();
+//			Iterator<Variable> it = methodParam.iterator();
+//			while(it.hasNext()){
+//				Variable param = it.next();
+//				IToken token = tokenStack.pop();
+//				if(token instanceof LiteralToken)
+//					param.setValue(((LiteralToken) token).getValue());
+//				else if(token instanceof VariableToken){
+//					Variable v = currentScope.lookupVariable(((VariableToken) token).getName());
+//					if(v.isConstant())
+//						param.setValue(v.getValue());
+//				} 
+//				else
+//					break;
+//			}
+//		}
 	}
 
 	public ClassGen getCG() {

@@ -41,6 +41,11 @@ public enum ParenthesisToken implements IToken {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public boolean isVariable() {
+		return false;
+	}
 
 
 }

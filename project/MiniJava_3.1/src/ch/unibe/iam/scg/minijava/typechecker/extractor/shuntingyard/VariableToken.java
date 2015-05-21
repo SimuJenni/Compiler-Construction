@@ -53,5 +53,10 @@ public class VariableToken implements IToken {
 	public void accept(CodeGeneratorVisitor vis) {
 		vis.visit(this);
 	}
+	
+	@Override
+	public boolean isVariable() {
+		return true;
+	}
 
 }

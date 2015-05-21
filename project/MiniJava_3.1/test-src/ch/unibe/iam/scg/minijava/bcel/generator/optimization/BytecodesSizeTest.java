@@ -51,6 +51,7 @@ public class BytecodesSizeTest {
 	@Test
 	public void testScaling() {
 		size = getSize(PATH + "Scaling.minijava");
+		System.out.println("Size: "+size);
 		assertTrue(size <= 72);
 	}
 

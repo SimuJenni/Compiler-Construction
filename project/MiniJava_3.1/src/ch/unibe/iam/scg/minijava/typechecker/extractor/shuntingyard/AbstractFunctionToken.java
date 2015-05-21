@@ -33,5 +33,10 @@ public abstract class AbstractFunctionToken<T extends INode> implements IToken {
 	public boolean isFunction() {
 		return true;
 	}
+	
+	@Override
+	public boolean isVariable() {
+		return false;
+	}
 
 }
