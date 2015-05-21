@@ -94,6 +94,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private Stack<IToken> tokenStack;
 	private Variable assignee;
 	private List<Variable> localVariables = new ArrayList<Variable>();
+	private Object result;
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -142,26 +143,27 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	private void evaluateStack(InstructionHandle startExpression) {
+		boolean stop = false;
 		Stack<Object> stack = new Stack<Object>();
 		Stack<IToken> tmp = new Stack<IToken>();
 		
 		// Stack in reversed order...
-		while(!tokenStack.isEmpty())
+		while(!tokenStack.isEmpty()){
 			tmp.push(tokenStack.pop());	
-		tokenStack = tmp;
+		}
+		tokenStack = (Stack<IToken>) tmp.clone();
 		
 		while(!tokenStack.isEmpty()){
 			IToken t = tokenStack.pop();
 			if(t.isVariable()){
 				Variable v = currentScope.lookupVariable(((VariableToken) t).getName());
-				v.increaseUseCount();
 				if(v.isConstant()){
 					if(v.getType().getName().equals("int"))
 						stack.push(Integer.parseInt(v.getValue()));
 					if(v.getType().getName().equals("boolean"))
 						stack.push(Boolean.parseBoolean(v.getValue()));
-				} else
-					return;
+				} else 
+					stop = true;
 				continue;
 			}
 			if(t.isLiteral()){
@@ -169,9 +171,11 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 					stack.push(Integer.parseInt(((LiteralToken) t).getValue()));
 				if(((LiteralToken) t).getType().getName().equals("boolean"))
 					stack.push(Boolean.parseBoolean(((LiteralToken) t).getValue()));
+				if(((LiteralToken) t).getValue().equals("this"))
+					stack.push("this");
 				continue;
 			}
-			if(t.isOperator()){
+			if(t.isOperator()&&!stop){
 				if(((AbstractOperatorToken) t).getSymbol().equals("+")){
 					stack.push((int) stack.pop() + (int) stack.pop());
 					continue;
@@ -203,36 +207,47 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				if(((AbstractOperatorToken) t).getSymbol().equals("!")){
 					stack.push(!(boolean) stack.pop());
 					continue;
-				}
-				if(inAssignment)
-					assignee.setUnknown();
-				return;
+				}	
+				stop = true;
 			}
 			if(t.isFunction()&&inAssignment){
-				if(inAssignment)
+				if(inAssignment){
 					assignee.setUnknown();
-				return;
+					assignee.increaseUseCount();
+				}
+				stop = true;
 			}
-
-			return;
+			stop = true;
 		}
-		Object result;
-		if(!stack.isEmpty()){
-			result = stack.pop();
-			if(!stack.isEmpty())
-				return;
-			try {
-				il.delete(startExpression, il.getEnd());
-			} catch (TargetLostException e) {
-				e.printStackTrace();
-			};
-			if(result instanceof Integer)
-				il.append(new PUSH(cp,(int) result));
-			if(result instanceof Boolean)
-				il.append(new PUSH(cp,(boolean) result));
-			// This is not working because of function calls...
-			if(inAssignment&&!inIf&&!inWhile){
-				assignee.setValue(result.toString());
+		
+		if(stop){
+			result=null;
+			while(!tmp.isEmpty()){
+				IToken t = tmp.pop();			
+				if(t.isVariable()){
+					Variable v = currentScope.lookupVariable(((VariableToken) t).getName());
+					v.increaseUseCount();
+				}
+			}
+		}
+		else {
+			if(!stack.isEmpty()){
+				result = stack.pop();
+				if(!stack.isEmpty())
+					return;
+				try {
+					il.delete(startExpression, il.getEnd());
+				} catch (TargetLostException e) {
+					e.printStackTrace();
+				};
+				if(result instanceof Integer)
+					il.append(new PUSH(cp,(int) result));
+				if(result instanceof Boolean)
+					il.append(new PUSH(cp,(boolean) result));
+				// This is not working because of function calls...
+				if(inAssignment&&!inIf&&!inWhile){
+					assignee.setValue(result.toString());
+				}
 			}
 		}
 	}
@@ -355,7 +370,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				this.il.append(InstructionFactory.ARETURN);
 			}
 		}
-//		removeDeadCode();
+		removeDeadCode();
 		mg.removeNOPs();
 		mg.setMaxStack();
 		mg.setMaxLocals();
@@ -373,14 +388,17 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				removeVar(var);
 			}
 		}
-		
 	}
 
 	private void removeVar(Variable var) {
 		Iterator<InstructionHandle> it = var.getAssignments().iterator();
+		this.mg.removeLocalVariable(var.getLg());
+		registerMap.remove(var.getName());
 		while(it.hasNext()){
 			try {
-				il.delete(it.next(), it.next());
+				InstructionHandle l1 = it.next();
+				InstructionHandle l2 = it.next();
+				il.delete(l1, l2);
 			} catch (TargetLostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -427,13 +445,14 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			LocalVariableGen lg = mg.addLocalVariable(varName+"_0", v.getType()
 					.toBcelType(), null, null);
 			int in = lg.getIndex();
-			v.setInitInstructions(lg.getStart(),lg.getEnd());
+			v.setLG(lg);
 			localVariables.add(v);
 			registerMap.put(varName, in);
 		}
 	}
 
 	public void visit(final AssignmentStatement n) {
+		il.append(iFact.NOP);
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
 		assignee = currentScope.lookupVariable(name);
 		InstructionHandle assignStart = il.getEnd();
@@ -479,6 +498,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		}
+		il.append(iFact.NOP);
 		assignee.setAssignInstructions(assignStart, il.getEnd());
 	}
 
@@ -504,6 +524,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	@Override
 	public void visit(final IfStatement n) {
+		boolean expressionValue = false, constant = false;
 		List<Variable> assignees = new AssigneeExtractor(currentScope).extract(n.f4);
 		Iterator<Variable> it = assignees.iterator();
 		while(it.hasNext())
@@ -519,6 +540,10 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		// f2 -> Expression()
 		final Expression n2 = n.f2;
 		n2.accept(this);
+		if(result!=null){
+			expressionValue = (boolean) result;
+			constant = true;
+		}
 		InstructionHandle ifStart = il.getEnd();
 		// f4 -> Statement()
 		inIf = true;
@@ -529,12 +554,27 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		final NodeToken n5 = n.f5;
 		n5.accept(this);
 		// f6 -> Statement()
+		il.append(iFact.NOP);
 		final Statement n6 = n.f6;
 		n6.accept(this);
 		InstructionHandle elseEnd = il.append(iFact.NOP);
-		il.append(ifStart, new IFEQ(ifEnd.getNext()));
-		il.append(ifEnd, new GOTO(elseEnd));
 		inIf = false;
+
+		if(!constant){
+			il.append(ifStart, new IFEQ(ifEnd.getNext()));
+			il.append(ifEnd, new GOTO(elseEnd));
+		}
+		else{
+			try {
+				if(expressionValue){
+					il.delete(ifEnd, elseEnd);
+				} else
+					il.delete(ifStart, ifEnd);
+			} catch (TargetLostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void visit(final WhileStatement n) {
@@ -543,24 +583,34 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		while(it.hasNext())
 			it.next().setUnknown();
 		
+		il.append(iFact.NOP);
 		InstructionHandle startExpression = il.getEnd();
 		// f2 -> Expression()
 		n.f2.accept(this);
+		il.append(iFact.NOP);
 
 		startExpression = startExpression.getNext();
 		InstructionHandle endExpression = il.getEnd();
 		
-		inWhile = true;
-
-		// f4 -> Statement()
-		n.f4.accept(this);
-
-		il.append(new GOTO(startExpression));
-		InstructionHandle endWhile = il.append(InstructionFactory.NOP);
-
-		il.append(endExpression, new IFEQ(endWhile));
-		
-		inWhile = false;
+		if(result==null||!(boolean) result){
+			inWhile = true;
+			// f4 -> Statement()
+			n.f4.accept(this);
+	
+			il.append(new GOTO(startExpression));
+			InstructionHandle endWhile = il.append(InstructionFactory.NOP);
+	
+			il.append(endExpression, new IFEQ(endWhile));
+			
+			inWhile = false;
+		} else {
+			try {
+				il.delete(startExpression, endExpression);
+			} catch (TargetLostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void visit(PrintStatement n) {
@@ -666,6 +716,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		String name = variableToken.getName();
 		IType type = variableToken.getType();
 		Variable v = this.currentScope.lookupVariable(name);
+//		v.increaseUseCount();
 
 		if (registerMap.containsKey(name)) {
 			int reg = registerMap.get(name);

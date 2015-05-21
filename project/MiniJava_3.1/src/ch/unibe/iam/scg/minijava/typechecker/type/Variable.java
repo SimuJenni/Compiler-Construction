@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.bcel.generic.InstructionHandle;
+import org.apache.bcel.generic.LocalVariableGen;
 
 public class Variable {
 
@@ -13,6 +14,7 @@ public class Variable {
 	protected int assignementCount = 0, useCount = 0;
 	private InstructionHandle initStart, initEnd;
 	private List<InstructionHandle> assignments = new ArrayList<InstructionHandle>();
+	private LocalVariableGen lg;
 
 	public Variable(String name, IType type) {
 		this.name = name;
@@ -83,6 +85,15 @@ public class Variable {
 
 	public InstructionHandle getInitEnd() {
 		return initEnd;
+	}
+
+	public void setLG(LocalVariableGen lg) {
+		// TODO Auto-generated method stub
+		this.lg=lg;
+	}
+
+	public LocalVariableGen getLg() {
+		return lg;
 	}
 
 }
