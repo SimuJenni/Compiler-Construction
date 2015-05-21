@@ -32,6 +32,7 @@ public class BytecodesSizeTest {
 	@Test
 	public void testFibonacci() {
 		size = getSize(PATH + "Fibonacci.minijava");
+		System.out.println("Size: "+size);
 		assertTrue(size <= 35);
 	}
 
@@ -45,6 +46,7 @@ public class BytecodesSizeTest {
 	@Test
 	public void testBinarySearch() {
 		size = getSize(PATH + "BinarySearch.minijava");
+		System.out.println("Size: "+size);
 		assertTrue(size <= 261);
 	}
 	

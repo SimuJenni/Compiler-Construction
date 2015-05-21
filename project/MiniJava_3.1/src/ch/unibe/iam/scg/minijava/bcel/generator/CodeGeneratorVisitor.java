@@ -90,8 +90,9 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private IScope currentScope;
 	private Map<String, Integer> registerMap = new HashMap<String, Integer>();
 	private JavaBytecodeGenerator bytecodeGenerator;
-	private boolean isField = false, inIf = false, inWhile = false;;
+	private boolean isField, inIf, inWhile, inAssignment;
 	private Stack<IToken> tokenStack;
+	private Variable assignee;
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -208,8 +209,10 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new PUSH(cp,(int) result));
 			if(result instanceof Boolean)
 				il.append(new PUSH(cp,(boolean) result));
+			if(inAssignment){
+				assignee.setValue(result.toString());
+			}
 		}
-
 	}
 
 	@Override
@@ -383,6 +386,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 	public void visit(final AssignmentStatement n) {
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
+		inAssignment = true;
+		assignee = currentScope.lookupVariable(name);
 		if (registerMap.containsKey(name)) {
 			if (n.f0.f0.which == 1) {
 				// f2 -> Expression()
@@ -419,6 +424,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		}
+		inAssignment = false;
 	}
 
 	private void createNewVariable(String name) {
