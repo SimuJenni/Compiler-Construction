@@ -93,6 +93,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	private boolean isField, inIf, inWhile, inAssignment;
 	private Stack<IToken> tokenStack;
 	private Variable assignee;
+	private List<Variable> localVariables = new ArrayList<Variable>();
 
 	public CodeGeneratorVisitor(JavaBytecodeGenerator bytecodeGenerator,
 			ClassGen cg, MethodGen mg, InstructionList il,
@@ -153,6 +154,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			IToken t = tokenStack.pop();
 			if(t.isVariable()){
 				Variable v = currentScope.lookupVariable(((VariableToken) t).getName());
+				v.increaseUseCount();
 				if(v.isConstant()){
 					if(v.getType().getName().equals("int"))
 						stack.push(Integer.parseInt(v.getValue()));
@@ -327,6 +329,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	}
 
 	public void visit(final MethodDeclaration n) {
+		localVariables = new ArrayList<Variable>();
 		// f2 -> Identifier()
 		il = new InstructionList();
 		String methodName = n.f2.f0.tokenImage;
@@ -352,6 +355,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				this.il.append(InstructionFactory.ARETURN);
 			}
 		}
+//		removeDeadCode();
 		mg.removeNOPs();
 		mg.setMaxStack();
 		mg.setMaxLocals();
@@ -359,6 +363,29 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 
 		bytecodeGenerator.addMethod(cg, mg);
 		il.dispose();
+	}
+
+	private void removeDeadCode() {
+		Iterator<Variable> it = localVariables.iterator();
+		while(it.hasNext()){
+			Variable var = it.next();
+			if(var.getUseCount()==0){
+				removeVar(var);
+			}
+		}
+		
+	}
+
+	private void removeVar(Variable var) {
+		Iterator<InstructionHandle> it = var.getAssignments().iterator();
+		while(it.hasNext()){
+			try {
+				il.delete(it.next(), it.next());
+			} catch (TargetLostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void extractMG(int accessFlags, String methodName, Method m) {
@@ -400,6 +427,8 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 			LocalVariableGen lg = mg.addLocalVariable(varName+"_0", v.getType()
 					.toBcelType(), null, null);
 			int in = lg.getIndex();
+			v.setInitInstructions(lg.getStart(),lg.getEnd());
+			localVariables.add(v);
 			registerMap.put(varName, in);
 		}
 	}
@@ -407,6 +436,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 	public void visit(final AssignmentStatement n) {
 		String name = (new IdentifierNameExtractor()).extract(n.f0);
 		assignee = currentScope.lookupVariable(name);
+		InstructionHandle assignStart = il.getEnd();
 		if (registerMap.containsKey(name)) {
 			if (n.f0.f0.which == 1) {
 				// f2 -> Expression()
@@ -449,6 +479,7 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 				il.append(new IASTORE());
 			}
 		}
+		assignee.setAssignInstructions(assignStart, il.getEnd());
 	}
 
 	private void createNewVariable(String name) {
