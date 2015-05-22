@@ -96,4 +96,12 @@ public class Variable {
 		return lg;
 	}
 
+	public void reinit(LocalVariableGen lg2) {
+		this.useCount=0;
+		this.lg=lg2;
+		this.assignments=new ArrayList<InstructionHandle>();
+		initStart=lg.getStart();
+		initEnd=lg.getEnd();
+	}
+
 }

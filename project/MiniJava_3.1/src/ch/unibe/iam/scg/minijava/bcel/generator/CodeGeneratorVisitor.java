@@ -508,6 +508,10 @@ public class CodeGeneratorVisitor extends DepthFirstVoidVisitor {
 		if(count>0&&!inIf&&!inWhile&&currentScope.lookupVariable(name).getType().isPrimitive()){
 			LocalVariableGen lg = mg.addLocalVariable(name+"_"+count, v.getType()
 					.toBcelType(), null, null);
+			if(v.getUseCount()==0){
+				removeVar(v);
+				v.reinit(lg);
+			}
 			int in = lg.getIndex();
 			registerMap.put(name, in);
 		}
